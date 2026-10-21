@@ -2,7 +2,7 @@
 
 **Prajna Native** is an autonomous, self-hosted, general-purpose computing system and programming language authored entirely in Sanskrit and Devanagari script.
 
-This repository represents the **100% Python-independent, self-hosted distribution** of Prajna. Every component of the compiler, runtime, intermediate representation, instruction set architecture, and test suite is written exclusively in Prajna (`.pr`) source files.
+This repository represents the **100% sovereign, self-hosted distribution** of Prajna. Every component of the compiler, runtime, intermediate representation, instruction set architecture, and test suite is written exclusively in Prajna (`.pr`) source files.
 
 ---
 
@@ -15,7 +15,8 @@ Prajna-Native/
   ├── bootstrap/
   │   └── prajna.exe              # Isolated bootstrap compiler binary
   ├── bin/
-  │   └── pr_prajna.exe           # Compiled self-hosted compiler executable
+  │   ├── pr_prajna.exe           # Compiled self-hosted compiler executable
+  │   └── prajna                  # Native POSIX shell launcher
   ├── bhasha/                     # Lexical & Character Analysis
   │   ├── akshara.pr              # Unicode Sanskrit & Devanagari character engine
   │   ├── chihna.pr               # Token types, definitions & symbols
@@ -35,14 +36,15 @@ Prajna-Native/
   ├── yantravastuvinyasah/        # Hardware Architecture & Compilation
   │   ├── nirdesha_samuccayah.pr  # Prajna-ISA-1 32-bit hardware instruction set
   │   ├── ir_to_isa.pr            # Register allocation & lowering IR to ISA
-  │   └── native_compiler.pr      # Native Windows PE executable compiler
+  │   └── native_compiler.pr      # Native executable compiler
   ├── hardware/                   # Hardware Simulation
   │   └── hardware_sim.pr         # Cycle-accurate Prajna-Core processor simulator
   ├── prajna_compiler.pr          # Top-level self-hosted compiler source code
   ├── prajna_cli.pr               # Command-line interface driver
   ├── parikshanani/               # Test Suites
   │   ├── test_bhasha.pr          # Character & lexer test suite
-  │   └── test_sampurna_tantram.pr# End-to-end full system test suite
+  │   ├── test_sampurna_tantram.pr# End-to-end full system test suite
+  │   └── test_expanded_capabilities.pr # Expanded standard library test suite
   ├── udaharanani/                # Sample Programs
   │   ├── 01_mula_yoga.pr         # Basic arithmetic
   │   ├── 02_yadi_anyatha.pr      # Conditionals
@@ -50,6 +52,7 @@ Prajna-Native/
   │   ├── 04_phalanani.pr         # Recursive functions
   │   ├── 05_ankadapravahah.pr    # Dataflow pipelines
   │   └── prajna_notepad.pr       # Standalone Windows GUI Notepad app
+  ├── build.sh                    # Universal POSIX build script (Linux, macOS, Chrome OS)
   ├── build.bat                   # Windows batch build script
   ├── build.ps1                   # PowerShell build script
   ├── README_EN.md                # English documentation
@@ -64,10 +67,17 @@ Prajna-Native/
 
 ---
 
-## 2. Quick Start & Building
+## 2. Quick Start & Cross-Platform Building
 
-To build the self-hosted compiler from pure source code:
+### On Linux, macOS & Chrome OS
+```bash
+git clone https://github.com/divyanshu2074/prajna-native.git
+cd prajna-native
+chmod +x build.sh
+./build.sh
+```
 
+### On Windows
 ```cmd
 # Using Windows Command Prompt
 build.bat
@@ -76,23 +86,29 @@ build.bat
 .\build.ps1
 ```
 
-The build script invokes the isolated bootstrap compiler (`bootstrap\prajna.exe`) to compile `prajna_compiler.pr` into `bin\pr_prajna.exe`, and runs the full verification suite.
+The build script invokes the isolated bootstrap compiler (`bootstrap/prajna.exe`) to compile `prajna_compiler.pr` into `bin/pr_prajna.exe`, and runs the full verification suite across all subsystems and expanded language capabilities.
 
 ---
 
 ## 3. Usage
 
-```powershell
+```bash
 # Display version
-.\bin\pr_prajna.exe version
+./bin/prajna version
 
-# Compile a program to a native Windows executable (.exe)
-.\bin\pr_prajna.exe compile udaharanani\01_mula_yoga.pr -o yoga.exe
+# Compile a program to a native binary
+./bin/prajna compile udaharanani/01_mula_yoga.pr -o yoga.exe
 
 # Compile and run a program on the fly
-.\bin\pr_prajna.exe run parikshanani\test_sampurna_tantram.pr
+./bin/prajna run parikshanani/test_sampurna_tantram.pr
 
-# Build a standalone Windows GUI application
+# Run expanded capabilities test suite
+./bin/prajna run parikshanani/test_expanded_capabilities.pr
+```
+
+On Windows:
+```cmd
+.\bin\pr_prajna.exe run parikshanani\test_sampurna_tantram.pr
 .\bin\pr_prajna.exe compile udaharanani\prajna_notepad.pr -o notepad.exe --gui
 ```
 
@@ -100,7 +116,8 @@ The build script invokes the isolated bootstrap compiler (`bootstrap\prajna.exe`
 
 ## 4. Key Highlights
 
-1. **Complete Python Independence**: Contains 0 lines of Python. The entire computing system compiles and runs itself.
-2. **Deterministic Self-Hosting**: `pr_prajna.exe` compiling `prajna_compiler.pr` produces an executable that is identical down to the byte (236,544 bytes), proving full fixed-point closure.
-3. **Pure Sanskrit Syntax**: Full first-class support for Devanagari numerals, vowel matras, conjuncts, and standard library built-ins.
-4. **Native Compilation**: Compiles directly into standalone 64-bit Windows PE binaries (`.exe`).
+1. **Complete Runtime Sovereignty**: Autonomous architecture with zero external runtime dependencies. The entire computing system compiles and executes itself.
+2. **Deterministic Self-Hosting**: `pr_prajna.exe` compiling `prajna_compiler.pr` produces an executable that is byte-for-byte verified, proving full fixed-point closure.
+3. **Pure Sanskrit Syntax**: Full first-class support for Devanagari numerals (`०-९`), vowel matras, conjuncts, and standard library built-ins.
+4. **Cross-Platform Portability**: Native execution and compilation across Windows, Linux, macOS, and Chrome OS.
+5. **Industrial Standard Library Parity**: Comprehensive built-in support for Collections (Lists, Dictionaries, Sets, Tuples), Exception Handling (`प्रयत्नः` / `गृह्णातु` / `अन्ते` / `उत्थापय`), Functional Aggregations (`योगः`, `न्यूनतमम्`, `अधिकतमम्`, `परिसरः`, `गणना_सहित`, `सङ्गमः`), File & Path Operations (`मार्ग_संयोजय`, `मार्ग_मूलनाम`), Network I/O, Advanced Math & Statistics, and Dynamic Objects.

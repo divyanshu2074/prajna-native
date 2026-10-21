@@ -1,89 +1,150 @@
 # Prajna Standard Library & Language Extensions
 
-This document details the standard library built-ins and type system enhancements available in the Prajna programming language.
+This document details the standard library built-ins, type system enhancements, and core language features available in the Prajna programming language.
 
 ---
 
-## 1. Dictionary / Hash Map (`शब्दकोषः`)
+## 1. Sets (`समुच्चयः`)
 
 | Function | Arity | Description |
 |---|---|---|
-| `कोष_रचय()` | 0 | Instantiates a new empty dictionary. |
-| `कोष_स्थापय(dict, key, value)` | 3 | Inserts or updates the specified key-value pair. |
-| `कोष_प्राप्नु(dict, key)` | 2 | Retrieves the value associated with the specified key. |
-| `कोष_अस्ति(dict, key)` | 2 | Returns `सत्यम्` (true) if the key exists, else `असत्यम्` (false). |
-| `कोष_निष्कासय(dict, key)` | 2 | Removes the specified key and returns its value. |
-| `कोष_कुञ्चिकाः(dict)` | 1 | Returns a list of all dictionary keys. |
-| `कोष_मूल्यानि(dict)` | 1 | Returns a list of all dictionary values. |
-| `कोष_दीर्घता(dict)` | 1 | Returns the number of entries in the dictionary. |
-| `कोष_स्वच्छीकुरु(dict)` | 1 | Clears all entries from the dictionary. |
+| `समुच्चय_रचय()` | 0 | Instantiates a new empty mathematical set with unique elements. |
+| `समुच्चय_योजय(set, item)` | 2 | Inserts an item into the set (duplicates automatically ignored). |
+| `समुच्चय_अस्ति(set, item)` | 2 | Returns `सत्यम्` (true) if the item is in the set, else `असत्यम्` (false). |
+| `समुच्चय_निष्कासय(set, item)` | 2 | Removes the specified item from the set. |
+| `समुच्चय_दीर्घता(set)` | 1 | Returns the total count of unique items in the set. |
+| `समुच्चय_मेलनम्(set1, set2)` | 2 | Returns the mathematical union ($A \cup B$) of two sets. |
+| `समुच्चय_छेदः(set1, set2)` | 2 | Returns the mathematical intersection ($A \cap B$) of two sets. |
+| `समुच्चय_अन्तरम्(set1, set2)` | 2 | Returns the mathematical difference ($A \setminus B$) of two sets. |
+| `समुच्चय_सूची(set)` | 1 | Converts the set to a standard dynamic list (`सूची`). |
 
 ---
 
-## 2. Advanced List Operations (`सूची`)
+## 2. Tuples (`युग्मम्`)
 
 | Function | Arity | Description |
 |---|---|---|
-| `सूची_खण्डम्(list, start, length)` | 3 | Extracts a sub-slice of the list from `start` of length `length`. |
-| `सूची_निष्कासय(list, index)` | 2 | Removes and returns the element at the specified index. |
-| `सूची_शोधय(list)` | 1 | Sorts the list elements in place. |
-| `सूची_विपरीत(list)` | 1 | Reverses the list elements in place. |
-| `सूची_अन्तर्भावः(list, item)` | 2 | Returns true if the item is present in the list. |
-| `सूची_संयोजय(list1, list2)` | 2 | Concatenates two lists and returns a new list. |
-| `सूची_अन्वेषणम्(list, item)` | 2 | Returns the zero-based index of the item, or -1 if not found. |
+| `युग्म_रचय(item1, item2, ...)` | N | Creates an immutable sequence tuple of specified elements. |
+| `युग्म_प्राप्नु(tuple, index)` | 2 | Retrieves the item at the specified zero-based index. |
+| `युग्म_दीर्घता(tuple)` | 1 | Returns the number of elements in the tuple. |
 
 ---
 
-## 3. Advanced String Operations (`सूत्रम्`)
+## 3. Exception & Error Handling (`दोष-नियन्त्रणम्`)
 
-| Function | Arity | Description |
+Prajna features native structured exception handling:
+
+```prajna
+प्रयत्नः {
+    लिख "प्रक्रिया प्रारब्धा...";
+    उत्थापय "अमान्य-मूल्यम्";
+} गृह्णातु (दोषः) {
+    लिख "त्रुटिः दृष्टा: " + दोषः;
+} अन्ते {
+    लिख "संसाधनानि मुक्तानि।";
+}
+```
+
+| Construct | Syntax | Description |
 |---|---|---|
-| `सूत्र_विभाजय(str, delim)` | 2 | Splits `str` by delimiter `delim` into a list. |
-| `सूत्र_संयोजय(delim, list)` | 2 | Joins list elements into a single string using delimiter. |
-| `सूत्र_प्रतिस्थापनम्(orig, old, new)` | 3 | Replaces occurrences of `old` with `new` in `orig`. |
-| `सूत्र_अन्वेषणम्(str, substr)` | 2 | Returns index of first occurrence of `substr` in `str` (-1 if none). |
-| `सूत्र_छेदय(str)` | 1 | Trims leading and trailing whitespace. |
-| `सूत्र_आरम्भः(str, prefix)` | 2 | Returns true if string starts with `prefix`. |
-| `सूत्र_अन्तः(str, suffix)` | 2 | Returns true if string ends with `suffix`. |
-| `लघु_वर्णमाला(str)` | 1 | Converts ASCII characters to lowercase. |
-| `गुरु_वर्णमाला(str)` | 1 | Converts ASCII characters to uppercase. |
+| `प्रयत्नः { ... }` | Block | Encloses protected code blocks subject to error interception. |
+| `गृह्णातु (दोषः) { ... }` | Catch Block | Intercepts raised errors and binds diagnostic message to variable. |
+| `अन्ते { ... }` | Finally Block | Guarantees deterministic execution regardless of exceptions. |
+| `उत्थापय <संदेशः>;` | Statement | Raises a runtime exception with custom error description. |
 
 ---
 
-## 4. Mathematics Library (`गणितम्`)
+## 4. Functional & Collection Aggregations
 
 | Function | Arity | Description |
 |---|---|---|
-| `गणित_वर्गमूलम्(x)` | 1 | Computes the square root of `x` ($\sqrt{x}$). |
-| `गणित_घातः(x, y)` | 2 | Computes $x^y$ (power). |
-| `गणित_परममूल्यम्(x)` | 1 | Computes the absolute value ($|x|$). |
-| `गणित_ज्या(rad)` | 1 | Computes sine of angle in radians. |
-| `गणित_कोज्या(rad)` | 1 | Computes cosine of angle in radians. |
-| `गणित_स्पर्शज्या(rad)` | 1 | Computes tangent of angle in radians. |
-| `गणित_अधः(x)` | 1 | Floor function. |
-| `गणित_उपरि(x)` | 1 | Ceiling function. |
-| `गणित_समीपम्(x)` | 1 | Round to nearest integer. |
-| `गणित_पाई()` | 0 | Returns the mathematical constant $\pi$ (3.14159...). |
-| `गणित_ई()` | 0 | Returns Euler's constant $e$ (2.71828...). |
-| `यादृच्छिक()` | 0 | Generates a pseudo-random floating point number in $[0, 1)$. |
-| `यादृच्छिक_अन्तराले(min, max)` | 2 | Generates a pseudo-random integer in range $[min, max]$. |
+| `योगः(list)` | 1 | Computes the arithmetic sum of numerical list elements. |
+| `न्यूनतमम्(list)` | 1 | Returns the minimum element in the collection. |
+| `अधिकतमम्(list)` | 1 | Returns the maximum element in the collection. |
+| `सर्वम्(list)` | 1 | Returns `सत्यम्` if all elements evaluate to truthy, else `असत्यम्`. |
+| `किमपि(list)` | 1 | Returns `सत्यम्` if at least one element is truthy. |
+| `परिसरः(start, end, step)` | 3 | Generates an arithmetic progression list from `start` to `end` with `step`. |
+| `गणना_सहित(list)` | 1 | Returns an indexed list of `[index, value]` pairs. |
+| `सङ्गमः(list1, list2)` | 2 | Zips two lists into paired elements. |
 
 ---
 
-## 5. Time, Operating System, & Types (`कालः`, `प्रणाली`, `प्रकारः`)
+## 5. File & Path Operations (`सञ्चिका`, `मार्गः`)
 
 | Function | Arity | Description |
 |---|---|---|
-| `काल_वर्तमान_मिली()` | 0 | Returns milliseconds since Unix epoch. |
-| `काल_वर्तमान_क्षणम्()` | 0 | Returns formatted current date/time string (`YYYY-MM-DD HH:MM:SS`). |
-| `काल_विराम(ms)` | 1 | Suspends thread execution for `ms` milliseconds. |
-| `सञ्चिका_लोपय(path)` | 1 | Deletes the specified file from the filesystem. |
-| `सञ्चिका_निर्देशिका_सूची(path)` | 1 | Returns an array of filenames in the directory. |
-| `निर्देशिका_रचय(path)` | 1 | Creates a directory path. |
-| `प्रणाली_वातावरणम्(key)` | 1 | Reads an environment variable by name. |
-| `प्रणाली_सञ्चालकः()` | 0 | Returns operating system identifier (`"windows"`). |
-| `जेसन_रूपान्तरम्(obj)` | 1 | Serializes object to JSON string representation. |
-| `जेसन_पठ(str)` | 1 | Parses JSON string. |
-| `प्रकारः(obj)` | 1 | Returns type name string (`"संख्या"`, `"दशांशः"`, `"सूत्रम्"`, `"सूची"`, `"शब्दकोषः"`, `"बूलियनम्"`). |
-| `दशांश_परिवर्तय(obj)` | 1 | Converts string/number representation to double precision float. |
-| `पूर्णाङ्क_परिवर्तय(obj)` | 1 | Converts string/number representation to 64-bit integer. |
+| `मार्ग_संयोजय(dir, filename)` | 2 | Cross-platform filesystem path concatenation. |
+| `मार्ग_मूलनाम(path)` | 1 | Returns the file name component of a path. |
+| `मार्ग_निर्देशिका(path)` | 1 | Returns the directory component of a path. |
+| `मार्ग_विस्तारः(path)` | 1 | Returns the file extension (e.g. `".pr"`). |
+| `सञ्चिका_पठ(path)` | 1 | Reads full text content from file (UTF-8). |
+| `सञ्चिका_लिख(path, content)` | 2 | Writes string content to file (UTF-8). |
+| `सञ्चिका_विद्यते(path)` | 1 | Checks whether file exists. |
+| `सञ्चिका_लोपय(path)` | 1 | Deletes file from filesystem. |
+| `सञ्चिका_निर्देशिका_सूची(path)` | 1 | Returns list of file entries in directory. |
+| `निर्देशिका_रचय(path)` | 1 | Creates new directory path recursively. |
+
+---
+
+## 6. Network & HTTP Operations (`जाल-तन्त्रम्`)
+
+| Function | Arity | Description |
+|---|---|---|
+| `जाल_प्राप्नु(url)` | 1 | Performs HTTP GET request and returns response body as string. |
+| `जाल_प्रेषय(url, jsonBody)` | 2 | Performs HTTP POST request sending JSON payload. |
+| `जाल_अवतारणम्(url, destPath)` | 2 | Downloads remote resource directly to local file. |
+
+---
+
+## 7. Dynamic Objects & Records (`वस्तु`)
+
+| Function | Arity | Description |
+|---|---|---|
+| `वस्तु_रचय()` | 0 | Instantiates a dynamic structured object record. |
+| `वस्तु_स्थापय(obj, prop, value)`| 3 | Assigns property value on object. |
+| `वस्तु_प्राप्नु(obj, prop)` | 2 | Accesses property value from object. |
+| `वस्तु_गुणाः(obj)` | 1 | Returns list of property keys on object. |
+
+---
+
+## 8. Mathematics & Statistics (`गणितम्`)
+
+| Function | Arity | Description |
+|---|---|---|
+| `गणित_माध्यम्(list)` | 1 | Calculates arithmetic mean of a dataset. |
+| `गणित_मध्यिका(list)` | 1 | Calculates statistical median of a dataset. |
+| `गणित_लॉग(x)` | 1 | Natural logarithm ($\ln x$). |
+| `गणित_लॉग१०(x)` | 1 | Base-10 logarithm ($\log_{10} x$). |
+| `गणित_वर्गमूलम्(x)` | 1 | Square root ($\sqrt{x}$). |
+| `गणित_घातः(x, y)` | 2 | Power function ($x^y$). |
+| `गणित_परममूल्यम्(x)` | 1 | Absolute value ($|x|$). |
+| `गणित_ज्या(rad)` | 1 | Sine function. |
+| `गणित_कोज्या(rad)` | 1 | Cosine function. |
+| `गणित_स्पर्शज्या(rad)` | 1 | Tangent function. |
+| `गणित_अधः(x)` | 1 | Floor. |
+| `गणित_उपरि(x)` | 1 | Ceiling. |
+| `गणित_समीपम्(x)` | 1 | Round. |
+| `गणित_पाई()` | 0 | Constant $\pi$. |
+| `गणित_ई()` | 0 | Euler constant $e$. |
+| `यादृच्छिक()` | 0 | Random float in $[0, 1)$. |
+| `यादृच्छिक_अन्तराले(min, max)` | 2 | Random integer in $[min, max]$. |
+
+---
+
+## 9. System, Time & Serialization
+
+| Function | Arity | Description |
+|---|---|---|
+| `प्रणाली_सञ्चालकः()` | 0 | Returns platform identifier (`"windows"`, `"linux"`, `"macos"`, `"chromeos"`). |
+| `प्रणाली_वातावरणम्(name)` | 1 | Retrieves system environment variable. |
+| `काल_वर्तमान_मिली()` | 0 | Unix timestamp in milliseconds. |
+| `काल_वर्तमान_क्षणम्()` | 0 | Formatted local timestamp (`YYYY-MM-DD HH:MM:SS`). |
+| `काल_विराम(ms)` | 1 | Thread sleep in milliseconds. |
+| `जेसन_रूपान्तरम्(obj)` | 1 | Converts object/collection to JSON string. |
+| `जेसन_पठ(str)` | 1 | Deserializes JSON string into native collection. |
+| `प्रकारः(obj)` | 1 | Type introspection (`"संख्या"`, `"दशांशः"`, `"सूत्रम्"`, `"सूची"`, `"शब्दकोषः"`, `"समुच्चयः"`, `"बूलियनम्"`, `"शून्यम्"`). |
+| `दशांश_परिवर्तय(obj)` | 1 | Converts string/number to double float. |
+| `पूर्णाङ्क_परिवर्तय(obj)` | 1 | Converts string/number to 64-bit integer. |
+| `आदेशः_निष्पादय(cmd)` | 1 | Executes shell/terminal command and captures output. |
+| `आदेशतर्काः()` | 0 | Returns command line arguments array. |
+| `बहिर्गच्छ(code)` | 1 | Terminates process with exit code. |

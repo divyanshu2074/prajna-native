@@ -49,7 +49,37 @@
     गणकः = गणकः + १;
 }
 
-लिख सूत्र_परिवर्तय(संख्या) + "! = " + सूत्र_परिवर्तय(गुणनफलम्);`
+लिख सूत्र_परिवर्तय(संख्या) + "! = " + सूत्र_परिवर्तय(गुणनफलम्);`,
+
+    sets: `// समुच्चयः (Unique Mathematical Sets)
+चलम् वेदाः = समुच्चय_रचय();
+समुच्चय_योजय(वेदाः, "ऋग्वेदः");
+समुच्चय_योजय(वेदाः, "यजुर्वेदः");
+समुच्चय_योजय(वेदाः, "सामवेदः");
+समुच्चय_योजय(वेदाः, "ऋग्वेदः"); // पुनरावृत्ति-निरोधः
+
+लिख "समुच्चय-दीर्घता: " + सूत्र_परिवर्तय(समुच्चय_दीर्घता(वेदाः));
+लिख "अथर्ववेदः अस्ति? " + सूत्र_परिवर्तय(समुच्चय_अस्ति(वेदाः, "अथर्ववेदः"));`,
+
+    exceptions: `// दोष-नियन्त्रणम् (Exception Handling)
+प्रयत्नः {
+    लिख "प्रक्रिया प्रारब्धा...";
+    उत्थापय "सीमा-उल्लङ्घनम्";
+} गृह्णातु (दोषः) {
+    लिख "दोषः गृहीतः: " + दोषः;
+} अन्ते {
+    लिख "संसाधनानि मुक्तानि।";
+}`,
+
+    objects: `// वस्तु-संरचना (Dynamic Object Records)
+चलम् छात्रः = वस्तु_रचय();
+वस्तु_स्थापय(छात्रः, "नाम", "पाणिनिः");
+वस्तु_स्थापय(छात्रः, "शास्त्रम्", "व्याकरणम्");
+वस्तु_स्थापय(छात्रः, "सूत्राणि", ३९९६);
+
+लिख "विद्वान्: " + सूत्र_परिवर्तय(वस्तु_प्राप्नु(छात्रः, "नाम"));
+लिख "शास्त्रम्: " + सूत्र_परिवर्तय(वस्तु_प्राप्नु(छात्रः, "शास्त्रम्"));
+लिख "सूत्राणि: " + सूत्र_परिवर्तय(वस्तु_प्राप्नु(छात्रः, "सूत्राणि"));`
   };
 
   // Convert Sanskrit numerals to Arabic and vice versa
@@ -237,12 +267,32 @@
         कोष_रचय: () => ({}),
         कोष_स्थापय: (map, k, v) => { map[k] = v; return v; },
         कोष_प्राप्nu: (map, k) => map[k],
+        कोष_प्राप्नु: (map, k) => map[k],
         कोष_अस्ति: (map, k) => (k in map),
         कोष_दीर्घता: map => Object.keys(map).length,
         सूची_रचय: () => [],
         सूची_योजय: (arr, v) => arr.push(v),
         सूची_प्राप्nu: (arr, idx) => arr[idx],
-        सूची_दीर्घता: arr => arr.length
+        सूची_प्राप्नु: (arr, idx) => arr[idx],
+        सूची_दीर्घता: arr => arr.length,
+        समुच्चय_रचय: () => new Set(),
+        समुच्चय_योजय: (s, v) => { s.add(v); return s; },
+        समुच्चय_अस्ति: (s, v) => s.has(v),
+        समुच्चय_निष्कासय: (s, v) => s.delete(v),
+        समुच्चय_दीर्घता: s => s.size,
+        समुच्चय_मेलनम्: (s1, s2) => new Set([...s1, ...s2]),
+        समुच्चय_छेदः: (s1, s2) => new Set([...s1].filter(x => s2.has(x))),
+        वस्तु_रचय: () => ({}),
+        वस्तु_स्थापय: (o, k, v) => { o[k] = v; return o; },
+        वस्तु_प्राप्नु: (o, k) => o[k],
+        वस्तु_गुणाः: o => Object.keys(o),
+        योगः: l => l.reduce((a, b) => a + Number(b), 0),
+        न्यूनतमम्: l => Math.min(...l),
+        अधिकतमम्: l => Math.max(...l),
+        परिसरः: (a, b, step = 1) => { const r = []; for (let i = a; i < b; i += step) r.push(i); return r; },
+        मार्ग_संयोजय: (a, b) => `${a}/${b}`,
+        मार्ग_मूलनाम: p => (p || '').split('/').pop(),
+        प्रणाली_सञ्चालकः: () => "browser"
       };
 
       // JS Transpiler for Playground
@@ -253,6 +303,10 @@
         .replace(/फलनम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*\(([^)]*)\)\s*\{/g, 'function $1($2) {')
         .replace(/प्रत्यागच्छ\s+([^;]+);/g, 'return $1;')
         .replace(/लिख\s+([^;]+);/g, 'print($1);')
+        .replace(/प्रयत्नः\s*\{/g, 'try {')
+        .replace(/गृह्णातु\s*\(([a-zA-Z0-9_\u0900-\u097F]+)\)\s*\{/g, 'catch ($1) {')
+        .replace(/अन्ते\s*\{/g, 'finally {')
+        .replace(/उत्थापय\s+([^;]+);/g, 'throw new Error($1);')
         .replace(/यदि\s*\(([^)]+)\)\s*\{/g, 'if ($1) {')
         .replace(/अन्यथा\s+यदि\s*\(([^)]+)\)\s*\{/g, 'else if ($1) {')
         .replace(/अन्यथा\s*\{/g, 'else {')
@@ -287,7 +341,7 @@
   }
 
   function loadPlaygroundSample() {
-    const sel = document.getElementById('playground-select');
+    const sel = document.getElementById('playground-sample-select') || document.getElementById('playground-select');
     const codeEl = document.getElementById('playground-code');
     if (sel && codeEl && playgroundSamples[sel.value]) {
       codeEl.value = playgroundSamples[sel.value];
@@ -392,6 +446,20 @@
     }
   });
 
+  function selectDownloadTab(tabId) {
+    document.querySelectorAll('.os-tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.download-tab-content').forEach(c => c.classList.remove('active'));
+
+    const targetTab = document.getElementById(tabId);
+    if (targetTab) {
+      targetTab.classList.add('active');
+    }
+    const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+    if (activeBtn) {
+      activeBtn.classList.add('active');
+    }
+  }
+
   // Export App interface
   window.PrajnaApp = {
     init: renderApp,
@@ -399,6 +467,7 @@
     toggleTheme: toggleTheme,
     toggleLanguage: toggleLanguage,
     setLanguage: setLanguage,
+    selectDownloadTab: selectDownloadTab,
     runPlayground: runPlayground,
     loadPlaygroundSample: loadPlaygroundSample,
     copyCode: copyCode,

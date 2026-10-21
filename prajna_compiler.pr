@@ -1,7 +1,7 @@
 // ============================================================================
 // प्रज्ञा (Prajna) — स्वयम्भू-सङ्कलकः (Self-Hosted Prajna Compiler)
 // अयम् सङ्कलकः सम्पूर्णतया प्रज्ञा-भाषायां लिखितः अस्ति।
-// अनेन प्रज्ञा-सङ्गणकप्रणाली Python-तन्त्रात् सम्पूर्णा मुक्ता भूत्वा
+// अनेन प्रज्ञा-सङ्गणकप्रणाली सर्वात्मना स्वायत्ता स्वयम्भू-प्रणाली भूत्वा
 // स्वयमेव प्रज्ञा-स्रोतःसङ्केतान् सङ्कलयति निष्पादयति च।
 // ============================================================================
 
@@ -78,7 +78,19 @@
          पदम् == "प्रणाली_सञ्चालकः" वा पदम् == "जेसन_रूपान्तरम्" वा पदम् == "जेसन_पठ" वा
          पदम् == "प्रकारः" वा पदम् == "दशांश_परिवर्तय" वा पदम् == "पूर्णाङ्क_परिवर्तय" वा
          पदम् == "वातायनम्_दर्शय" वा पदम् == "पत्रलेखकम्_आरभस्व" वा पदम् == "आदेशः_निष्पादय" वा
-         पदम् == "आदेशतर्काः" वा पदम् == "बहिर्गच्छ") {
+         पदम् == "आदेशतर्काः" वा पदम् == "बहिर्गच्छ" वा
+         पदम् == "समुच्चय_रचय" वा पदम् == "समुच्चय_योजय" वा पदम् == "समुच्चय_अस्ति" वा
+         पदम् == "समुच्चय_निष्कासय" वा पदम् == "समुच्चय_दीर्घता" वा पदम् == "समुच्चय_मेलनम्" वा
+         पदम् == "समुच्चय_छेदः" वा पदम् == "समुच्चय_अन्तरम्" वा पदम् == "समुच्चय_सूची" वा
+         पदम् == "युग्म_रचय" वा पदम् == "युग्म_प्राप्नु" वा पदम् == "युग्म_दीर्घता" वा
+         पदम् == "योगः" वा पदम् == "न्यूनतमम्" वा पदम् == "अधिकतमम्" वा
+         पदम् == "सर्वम्" वा पदम् == "किमपि" वा पदम् == "परिसरः" वा
+         पदम् == "गणना_सहित" वा पदम् == "सङ्गमः" वा पदम् == "मार्ग_संयोजय" वा
+         पदम् == "मार्ग_मूलनाम" वा पदम् == "मार्ग_निर्देशिका" वा पदम् == "मार्ग_विस्तारः" वा
+         पदम् == "जाल_प्राप्नु" वा पदम् == "जाल_प्रेषय" वा पदम् == "जाल_अवतारणम्" वा
+         पदम् == "गणित_लॉग" वा पदम् == "गणित_लॉग१०" वा पदम् == "गणित_माध्यम्" वा
+         पदम् == "गणित_मध्यिका" वा पदम् == "वस्तु_रचय" वा पदम् == "वस्तु_स्थापय" वा
+         पदम् == "वस्तु_प्राप्नु" वा पदम् == "वस्तु_गुणाः") {
         प्रत्यागच्छ सत्यम्;
     }
     प्रत्यागच्छ असत्यम्;
@@ -88,6 +100,7 @@
 फलनम् पद_रूपान्तरम्(पदम्) {
     यदि (पदम् == "सत्यम्") { प्रत्यागच्छ "true"; }
     यदि (पदम् == "असत्यम्") { प्रत्यागच्छ "false"; }
+    यदि (पदम् == "शून्यम्") { प्रत्यागच्छ "null"; }
     यदि (पदम् == "तथा") { प्रत्यागच्छ "&&"; }
     यदि (पदम् == "वा") { प्रत्यागच्छ "||"; }
     यदि (पदम् == "न") { प्रत्यागच्छ "!"; }
@@ -413,6 +426,67 @@
             यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == ";") {
                 सूचकः = सूचकः + १;
             }
+        } अन्यथा यदि (चिह्नम् == "प्रयत्नः") {
+            चलम् पङ्क्तिः = "try {\n";
+            सूचकः = सूचकः + १;
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == "{") {
+                सूचकः = सूचकः + १;
+            }
+            खण्ड_स्तरः = खण्ड_स्तरः + १;
+            यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        " + पङ्क्तिः;
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+            }
+        } अन्यथा यदि (चिह्नम् == "गृह्णातु") {
+            सूचकः = सूचकः + १;
+            चलम् दोष_नाम = "दोषः";
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == "(") {
+                सूचकः = सूचकः + १;
+                दोष_नाम = सूची_प्राप्नु(चिह्नानि, सूचकः);
+                सूचकः = सूचकः + १;
+                यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == ")") {
+                    सूचकः = सूचकः + १;
+                }
+            }
+            चलम् पङ्क्तिः = "catch (Exception var_" + दोष_नाम + ") {\n";
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == "{") {
+                सूचकः = सूचकः + १;
+            }
+            खण्ड_स्तरः = खण्ड_स्तरः + १;
+            यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        " + पङ्क्तिः;
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+            }
+        } अन्यथा यदि (चिह्नम् == "अन्ते") {
+            चलम् पङ्क्तिः = "finally {\n";
+            सूचकः = सूचकः + १;
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == "{") {
+                सूचकः = सूचकः + १;
+            }
+            खण्ड_स्तरः = खण्ड_स्तरः + १;
+            यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        " + पङ्क्तिः;
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+            }
+        } अन्यथा यदि (चिह्नम् == "उत्थापय") {
+            चलम् पङ्क्तिः = "throw new Exception(PrajnaRuntime.Format(";
+            सूचकः = सूचकः + १;
+            यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != ";") {
+                पङ्क्तिः = पङ्क्तिः + पद_रूपान्तरम्(सूची_प्राप्नु(चिह्नानि, सूचकः));
+                सूचकः = सूचकः + १;
+            }
+            पङ्क्तिः = पङ्क्तिः + "));\n";
+            यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        " + पङ्क्तिः;
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+            }
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == ";") {
+                सूचकः = सूचकः + १;
+            }
         } अन्यथा यदि (चिह्नम् == "}") {
             // ७. खण्डसमाप्तिः
             खण्ड_स्तरः = खण्ड_स्तरः - १;
@@ -451,7 +525,7 @@
 // C# सम्पूर्ण-सङ्केतस्य निर्माणम्
 फलनम् सज्जीकुरु_सङ्केतम्(फलनानि, मुख्य_भागः) {
     चलम् आधारः = "// प्रज्ञा (Prajna) स्वयम्भू-सङ्कलकेन निर्मितम्\n";
-    आधारः = आधारः + "using System;\nusing System.IO;\nusing System.Text;\nusing System.Drawing;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Diagnostics;\nusing System.Windows.Forms;\n\n";
+    आधारः = आधारः + "using System;\nusing System.IO;\nusing System.Text;\nusing System.Net;\nusing System.Drawing;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Diagnostics;\nusing System.Windows.Forms;\n\n";
 
     // PrajnaRuntime
     चलम् धावकः = "public static class PrajnaRuntime {\n";
@@ -478,6 +552,16 @@
     धावकः = धावकः + "        if (val is bool) return ((bool)val) ? \"सत्यम्\" : \"असत्यम्\";\n";
     धावकः = धावकः + "        if (val is long || val is int) { long v = Convert.ToInt64(val); return DevanagariOutput ? IntToDevanagari(v) : v.ToString(); }\n";
     धावकः = धावकः + "        if (val is double || val is float) return val.ToString();\n";
+    धावकः = धावकः + "        if (val is HashSet<object>) {\n";
+    धावकः = धावकः + "            var set = (HashSet<object>)val; StringBuilder sb = new StringBuilder(); sb.Append(\"समुच्चयः{\");\n";
+    धावकः = धावकः + "            int i = 0; foreach (var x in set) { sb.Append(Format(x)); if (i < set.Count - 1) sb.Append(\", \"); i++; }\n";
+    धावकः = धावकः + "            sb.Append(\"}\"); return sb.ToString();\n";
+    धावकः = धावकः + "        }\n";
+    धावकः = धावकः + "        if (val is Dictionary<string, object>) {\n";
+    धावकः = धावकः + "            var dict = (Dictionary<string, object>)val; StringBuilder sb = new StringBuilder(); sb.Append(\"कोषः{\");\n";
+    धावकः = धावकः + "            int i = 0; foreach (var kv in dict) { sb.Append(kv.Key).Append(\": \").Append(Format(kv.Value)); if (i < dict.Count - 1) sb.Append(\", \"); i++; }\n";
+    धावकः = धावकः + "            sb.Append(\"}\"); return sb.ToString();\n";
+    धावकः = धावकः + "        }\n";
     धावकः = धावकः + "        if (val is IList) {\n";
     धावकः = धावकः + "            IList list = (IList)val; StringBuilder sb = new StringBuilder(); sb.Append(\"[\");\n";
     धावकः = धावकः + "            for (int i = 0; i < list.Count; i++) { sb.Append(Format(list[i])); if (i < list.Count - 1) sb.Append(\", \" ); }\n";
@@ -524,9 +608,21 @@
     धावकः = धावकः + "    public static long SanchikaLekha(object p, object c) { File.WriteAllText(p.ToString(), c == null ? \"\" : c.ToString(), Encoding.UTF8); return 1; }\n";
     धावकः = धावकः + "    public static bool SanchikaVidyate(object p) { return File.Exists(p.ToString()); }\n";
     धावकः = धावकः + "    public static long VatayanamaDarshaya(object t, object m) { MessageBox.Show(m == null ? \"\" : m.ToString(), t == null ? \"प्रज्ञा\" : t.ToString()); return 1; }\n";
+    धावकः = धावकः + "    public static string PranaliSanchalakah() {\n";
+    धावकः = धावकः + "        int p = (int)Environment.OSVersion.Platform;\n";
+    धावकः = धावकः + "        if (p == 4 || p == 128) {\n";
+    धावकः = धावकः + "            try { if (File.Exists(\"/etc/os-release\")) { string osRel = File.ReadAllText(\"/etc/os-release\").ToLower(); if (osRel.Contains(\"chromeos\") || osRel.Contains(\"cros\") || Directory.Exists(\"/usr/share/cros\")) return \"chromeos\"; } } catch { }\n";
+    धावकः = धावकः + "            return \"linux\";\n";
+    धावकः = धावकः + "        }\n";
+    धावकः = धावकः + "        if (p == 6 || Directory.Exists(\"/System/Library/CoreServices\")) return \"macos\";\n";
+    धावकः = धावकः + "        return \"windows\";\n";
+    धावकः = धावकः + "    }\n";
     धावकः = धावकः + "    public static string AdeshahNishpadaya(object cmd) {\n";
     धावकः = धावकः + "        try {\n";
-    धावकः = धावकः + "            ProcessStartInfo psi = new ProcessStartInfo(\"cmd.exe\", \"/c \" + cmd.ToString()) {\n";
+    धावकः = धावकः + "            bool isWin = PranaliSanchalakah() == \"windows\";\n";
+    धावकः = धावकः + "            string sh = isWin ? \"cmd.exe\" : \"/bin/sh\";\n";
+    धावकः = धावकः + "            string arg = isWin ? \"/c \" + cmd.ToString() : \"-c \\\"\" + cmd.ToString().Replace(\"\\\"\", \"\\\\\\\"\") + \"\\\"\";\n";
+    धावकः = धावकः + "            ProcessStartInfo psi = new ProcessStartInfo(sh, arg) {\n";
     धावकः = धावकः + "                RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false, CreateNoWindow = true,\n";
     धावकः = धावकः + "                StandardOutputEncoding = Encoding.UTF8, StandardErrorEncoding = Encoding.UTF8\n";
     धावकः = धावकः + "            };\n";
@@ -559,6 +655,56 @@
     धावकः = धावकः + "    public static List<object> KoshaMulyani(object dict) { var res = new List<object>(); if (dict is Dictionary<string, object>) { foreach (var v in ((Dictionary<string, object>)dict).Values) res.Add(v); } return res; }\n";
     धावकः = धावकः + "    public static long KoshaDirghata(object dict) { if (dict is Dictionary<string, object>) return ((Dictionary<string, object>)dict).Count; return 0; }\n";
     धावकः = धावकः + "    public static object KoshaSwacchikuru(object dict) { if (dict is Dictionary<string, object>) ((Dictionary<string, object>)dict).Clear(); return dict; }\n";
+
+    // Sets (समुच्चयः)
+    धावकः = धावकः + "    public static HashSet<object> SamucchayaRachaya() { return new HashSet<object>(); }\n";
+    धावकः = धावकः + "    public static HashSet<object> SamucchayaYojaya(object s, object v) { if (s is HashSet<object>) { ((HashSet<object>)s).Add(Format(v)); } return (HashSet<object>)s; }\n";
+    धावकः = धावकः + "    public static bool SamucchayaAsti(object s, object v) { if (s is HashSet<object>) { return ((HashSet<object>)s).Contains(Format(v)); } return false; }\n";
+    धावकः = धावकः + "    public static bool SamucchayaNishkasaya(object s, object v) { if (s is HashSet<object>) { return ((HashSet<object>)s).Remove(Format(v)); } return false; }\n";
+    धावकः = धावकः + "    public static long SamucchayaDirghata(object s) { if (s is HashSet<object>) return ((HashSet<object>)s).Count; return 0; }\n";
+    धावकः = धावकः + "    public static HashSet<object> SamucchayaMelanam(object s1, object s2) { var res = new HashSet<object>(); if (s1 is HashSet<object>) foreach (var x in (HashSet<object>)s1) res.Add(x); if (s2 is HashSet<object>) foreach (var x in (HashSet<object>)s2) res.Add(x); return res; }\n";
+    धावकः = धावकः + "    public static HashSet<object> SamucchayaChedah(object s1, object s2) { var res = new HashSet<object>(); if (s1 is HashSet<object> && s2 is HashSet<object>) { var set2 = (HashSet<object>)s2; foreach (var x in (HashSet<object>)s1) if (set2.Contains(x)) res.Add(x); } return res; }\n";
+    धावकः = धावकः + "    public static HashSet<object> SamucchayaAntaram(object s1, object s2) { var res = new HashSet<object>(); if (s1 is HashSet<object> && s2 is HashSet<object>) { var set2 = (HashSet<object>)s2; foreach (var x in (HashSet<object>)s1) if (!set2.Contains(x)) res.Add(x); } return res; }\n";
+    धावकः = धावकः + "    public static List<object> SamucchayaSuchi(object s) { var res = new List<object>(); if (s is HashSet<object>) foreach (var x in (HashSet<object>)s) res.Add(x); return res; }\n";
+
+    // Tuples (युग्मम्)
+    धावकः = धावकः + "    public static List<object> YugmaRachaya(params object[] items) { return new List<object>(items); }\n";
+    धावकः = धावकः + "    public static object YugmaPraptnu(object t, object idx) { return SuchiPraptnu(t, idx); }\n";
+    धावकः = धावकः + "    public static long YugmaDirghata(object t) { return SuchiDirghata(t); }\n";
+
+    // Functional & Higher-Order (योगः, न्यूनतमम्, अधिकतमम्, सर्वम्, किमपि, परिसरः, गणना_सहित, सङ्गमः)
+    धावकः = धावकः + "    public static double Yogah(object list) { double sum = 0; if (list is IList) { foreach (var x in (IList)list) { double d = 0; if (double.TryParse(x.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d)) sum += d; } } return sum; }\n";
+    धावकः = धावकः + "    public static object Nyunatamam(object list) { if (list is IList) { IList il = (IList)list; if (il.Count > 0) { double min = Convert.ToDouble(il[0]); for (int i = 1; i < il.Count; i++) { double d = Convert.ToDouble(il[i]); if (d < min) min = d; } return min; } } return 0; }\n";
+    धावकः = धावकः + "    public static object Adhikatamam(object list) { if (list is IList) { IList il = (IList)list; if (il.Count > 0) { double max = Convert.ToDouble(il[0]); for (int i = 1; i < il.Count; i++) { double d = Convert.ToDouble(il[i]); if (d > max) max = d; } return max; } } return 0; }\n";
+    धावकः = धावकः + "    public static bool Sarvam(object list) { if (list is IList) { foreach (var x in (IList)list) if (!ToBool(x)) return false; return true; } return false; }\n";
+    धावकः = धावकः + "    public static bool Kimapi(object list) { if (list is IList) { foreach (var x in (IList)list) if (ToBool(x)) return true; return false; } return false; }\n";
+    धावकः = धावकः + "    public static List<object> Parisarah(object a, object b, object step) { var res = new List<object>(); int start = Convert.ToInt32(a); int end = Convert.ToInt32(b); int s = Convert.ToInt32(step); if (s == 0) s = 1; if (s > 0) { for (int i = start; i < end; i += s) res.Add((long)i); } else { for (int i = start; i > end; i += s) res.Add((long)i); } return res; }\n";
+    धावकः = धावकः + "    public static List<object> GananaSahita(object list) { var res = new List<object>(); if (list is IList) { IList il = (IList)list; for (int i = 0; i < il.Count; i++) { var pair = new List<object>(); pair.Add((long)i); pair.Add(il[i]); res.Add(pair); } } return res; }\n";
+    धावकः = धावकः + "    public static List<object> Sangamah(object l1, object l2) { var res = new List<object>(); if (l1 is IList && l2 is IList) { IList i1 = (IList)l1; IList i2 = (IList)l2; int min = Math.Min(i1.Count, i2.Count); for (int i = 0; i < min; i++) { var pair = new List<object>(); pair.Add(i1[i]); pair.Add(i2[i]); res.Add(pair); } } return res; }\n";
+
+    // Path (मार्गः)
+    धावकः = धावकः + "    public static string MargaSamyojaya(object a, object b) { return Path.Combine(a == null ? \"\" : a.ToString(), b == null ? \"\" : b.ToString()); }\n";
+    धावकः = धावकः + "    public static string MargaMulanaama(object p) { return Path.GetFileName(p == null ? \"\" : p.ToString()); }\n";
+    धावकः = धावकः + "    public static string MargaNirdeshika(object p) { return Path.GetDirectoryName(p == null ? \"\" : p.ToString()) ?? \"\"; }\n";
+    धावकः = धावकः + "    public static string MargaVistarah(object p) { return Path.GetExtension(p == null ? \"\" : p.ToString()); }\n";
+
+    // Networking (जाल-तन्त्रम्)
+    धावकः = धावकः + "    public static string JalaPraptnu(object url) { try { using (WebClient wc = new WebClient()) { wc.Encoding = Encoding.UTF8; return wc.DownloadString(url.ToString()); } } catch (Exception ex) { return \"दोषः: \" + ex.Message; } }\n";
+    धावकः = धावकः + "    public static string JalaPreshaya(object url, object body) { try { using (WebClient wc = new WebClient()) { wc.Encoding = Encoding.UTF8; wc.Headers[HttpRequestHeader.ContentType] = \"application/json\"; return wc.UploadString(url.ToString(), body == null ? \"\" : body.ToString()); } } catch (Exception ex) { return \"दोषः: \" + ex.Message; } }\n";
+    धावकः = धावकः + "    public static long JalaAvataranam(object url, object path) { try { using (WebClient wc = new WebClient()) { wc.DownloadFile(url.ToString(), path.ToString()); return 1; } } catch { return 0; } }\n";
+
+    // Extended Math & Stats
+    धावकः = धावकः + "    public static double GanitaLog(object x) { return Math.Log(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static double GanitaLog10(object x) { return Math.Log10(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static double GanitaMadhyamam(object list) { if (list is IList) { IList il = (IList)list; if (il.Count > 0) return Yogah(list) / il.Count; } return 0; }\n";
+    धावकः = धावकः + "    public static double GanitaMadhyika(object list) { if (list is IList) { var nums = new List<double>(); foreach (var x in (IList)list) { double d = 0; if (double.TryParse(x.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d)) nums.Add(d); } if (nums.Count > 0) { nums.Sort(); int mid = nums.Count / 2; if (nums.Count % 2 == 1) return nums[mid]; else return (nums[mid - 1] + nums[mid]) / 2.0; } } return 0; }\n";
+
+    // Dynamic Objects (वस्तु)
+    धावकः = धावकः + "    public static Dictionary<string, object> VastuRachaya() { return new Dictionary<string, object>(); }\n";
+    धावकः = धावकः + "    public static object VastuSthapaya(object obj, object prop, object val) { if (obj is Dictionary<string, object>) { ((Dictionary<string, object>)obj)[prop.ToString()] = val; return obj; } return obj; }\n";
+    धावकः = धावकः + "    public static object VastuPraptnu(object obj, object prop) { if (obj is Dictionary<string, object>) { var d = (Dictionary<string, object>)obj; string p = prop.ToString(); if (d.ContainsKey(p)) return d[p]; } return null; }\n";
+    धावकः = धावकः + "    public static List<object> VastuGunah(object obj) { var res = new List<object>(); if (obj is Dictionary<string, object>) { foreach (var k in ((Dictionary<string, object>)obj).Keys) res.Add(k); } return res; }\n";
+
     धावकः = धावकः + "    public static double GanitaVargamulam(object x) { return Math.Sqrt(Convert.ToDouble(x)); }\n";
     धावकः = धावकः + "    public static double GanitaGhaatah(object x, object y) { return Math.Pow(Convert.ToDouble(x), Convert.ToDouble(y)); }\n";
     धावकः = धावकः + "    public static object GanitaParamamulyam(object x) { if (x is double || x is float) return Math.Abs(Convert.ToDouble(x)); return Math.Abs(Convert.ToInt64(x)); }\n";
@@ -580,7 +726,6 @@
     धावकः = धावकः + "    public static List<object> SanchikaNirdeshikaSuchi(object dir) { var res = new List<object>(); string d = dir == null ? \"\" : dir.ToString(); if (Directory.Exists(d)) { foreach (var f in Directory.GetFileSystemEntries(d)) res.Add(Path.GetFileName(f)); } return res; }\n";
     धावकः = धावकः + "    public static long NirdeshikaRachaya(object dir) { string d = dir == null ? \"\" : dir.ToString(); if (!Directory.Exists(d)) Directory.CreateDirectory(d); return 1; }\n";
     धावकः = धावकः + "    public static string PranaliVatavaranam(object key) { return Environment.GetEnvironmentVariable(key == null ? \"\" : key.ToString()) ?? \"\"; }\n";
-    धावकः = धावकः + "    public static string PranaliSanchalakah() { return \"windows\"; }\n";
     धावकः = धावकः + "    public static string JesonRupantaram(object obj) { return Format(obj); }\n";
     धावकः = धावकः + "    public static object JesonPatha(object str) { return str == null ? \"\" : str.ToString(); }\n";
     धावकः = धावकः + "    public static string Prakaarah(object v) { if (v == null) return \"शून्यम्\"; if (v is bool) return \"बूलियनम्\"; if (v is long || v is int) return \"संख्या\"; if (v is double || v is float) return \"दशांशः\"; if (v is string) return \"सूत्रम्\"; if (v is IList) return \"सूची\"; if (v is IDictionary) return \"शब्दकोषः\"; return \"अज्ञातम्\"; }\n";
@@ -635,6 +780,41 @@
     कक्षा = कक्षा + "    public static dynamic कोष_मूल्यानि(dynamic a) { return PrajnaRuntime.KoshaMulyani(a); }\n";
     कक्षा = कक्षा + "    public static dynamic कोष_दीर्घता(dynamic a) { return PrajnaRuntime.KoshaDirghata(a); }\n";
     कक्षा = कक्षा + "    public static dynamic कोष_स्वच्छीकुरु(dynamic a) { return PrajnaRuntime.KoshaSwacchikuru(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_रचय() { return PrajnaRuntime.SamucchayaRachaya(); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_योजय(dynamic a, dynamic b) { return PrajnaRuntime.SamucchayaYojaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_अस्ति(dynamic a, dynamic b) { return PrajnaRuntime.SamucchayaAsti(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_निष्कासय(dynamic a, dynamic b) { return PrajnaRuntime.SamucchayaNishkasaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_दीर्घता(dynamic a) { return PrajnaRuntime.SamucchayaDirghata(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_मेलनम्(dynamic a, dynamic b) { return PrajnaRuntime.SamucchayaMelanam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_छेदः(dynamic a, dynamic b) { return PrajnaRuntime.SamucchayaChedah(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_अन्तरम्(dynamic a, dynamic b) { return PrajnaRuntime.SamucchayaAntaram(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic समुच्चय_सूची(dynamic a) { return PrajnaRuntime.SamucchayaSuchi(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic युग्म_रचय(params dynamic[] a) { return PrajnaRuntime.YugmaRachaya(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic युग्म_प्राप्नु(dynamic a, dynamic b) { return PrajnaRuntime.YugmaPraptnu(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic युग्म_दीर्घता(dynamic a) { return PrajnaRuntime.YugmaDirghata(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic योगः(dynamic a) { return PrajnaRuntime.Yogah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic न्यूनतमम्(dynamic a) { return PrajnaRuntime.Nyunatamam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic अधिकतमम्(dynamic a) { return PrajnaRuntime.Adhikatamam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सर्वम्(dynamic a) { return PrajnaRuntime.Sarvam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic किमपि(dynamic a) { return PrajnaRuntime.Kimapi(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic परिसरः(dynamic a, dynamic b, dynamic c) { return PrajnaRuntime.Parisarah(a, b, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणना_सहित(dynamic a) { return PrajnaRuntime.GananaSahita(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सङ्गमः(dynamic a, dynamic b) { return PrajnaRuntime.Sangamah(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic मार्ग_संयोजय(dynamic a, dynamic b) { return PrajnaRuntime.MargaSamyojaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic मार्ग_मूलनाम(dynamic a) { return PrajnaRuntime.MargaMulanaama(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic मार्ग_निर्देशिका(dynamic a) { return PrajnaRuntime.MargaNirdeshika(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic मार्ग_विस्तारः(dynamic a) { return PrajnaRuntime.MargaVistarah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic जाल_प्राप्नु(dynamic a) { return PrajnaRuntime.JalaPraptnu(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic जाल_प्रेषय(dynamic a, dynamic b) { return PrajnaRuntime.JalaPreshaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic जाल_अवतारणम्(dynamic a, dynamic b) { return PrajnaRuntime.JalaAvataranam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_लॉग(dynamic a) { return PrajnaRuntime.GanitaLog(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_लॉग१०(dynamic a) { return PrajnaRuntime.GanitaLog10(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_माध्यम्(dynamic a) { return PrajnaRuntime.GanitaMadhyamam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_मध्यिका(dynamic a) { return PrajnaRuntime.GanitaMadhyika(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic वस्तु_रचय() { return PrajnaRuntime.VastuRachaya(); }\n";
+    कक्षा = कक्षा + "    public static dynamic वस्तु_स्थापय(dynamic a, dynamic b, dynamic c) { return PrajnaRuntime.VastuSthapaya(a, b, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic वस्तु_प्राप्नु(dynamic a, dynamic b) { return PrajnaRuntime.VastuPraptnu(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic वस्तु_गुणाः(dynamic a) { return PrajnaRuntime.VastuGunah(a); }\n";
     कक्षा = कक्षा + "    public static dynamic गणित_वर्गमूलम्(dynamic a) { return PrajnaRuntime.GanitaVargamulam(a); }\n";
     कक्षा = कक्षा + "    public static dynamic गणित_घातः(dynamic a, dynamic b) { return PrajnaRuntime.GanitaGhaatah(a, b); }\n";
     कक्षा = कक्षा + "    public static dynamic गणित_परममूल्यम्(dynamic a) { return PrajnaRuntime.GanitaParamamulyam(a); }\n";
@@ -705,13 +885,27 @@
         लक्ष्यम् = "/target:winexe";
     }
 
-    चलम् csc = "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe";
-    चलम् आदेशः = csc + " /nologo /codepage:65001 /optimize+ " + लक्ष्यम् + " /r:System.dll /r:System.Core.dll /r:Microsoft.CSharp.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll /out:" + निर्गम_मार्गः + " " + cs_मार्गः;
+    चलम् प्रणाली = प्रणाली_सञ्चालकः();
+    चलम् आदेशः = "";
+
+    यदि (प्रणाली == "windows") {
+        चलम् csc = "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe";
+        यदि (सञ्चिका_विद्यते(csc) == असत्यम्) {
+            csc = "csc";
+        }
+        आदेशः = csc + " /nologo /codepage:65001 /optimize+ " + लक्ष्यम् + " /r:System.dll /r:System.Core.dll /r:Microsoft.CSharp.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll /out:" + निर्गम_मार्गः + " " + cs_मार्गः;
+    } अन्यथा {
+        आदेशः = "mcs -codepage:utf8 -optimize+ -target:exe -r:System.dll,System.Core.dll,Microsoft.CSharp.dll -out:" + निर्गम_मार्गः + " " + cs_मार्गः;
+    }
 
     चलम् परिणामः = आदेशः_निष्पादय(आदेशः);
 
     यदि (सञ्चिका_विद्यते(निर्गम_मार्गः)) {
-        आदेशः_निष्पादय("cmd /c del " + cs_मार्गः);
+        यदि (प्रणाली == "windows") {
+            आदेशः_निष्पादय("cmd /c del " + cs_मार्गः);
+        } अन्यथा {
+            आदेशः_निष्पादय("rm -f " + cs_मार्गः);
+        }
         लिख "सङ्कलनं सफलं जातम्! निष्पाद्य-सञ्चिका: " + निर्गम_मार्गः;
         प्रत्यागच्छ १;
     } अन्यथा {
@@ -739,7 +933,7 @@
 
     यदि (सूची_प्राप्नु(तर्काः, ०) == "version" वा सूची_प्राप्नु(तर्काः, ०) == "-v" वा सूची_प्राप्नु(तर्काः, ०) == "--version") {
         लिख "प्रज्ञा (Prajna) v1.0.0 — संस्कृतभाषाधारिता स्वायत्तसङ्गणकप्रणाली";
-        लिख "Python-निरपेक्षम् स्वयम्भू-निष्पादनतन्त्रम्";
+        लिख "स्वायत्तम् स्वयम्भू-निष्पादनतन्त्रम्";
         लिख "सर्वाधिकारः सुरक्षिताः © २०२६";
         प्रत्यागच्छ ०;
     }
@@ -779,9 +973,18 @@
         चलम् तात्कालिक_exe = "_prajna_temp.exe";
         चलम् यशः = सङ्कलय_सञ्चिकाम्(स्रोतः_मार्गः, तात्कालिक_exe, असत्यम्);
         यदि (यशः == १) {
-            चलम् निर्गमः = आदेशः_निष्पादय(तात्कालिक_exe);
+            चलम् प्रणाली = प्रणाली_सञ्चालकः();
+            चलम् धावन_आदेशः = तात्कालिक_exe;
+            यदि (प्रणाली != "windows") {
+                धावन_आदेशः = "mono " + तात्कालिक_exe;
+            }
+            चलम् निर्गमः = आदेशः_निष्पादय(धावन_आदेशः);
             लिख निर्गमः;
-            आदेशः_निष्पादय("cmd /c del " + तात्कालिक_exe);
+            यदि (प्रणाली == "windows") {
+                आदेशः_निष्पादय("cmd /c del " + तात्कालिक_exe);
+            } अन्यथा {
+                आदेशः_निष्पादय("rm -f " + तात्कालिक_exe);
+            }
         }
         प्रत्यागच्छ यशः;
     }
