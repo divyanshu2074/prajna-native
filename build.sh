@@ -47,7 +47,6 @@ esac
 
 # 2. Check for Execution Runtime (mono / dotnet)
 MONO_BIN="$(command -v mono || true)"
-CSC_BIN="$(command -v mcs || command -v csc || true)"
 
 if [ -z "$MONO_BIN" ] && [ "$PLATFORM" != "windows" ]; then
     echo -e "${RED}[ERROR] 'mono' runtime was not found in your PATH.${NC}"
@@ -74,9 +73,9 @@ mkdir -p bin
 # 3. Bootstrapping
 echo -e "\n${YELLOW}[1/3] Bootstrapping self-hosted compiler prajna_compiler.pr...${NC}"
 if [ "$PLATFORM" = "windows" ]; then
-    ./bootstrap/prajna.exe compile prajna_compiler.pr -o bin/pr_prajna.exe
+    ./bootstrap/prajna.exe build prajna_compiler.pr -o bin/pr_prajna.exe
 else
-    mono ./bootstrap/prajna.exe compile prajna_compiler.pr -o bin/pr_prajna.exe
+    mono ./bootstrap/prajna.exe build prajna_compiler.pr -o bin/pr_prajna.exe
 fi
 
 if [ ! -f "bin/pr_prajna.exe" ]; then

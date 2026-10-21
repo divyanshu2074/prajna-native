@@ -15,7 +15,7 @@ if not exist "bin" mkdir bin
 
 echo.
 echo [1/3] Compiling prajna_compiler.pr using isolated bootstrap compiler...
-bootstrap\prajna.exe compile prajna_compiler.pr -o bin\pr_prajna.exe
+bootstrap\prajna.exe build prajna_compiler.pr -o bin\pr_prajna.exe
 
 if not exist "bin\pr_prajna.exe" (
     echo [FAILED] Compilation failed!
