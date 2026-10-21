@@ -8,6 +8,17 @@
   let currentChapter = window.location.hash.replace('#', '') || 'intro';
 
   const playgroundSamples = {
+    conditionals: `// यदि-अन्यथा (Conditionals & Grades)
+चलम् अङ्कः = ८५;
+
+यदि (अङ्कः >= ९०) {
+    लिख "उत्कृष्टम्! (A+)";
+} अन्यथा यदि (अङ्कः >= ७५) {
+    लिख "उत्तमम्! (A)";
+} अन्यथा {
+    लिख "प्रयत्नः करणीयः।";
+}`,
+
     fibonacci: `// फिबोनाची-माला (Fibonacci Recursion)
 फलनम् फिबोनाची(संख्या) {
     यदि (संख्या <= ०) { प्रत्यागच्छ ०; }
@@ -36,7 +47,7 @@
 
 लिख "कोष-दीर्घता: " + सूत्र_परिवर्तय(कोष_दीर्घता(शब्दकोषः));
 यदि (कोष_अस्ति(शब्दकोषः, "सूर्यः")) {
-    लिख "सूर्यस्य पर्यायः = " + कोष_प्राप्nu(शब्दकोषः, "सूर्यः");
+    लिख "सूर्यस्य पर्यायः = " + कोष_प्राप्नु(शब्दकोषः, "सूर्यः");
 }`,
 
     factorial: `// यावत्-गुणनफलम् (Factorial Loop)
@@ -84,13 +95,9 @@
 
   // Convert Sanskrit numerals to Arabic and vice versa
   function devanagariToInt(str) {
-    const map = { '०':0, '१':1, '२':2, '३':3, '४':4, '५':5, '६':6, '७':7, '८':8, '९':9 };
-    let res = 0;
-    for (let c of str) {
-      if (c in map) res = res * 10 + map[c];
-      else if (c >= '0' && c <= '9') res = res * 10 + parseInt(c);
-    }
-    return res;
+    const map = { '०':'0', '१':'1', '२':'2', '३':'3', '४':'4', '५':'5', '६':'6', '७':'7', '८':'8', '९':'9' };
+    const s = String(str).split('').map(c => map[c] !== undefined ? map[c] : c).join('');
+    return s.includes('.') ? parseFloat(s) : parseInt(s, 10);
   }
 
   function intToDevanagari(num) {
@@ -250,6 +257,8 @@
       const env = {
         सूत्र_दीर्घता: str => (str || '').length,
         वर्ण_प्राप्नु: (str, idx) => (str || '')[idx] || '',
+        सूत्र_खण्डम्: (str, start, len) => (str || '').substr(start, len),
+        सूत्र_संयोजय: (a, b) => String(a) + String(b),
         सूत्र_परिवर्तय: val => intToDevanagari(val),
         संख्या_परिवर्तय: str => devanagariToInt(str),
         पूर्णाङ्क_परिवर्तय: str => parseInt(str, 10),
@@ -271,7 +280,7 @@
         कोष_अस्ति: (map, k) => (k in map),
         कोष_दीर्घता: map => Object.keys(map).length,
         सूची_रचय: () => [],
-        सूची_योजय: (arr, v) => arr.push(v),
+        सूची_योजय: (arr, v) => { arr.push(v); return arr; },
         सूची_प्राप्nu: (arr, idx) => arr[idx],
         सूची_प्राप्नु: (arr, idx) => arr[idx],
         सूची_दीर्घता: arr => arr.length,
@@ -282,6 +291,11 @@
         समुच्चय_दीर्घता: s => s.size,
         समुच्चय_मेलनम्: (s1, s2) => new Set([...s1, ...s2]),
         समुच्चय_छेदः: (s1, s2) => new Set([...s1].filter(x => s2.has(x))),
+        समुच्चय_अन्तरम्: (s1, s2) => new Set([...s1].filter(x => !s2.has(x))),
+        समुच्चय_सूची: s => Array.from(s),
+        युग्म_रचय: (...args) => Object.freeze([...args]),
+        युग्म_प्राप्नु: (t, idx) => t[idx],
+        युग्म_दीर्घता: t => t.length,
         वस्तु_रचय: () => ({}),
         वस्तु_स्थापय: (o, k, v) => { o[k] = v; return o; },
         वस्तु_प्राप्नु: (o, k) => o[k],
@@ -289,56 +303,112 @@
         योगः: l => l.reduce((a, b) => a + Number(b), 0),
         न्यूनतमम्: l => Math.min(...l),
         अधिकतमम्: l => Math.max(...l),
+        सर्वम्: l => l.every(Boolean),
+        किमपि: l => l.some(Boolean),
         परिसरः: (a, b, step = 1) => { const r = []; for (let i = a; i < b; i += step) r.push(i); return r; },
+        गणना_सहित: l => l.map((v, i) => [i, v]),
+        सङ्गमः: (...lists) => { const minL = Math.min(...lists.map(l => l.length)); const res = []; for (let i = 0; i < minL; i++) res.push(lists.map(l => l[i])); return res; },
+        गणित_लॉग: Math.log,
+        गणित_लॉग१०: Math.log10,
+        गणित_माध्यम्: l => l.length ? l.reduce((a, b) => a + Number(b), 0) / l.length : 0,
+        गणित_मध्यिका: l => { if (!l.length) return 0; const s = [...l].map(Number).sort((a,b)=>a-b); const m = Math.floor(s.length/2); return s.length % 2 ? s[m] : (s[m-1] + s[m])/2; },
         मार्ग_संयोजय: (a, b) => `${a}/${b}`,
         मार्ग_मूलनाम: p => (p || '').split('/').pop(),
+        मार्ग_निर्देशिका: p => { const parts = (p || '').split('/'); parts.pop(); return parts.join('/') || '.'; },
+        मार्ग_विस्तारः: p => { const f = (p || '').split('/').pop(); const dot = f.lastIndexOf('.'); return dot !== -1 ? f.slice(dot) : ''; },
         प्रणाली_सञ्चालकः: () => "browser"
       };
 
-      // JS Transpiler for Playground
-      let js = code
-        .replace(/\/\/.*/g, '')
-        .replace(/चलम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*=/g, 'let $1 =')
-        .replace(/स्थिरम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*=/g, 'const $1 =')
-        .replace(/फलनम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*\(([^)]*)\)\s*\{/g, 'function $1($2) {')
-        .replace(/प्रत्यागच्छ\s+([^;]+);/g, 'return $1;')
-        .replace(/लिख\s+([^;]+);/g, 'print($1);')
-        .replace(/प्रयत्नः\s*\{/g, 'try {')
-        .replace(/गृह्णातु\s*\(([a-zA-Z0-9_\u0900-\u097F]+)\)\s*\{/g, 'catch ($1) {')
-        .replace(/अन्ते\s*\{/g, 'finally {')
-        .replace(/उत्थापय\s+([^;]+);/g, 'throw new Error($1);')
-        .replace(/यदि\s*\(([^)]+)\)\s*\{/g, 'if ($1) {')
-        .replace(/अन्यथा\s+यदि\s*\(([^)]+)\)\s*\{/g, 'else if ($1) {')
-        .replace(/अन्यथा\s*\{/g, 'else {')
-        .replace(/यावत्\s*\(([^)]+)\)\s*\{/g, 'while ($1) {')
-        .replace(/सत्यम्/g, 'true')
-        .replace(/असत्यम्/g, 'false')
-        .replace(/\bतथा\b/g, '&&')
-        .replace(/\bवा\b/g, '||')
-        .replace(/\bन\b/g, '!');
+      // 1. Extract and preserve string literals
+      const stringPool = [];
+      let masked = code.replace(/"((?:\\.|[^"\\])*)"/g, (match) => {
+        const idx = stringPool.length;
+        stringPool.push(match);
+        return `__PRAJNA_STR_${idx}__`;
+      });
 
-      // Convert Devanagari numbers in code
-      js = js.replace(/[\u0966-\u096F]+/g, m => devanagariToInt(m));
+      // Remove comments
+      masked = masked.replace(/\/\*[\s\S]*?\*\//g, '');
+      masked = masked.replace(/\/\/.*/g, '');
+
+      // Normalize Sanskrit purna virama (।) to semicolon
+      masked = masked.replace(/।/g, ';');
+
+      // 2. Conditionals (MUST DO अन्यथा यदि / अन्यथायदि BEFORE यदि AND BEFORE अन्यथा)
+      masked = masked.replace(/(^|[\s{};])अन्यथा\s+यदि\s*(\([^{]+\))\s*\{/g, '$1else if $2 {');
+      masked = masked.replace(/(^|[\s{};])अन्यथायदि\s*(\([^{]+\))\s*\{/g, '$1else if $2 {');
+      masked = masked.replace(/(^|[\s{};])यदि\s*(\([^{]+\))\s*\{/g, '$1if $2 {');
+      masked = masked.replace(/(^|[\s{};])अन्यथा\s*\{/g, '$1else {');
+
+      // 3. Loops & Control Flow
+      masked = masked.replace(/(^|[\s{};])यावत्\s*(\([^{]+\))\s*\{/g, '$1while $2 {');
+      masked = masked.replace(/(^|[\s{};])कृते\s*\(([^;]+);([^;]+);([^)]+)\)\s*\{/g, '$1for ($2; $3; $4) {');
+      masked = masked.replace(/(^|[\s{};])विराम\s*;?/g, '$1break;');
+      masked = masked.replace(/(^|[\s{};])निरन्तरम्\s*;?/g, '$1continue;');
+
+      // 4. Functions & Returns
+      masked = masked.replace(/(^|[\s{};])फलनम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*\(([^)]*)\)\s*\{/g, '$1function $2($3) {');
+      masked = masked.replace(/(^|[\s{};])प्रत्यागच्छ\s+([^;{}]+);/g, '$1return $2;');
+      masked = masked.replace(/(^|[\s{};])प्रत्यागच्छ\s*;/g, '$1return;');
+
+      // 5. Variables
+      masked = masked.replace(/(^|[\s{};])चलम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*=/g, '$1let $2 =');
+      masked = masked.replace(/(^|[\s{};])चलम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*;/g, '$1let $2;');
+      masked = masked.replace(/(^|[\s{};])स्थिरम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*=/g, '$1const $2 =');
+      masked = masked.replace(/(^|[\s{};])स्थिरम्\s+([a-zA-Z0-9_\u0900-\u097F]+)\s*;/g, '$1const $2;');
+
+      // 6. Error Handling
+      masked = masked.replace(/(^|[\s{};])प्रयत्नः\s*\{/g, '$1try {');
+      masked = masked.replace(/(^|[\s{};])गृह्णातु\s*\(([a-zA-Z0-9_\u0900-\u097F]+)\)\s*\{/g, '$1catch ($2) {');
+      masked = masked.replace(/(^|[\s{};])गृह्णातु\s*\{/g, '$1catch (__doshah) {');
+      masked = masked.replace(/(^|[\s{};])अन्ते\s*\{/g, '$1finally {');
+      masked = masked.replace(/(^|[\s{};])उत्थापय\s+([^;{}]+);/g, '$1throw new Error($2);');
+
+      // 7. Output / Print (likh)
+      masked = masked.replace(/(^|[\s{};])लिख\s*\(([^)]*)\)\s*;?/g, '$1print($2);');
+      masked = masked.replace(/(^|[\s{};])लिख\s+([^;{}]+);/g, '$1print($2);');
+
+      // 8. Booleans & Null (replace असत्यम् before सत्यम्)
+      masked = masked.replace(/(^|[\s(),;{}[\]])असत्यम्(?=$|[\s(),;{}[\]])/g, '$1false');
+      masked = masked.replace(/(^|[\s(),;{}[\]])मिथ्या(?=$|[\s(),;{}[\]])/g, '$1false');
+      masked = masked.replace(/(^|[\s(),;{}[\]])सत्यम्(?=$|[\s(),;{}[\]])/g, '$1true');
+      masked = masked.replace(/(^|[\s(),;{}[\]])शून्यम्(?=$|[\s(),;{}[\]])/g, '$1null');
+
+      // 9. Logical operators with Unicode boundaries
+      masked = masked.replace(/(^|[\s(),;{}[\]])तथा(?=$|[\s(),;{}[\]])/g, '$1&&');
+      masked = masked.replace(/(^|[\s(),;{}[\]])वा(?=$|[\s(),;{}[\]])/g, '$1||');
+      masked = masked.replace(/(^|[\s(),;{}[\]])न(?=$|[\s(),;{}[\]])/g, '$1!');
+
+      // 10. Devanagari numerals outside strings
+      masked = masked.replace(/[\u0966-\u096F]+(?:\.[\u0966-\u096F]+)?/g, m => devanagariToInt(m));
+
+      // 11. Restore string literals
+      for (let i = 0; i < stringPool.length; i++) {
+        masked = masked.replace(`__PRAJNA_STR_${i}__`, stringPool[i]);
+      }
 
       const runner = new Function('env', 'print', `
         with(env) {
-          ${js}
+          ${masked}
         }
       `);
 
-      runner(env, val => {
-        let display = val;
-        if (typeof val === 'number') {
-          display = intToDevanagari(val);
-        }
-        logs.push(display);
+      runner(env, (...vals) => {
+        const line = vals.map(val => {
+          if (typeof val === 'number') return intToDevanagari(val);
+          if (val instanceof Set) return '{ ' + Array.from(val).join(', ') + ' }';
+          if (Array.isArray(val)) return '[ ' + val.join(', ') + ' ]';
+          if (typeof val === 'object' && val !== null) return JSON.stringify(val);
+          return String(val);
+        }).join(' ');
+        logs.push(line);
       });
 
       outEl.textContent = logs.join('\n') || '[निर्गमः रिक्तः]';
     } catch (e) {
       outEl.textContent = '[सञ्चालन-दोषः / Runtime Error]: ' + e.message;
     }
-  }
+    }
 
   function loadPlaygroundSample() {
     const sel = document.getElementById('playground-sample-select') || document.getElementById('playground-select');

@@ -711,6 +711,7 @@ chmod +x build.sh
       <div style="margin: 1.5rem 0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
           <select id="playground-sample-select" class="btn-control" onchange="PrajnaApp.loadPlaygroundSample()">
+            <option value="conditionals">यदि-अन्यथा (Conditionals & Grades)</option>
             <option value="fibonacci">फिबोनाची-माला (Fibonacci)</option>
             <option value="sets">समुच्चयः (Mathematical Sets)</option>
             <option value="exceptions">दोष-नियन्त्रणम् (Exceptions)</option>
