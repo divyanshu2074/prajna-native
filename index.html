@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="sa" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>प्रज्ञा (Prajna) — संस्कृतभाषाधारिता स्वायत्ता सङ्गणकप्रणाली | Official Documentation</title>
+  <meta name="description" content="Prajna is the official native, self-hosted, general-purpose Sanskrit programming language and autonomous computing system.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕉️</text></svg>">
+  <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+<body>
+
+  <!-- Top Navigation Header -->
+  <header class="navbar">
+    <div style="display:flex; align-items:center; gap:0.75rem;">
+      <button class="mobile-menu-btn" onclick="PrajnaApp.toggleMobileSidebar()" aria-label="Toggle Menu">☰</button>
+      <a class="nav-brand" href="#intro" onclick="PrajnaApp.navigateTo('intro')">
+        <span class="brand-icon">🕉️</span>
+        <span>प्रज्ञा <span style="font-size:0.8em; font-weight:400; opacity:0.8;">Prajna</span></span>
+        <span class="brand-badge">v1.0.0</span>
+      </a>
+    </div>
+
+    <nav class="nav-links">
+      <a class="nav-item" id="nav-docs" onclick="PrajnaApp.navigateTo('intro')">प्रलेखनम्</a>
+      <a class="nav-item" id="nav-tutorial" onclick="PrajnaApp.navigateTo('variables')">शिक्षा-मार्गः</a>
+      <a class="nav-item" id="nav-stdlib" onclick="PrajnaApp.navigateTo('stdlib_strings')">प्रमाण-पुस्तकालयः</a>
+      <a class="nav-item" id="nav-arch" onclick="PrajnaApp.navigateTo('arch_isa')">वास्तुविन्यासः</a>
+      <a class="nav-item" id="nav-playground" onclick="PrajnaApp.navigateTo('playground_sec')">प्रयोगशाला</a>
+    </nav>
+
+    <div class="nav-controls">
+      <div class="search-trigger" onclick="PrajnaApp.openSearch()">
+        <span>🔍</span>
+        <span id="search-trigger-text">अन्वेषणम् (Search)...</span>
+        <span class="search-shortcut">Ctrl+K</span>
+      </div>
+
+      <button class="btn-control" id="lang-toggle-btn" onclick="PrajnaApp.toggleLanguage()">English</button>
+      <button class="btn-control" id="theme-toggle-btn" onclick="PrajnaApp.toggleTheme()">☀️ शुक्लम्</button>
+      <a class="btn-control btn-primary" href="https://github.com/divyanshu2074/prajna-native" target="_blank" rel="noopener">
+        <span>GitHub</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Docs Layout Container -->
+  <div class="docs-container">
+    <!-- Left Sidebar -->
+    <aside class="sidebar" id="sidebar-content">
+      <!-- Injected dynamically by docs.js -->
+    </aside>
+
+    <!-- Center Main Content -->
+    <main class="main-content" id="main-doc-content">
+      <!-- Injected dynamically by docs.js -->
+    </main>
+
+    <!-- Right On-Page Table of Contents -->
+    <aside class="toc-sidebar">
+      <div class="toc-title">अस्मिन् पृष्ठे (On this page)</div>
+      <ul class="toc-list" id="toc-list">
+        <!-- Injected dynamically by docs.js -->
+      </ul>
+    </aside>
+  </div>
+
+  <!-- Search Modal Overlay -->
+  <div class="modal-overlay" id="search-modal-overlay" onclick="if(event.target===this) PrajnaApp.closeSearch()">
+    <div class="search-modal">
+      <div class="search-modal-header">
+        <span>🔍</span>
+        <input type="text" class="search-modal-input" id="search-input" placeholder="अन्वेषणं कुरु / Type to search..." oninput="PrajnaApp.renderSearchResults(this.value)">
+        <button class="btn-control" onclick="PrajnaApp.closeSearch()" style="padding:0.2rem 0.5rem;">Esc</button>
+      </div>
+      <div class="search-results" id="search-results">
+        <!-- Search hits appear here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>प्रज्ञा (Prajna) — संस्कृतभाषाधारिता स्वायत्ता स्वयम्भू-सङ्गणकप्रणाली</p>
+    <p style="margin-top:0.5rem; font-size:0.85em; opacity:0.8;">
+      100% Python-Independent &bull; Pure Sanskrit Syntax &bull; Open-Source &bull; सर्वाधिकारः सुरक्षिताः &copy; २०२६
+    </p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/content_en.js"></script>
+  <script src="assets/js/content_sa.js"></script>
+  <script src="assets/js/docs.js"></script>
+</body>
+</html>
