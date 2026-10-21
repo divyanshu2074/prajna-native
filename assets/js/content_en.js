@@ -98,25 +98,41 @@ window.PRAJNA_DOCS_EN = {
             <div class="dl-card-left">
               <div class="dl-icon">🪟</div>
               <div class="dl-info">
-                <h3>Prajna for Windows (x64)</h3>
-                <p>Windows 10 / 11 (64-bit) &bull; Standalone Native Binary</p>
-                <div class="dl-tags">
+                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+                  <h3 style="margin:0;">Prajna Setup Wizard (.exe)</h3>
+                  <span class="badge-recommended">⭐ Recommended</span>
+                </div>
+                <p>Windows 10 / 11 (64-bit) &bull; Interactive GUI Installer</p>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.2rem;">
+                  ✓ Automatically sets <code>PRAJNA_HOME</code> &amp; adds Prajna to User <code>PATH</code><br>
+                  ✓ Associates <code>.pr</code> files &bull; Creates Desktop and Start Menu shortcuts<br>
+                  ✓ Zero Administrator permissions required!
+                </p>
+                <div class="dl-tags" style="margin-top:0.5rem;">
                   <span class="dl-tag">v1.0.0</span>
-                  <span class="dl-tag">x86_64</span>
-                  <span class="dl-tag">Zero External Dependencies</span>
+                  <span class="dl-tag">Setup Wizard</span>
+                  <span class="dl-tag">Auto PATH &amp; Env</span>
                 </div>
               </div>
             </div>
-            <a class="btn-download" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/prajna-windows-x64.zip" target="_blank" rel="noopener">
-              ⬇️ Download Windows (.zip)
-            </a>
+            <div class="dl-buttons-container">
+              <a class="btn-download" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/prajna-setup-x64.exe" target="_blank" rel="noopener">
+                ⬇️ Download Setup (.exe)
+              </a>
+              <a class="btn-download-secondary" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/pr_prajna.exe" target="_blank" rel="noopener">
+                ⚙️ Direct Standalone Binary (pr_prajna.exe)
+              </a>
+              <a class="btn-download-secondary" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/prajna-windows-x64.zip" target="_blank" rel="noopener">
+                📦 Portable Archive (.zip)
+              </a>
+            </div>
           </div>
           <div class="download-command-box">
             <span>PowerShell Quick Install:</span>
             <code>irm https://raw.githubusercontent.com/divyanshu2074/prajna-native/main/build.ps1 | iex</code>
           </div>
           <div class="download-subtext">
-            <span>Pre-installed on modern Windows via .NET 4.0+. Includes bootstrap compiler and test suite.</span>
+            <span>Pre-installed on modern Windows via .NET 4.0+. Includes compiler, standard library, and interactive REPL.</span>
           </div>
         </div>
 

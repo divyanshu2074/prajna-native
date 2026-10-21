@@ -96,25 +96,41 @@ window.PRAJNA_DOCS_SA = {
             <div class="dl-card-left">
               <div class="dl-icon">🪟</div>
               <div class="dl-info">
-                <h3>Windows (६४-बिट्) कृते प्रज्ञा</h3>
-                <p>Windows 10 / 11 (६४-बिट्) &bull; स्वायत्त-निष्पाद्य-बाइनरी</p>
-                <div class="dl-tags">
+                <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.25rem;">
+                  <h3 style="margin:0;">प्रज्ञा संवादात्मक-संस्थापकम् (.exe)</h3>
+                  <span class="badge-recommended">⭐ प्रशस्तम् (Recommended)</span>
+                </div>
+                <p>Windows 10 / 11 (64-bit) &bull; संवादात्मक-स्थापनाप्रणाली</p>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-top:0.2rem;">
+                  ✓ स्वयमेव <code>PRAJNA_HOME</code> तथा <code>PATH</code> वातावरणचरान् निर्धारयति<br>
+                  ✓ <code>.pr</code> सञ्चिकाः संयोजयति &bull; डेस्कटॉप्-सत्वरमार्गं रचयति<br>
+                  ✓ प्रशासकाधिकारं विना संस्थापयति!
+                </p>
+                <div class="dl-tags" style="margin-top:0.5rem;">
                   <span class="dl-tag">v1.0.0</span>
-                  <span class="dl-tag">x86_64</span>
-                  <span class="dl-tag">शून्य-बाह्यनिर्भरता</span>
+                  <span class="dl-tag">Setup Wizard</span>
+                  <span class="dl-tag">Auto PATH &amp; Env</span>
                 </div>
               </div>
             </div>
-            <a class="btn-download" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/prajna-windows-x64.zip" target="_blank" rel="noopener">
-              ⬇️ Windows अवतारणम् (.zip)
-            </a>
+            <div class="dl-buttons-container">
+              <a class="btn-download" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/prajna-setup-x64.exe" target="_blank" rel="noopener">
+                ⬇️ संस्थापकमवतारयतु (.exe)
+              </a>
+              <a class="btn-download-secondary" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/pr_prajna.exe" target="_blank" rel="noopener">
+                ⚙️ साक्षात् सङ्कलकम् (pr_prajna.exe)
+              </a>
+              <a class="btn-download-secondary" href="https://github.com/divyanshu2074/prajna-native/releases/download/v1.0.0/prajna-windows-x64.zip" target="_blank" rel="noopener">
+                📦 सङ्कुचितसञ्चिका (.zip)
+              </a>
+            </div>
           </div>
           <div class="download-command-box">
             <span>PowerShell शीघ्र-प्रतिष्ठापना:</span>
             <code>irm https://raw.githubusercontent.com/divyanshu2074/prajna-native/main/build.ps1 | iex</code>
           </div>
           <div class="download-subtext">
-            <span>.NET 4.0+ युक्तेषु सर्वेषु Windows-यन्त्रेषु साक्षात् सञ्चलति।</span>
+            <span>आधुनिक-Windows प्रणाल्यां साक्षात् प्रचलति। सङ्कलकः, प्रमाणपुस्तकालयः, आदेशफलकम् (REPL) च अन्तर्भूताः।</span>
           </div>
         </div>
 
