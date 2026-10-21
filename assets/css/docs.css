@@ -960,3 +960,37 @@ tr:nth-child(even) {
     display: none;
   }
 }
+
+.btn-download-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.btn-download-secondary:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--text-muted);
+}
+.dl-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-end;
+}
+.badge-recommended {
+  background: rgba(46, 160, 67, 0.15);
+  color: #3fb950;
+  border: 1px solid rgba(46, 160, 67, 0.4);
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}

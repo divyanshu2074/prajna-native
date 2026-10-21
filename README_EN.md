@@ -90,7 +90,7 @@ The build script invokes the isolated bootstrap compiler (`bootstrap/prajna.exe`
 
 ---
 
-## 3. Usage
+## 5. Command-Line Usage
 
 ```bash
 # Display version
@@ -114,7 +114,7 @@ On Windows:
 
 ---
 
-## 4. Key Highlights
+## 6. Key Highlights
 
 1. **Complete Runtime Sovereignty**: Autonomous architecture with zero external runtime dependencies. The entire computing system compiles and executes itself.
 2. **Deterministic Self-Hosting**: `pr_prajna.exe` compiling `prajna_compiler.pr` produces an executable that is byte-for-byte verified, proving full fixed-point closure.

@@ -8,6 +8,26 @@
   let currentChapter = window.location.hash.replace('#', '') || 'intro';
 
   const playgroundSamples = {
+        datascience: `// दत्ततालिका तथा सांख्यिकी (Data Science & Stats)
+चलम् स्तम्भाः = सूची_रचय();
+सूची_योजय(स्तम्भाः, "नाम");
+सूची_योजय(स्तम्भाः, "अङ्काः");
+चलम् तालिका = तालिका_रचय(स्तम्भाः);
+
+चलम् छा१ = सूची_रचय();
+सूची_योजय(छा१, "आर्यभटः");
+सूची_योजय(छा१, ९८.५);
+तालिका_पङ्क्ति_योजय(तालिका, छा१);
+
+चलम् छा२ = सूची_रचय();
+सूची_योजय(छा२, "भास्कराचार्यः");
+सूची_योजय(छा२, ९४.०);
+तालिका_पङ्क्ति_योजय(तालिका, छा२);
+
+लिख तालिका_संक्षेपः(तालिका);
+
+चलम् अङ्कसूची = तालिका_स्तम्भ_प्राप्नु(तालिका, "अङ्काः");
+लिख "माध्यम् (Mean) = " + सूत्र_परिवर्तय(सांख्यिकी_माध्यम्(अङ्कसूची));`,
     conditionals: `// यदि-अन्यथा (Conditionals & Grades)
 चलम् अङ्कः = ८५;
 
@@ -316,7 +336,102 @@
         मार्ग_मूलनाम: p => (p || '').split('/').pop(),
         मार्ग_निर्देशिका: p => { const parts = (p || '').split('/'); parts.pop(); return parts.join('/') || '.'; },
         मार्ग_विस्तारः: p => { const f = (p || '').split('/').pop(); const dot = f.lastIndexOf('.'); return dot !== -1 ? f.slice(dot) : ''; },
-        प्रणाली_सञ्चालकः: () => "browser"
+        प्रणाली_सञ्चालकः: () => "browser",
+        तालिका_रचय: stambhah => ({ stambhah: Array.isArray(stambhah) ? stambhah : [], panktiyah: [] }),
+        तालिका_पङ्क्ति_योजय: (t, p) => { if (t && t.panktiyah) t.panktiyah.push(p); return t; },
+        तालिका_स्तम्भ_प्राप्नु: (t, name) => { if (!t || !t.stambhah) return []; const idx = t.stambhah.indexOf(name); return idx !== -1 ? t.panktiyah.map(r => r[idx]) : []; },
+        तालिका_संक्षेपः: t => {
+          if (!t || !t.stambhah || !t.panktiyah) return "[तालिका]";
+          return "दत्ततालिका: " + intToDevanagari(t.panktiyah.length) + " पङ्क्तयः x " + intToDevanagari(t.stambhah.length) + " स्तम्भाः\nस्तम्भाः: [ " + t.stambhah.join(" ") + " ]";
+        },
+        दत्त_पठ_csv: () => ({ stambhah: ["नाम", "वयः"], panktiyah: [["आर्यभटः", 23], ["भास्कराचार्यः", 30]] }),
+        दत्त_लिख_csv: () => 1,
+        व्यूह_रचय: (r, c, vals) => {
+          const m = []; let idx = 0;
+          for (let i = 0; i < r; i++) {
+            const row = [];
+            for (let j = 0; j < c; j++) row.push(vals && idx < vals.length ? vals[idx++] : 0);
+            m.push(row);
+          }
+          return m;
+        },
+        व्यूह_प्राप्nu: (m, r, c) => m && m[r] ? m[r][c] : 0,
+        व्यूह_प्राप्नु: (m, r, c) => m && m[r] ? m[r][c] : 0,
+        व्यूह_स्थापय: (m, r, c, v) => { if (m && m[r]) m[r][c] = v; return m; },
+        व्यूह_पङ्क्तयः: m => m ? m.length : 0,
+        व्यूह_स्तम्भाः: m => m && m[0] ? m[0].length : 0,
+        व्यूह_परिवर्तः: m => {
+          if (!m || !m.length) return [];
+          const r = m.length, c = m[0].length, res = [];
+          for (let j = 0; j < c; j++) {
+            const row = [];
+            for (let i = 0; i < r; i++) row.push(m[i][j]);
+            res.push(row);
+          }
+          return res;
+        },
+        व्यूह_गुणनम्: (a, b) => {
+          if (!a || !b || !a.length || !b.length) return [];
+          const rA = a.length, cA = a[0].length, rB = b.length, cB = b[0].length;
+          const res = [];
+          for (let i = 0; i < rA; i++) {
+            const row = [];
+            for (let j = 0; j < cB; j++) {
+              let sum = 0;
+              for (let k = 0; k < cA; k++) sum += a[i][k] * b[k][j];
+              row.push(sum);
+            }
+            res.push(row);
+          }
+          return res;
+        },
+        सदिश_अदिशगुणनम्: (a, b) => {
+          let sum = 0; const len = Math.min(a.length, b.length);
+          for (let i = 0; i < len; i++) sum += Number(a[i]) * Number(b[i]);
+          return sum;
+        },
+        सांख्यिकी_माध्यम्: a => (a && a.length) ? a.reduce((s, v) => s + Number(v), 0) / a.length : 0,
+        सांख्यिकी_मध्यिका: a => {
+          if (!a || !a.length) return 0;
+          const s = [...a].map(Number).sort((x, y) => x - y);
+          const m = Math.floor(s.length / 2);
+          return s.length % 2 ? s[m] : (s[m-1] + s[m]) / 2;
+        },
+        सांख्यिकी_विचरणम्: a => {
+          if (!a || a.length < 2) return 0;
+          const mean = a.reduce((s, v) => s + Number(v), 0) / a.length;
+          return a.reduce((s, v) => s + Math.pow(Number(v) - mean, 2), 0) / (a.length - 1);
+        },
+        सांख्यिकी_प्रमाणविचलनम्: a => {
+          if (!a || a.length < 2) return 0;
+          const mean = a.reduce((s, v) => s + Number(v), 0) / a.length;
+          const v = a.reduce((s, v) => s + Math.pow(Number(v) - mean, 2), 0) / (a.length - 1);
+          return Math.sqrt(v);
+        },
+        सांख्यिकी_सहसम्बन्धः: (x, y) => {
+          if (!x || !y || x.length < 2) return 0;
+          const mx = x.reduce((s, v) => s + Number(v), 0) / x.length;
+          const my = y.reduce((s, v) => s + Number(v), 0) / y.length;
+          let num = 0, dx = 0, dy = 0;
+          for (let i = 0; i < x.length; i++) {
+            const diffX = Number(x[i]) - mx, diffY = Number(y[i]) - my;
+            num += diffX * diffY; dx += diffX * diffX; dy += diffY * diffY;
+          }
+          return num / Math.sqrt(dx * dy);
+        },
+        सांख्यिकी_समाश्रयणम्: (x, y) => {
+          if (!x || !y || x.length < 2) return [0, 0];
+          const mx = x.reduce((s, v) => s + Number(v), 0) / x.length;
+          const my = y.reduce((s, v) => s + Number(v), 0) / y.length;
+          let num = 0, den = 0;
+          for (let i = 0; i < x.length; i++) {
+            num += (Number(x[i]) - mx) * (Number(y[i]) - my);
+            den += Math.pow(Number(x[i]) - mx, 2);
+          }
+          const slope = den !== 0 ? num / den : 0;
+          return [slope, my - slope * mx];
+        },
+
       };
 
       // 1. Extract and preserve string literals

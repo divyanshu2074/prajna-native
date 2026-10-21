@@ -148,3 +148,31 @@ Prajna features native structured exception handling:
 | `आदेशः_निष्पादय(cmd)` | 1 | Executes shell/terminal command and captures output. |
 | `आदेशतर्काः()` | 0 | Returns command line arguments array. |
 | `बहिर्गच्छ(code)` | 1 | Terminates process with exit code. |
+
+---
+
+## 10. DataFrames, Matrices & Statistics (दत्ततालिका, संख्याव्यूहः, सांख्यिकी)
+
+| Function | Arity | Description |
+|---|---|---|
+| `तालिका_रचय(columns)` | 1 | Initializes a new DataFrame with named column headers. |
+| `तालिका_पङ्क्ति_योजय(df, row)` | 2 | Appends a row record to the DataFrame. |
+| `तालिका_स्तम्भ_प्राप्नु(df, name)` | 2 | Extracts a column as a list by header name. |
+| `तालिका_संक्षेपः(df)` | 1 | Generates structured summary metrics for the DataFrame. |
+| `दत्त_पठ_csv(path)` | 1 | Reads a CSV file from disk into a native DataFrame. |
+| `दत्त_लिख_csv(df, path)` | 2 | Serializes and saves a DataFrame to a CSV file. |
+| `व्यूह_रचय(rows, cols, values)` | 3 | Initializes an $M \times N$ numerical matrix. |
+| `व्यूह_प्राप्नु(m, r, c)` | 3 | Accesses element at row $r$ and column $c$. |
+| `व्यूह_स्थापय(m, r, c, val)` | 4 | Updates element at row $r$ and column $c$. |
+| `व्यूह_पङ्क्तयः(m)` | 1 | Returns number of rows in matrix. |
+| `व्यूह_स्तम्भाः(m)` | 1 | Returns number of columns in matrix. |
+| `व्यूह_गुणनम्(mA, mB)` | 2 | Computes matrix multiplication ($A \times B$). |
+| `व्यूह_परिवर्तः(m)` | 1 | Transposes matrix ($A^T$). |
+| `सदिश_अदिशगुणनम्(v1, v2)` | 2 | Computes dot product of two numerical vectors. |
+| `सांख्यिकी_माध्यम्(list)` | 1 | Calculates arithmetic mean. |
+| `सांख्यिकी_मध्यिका(list)` | 1 | Calculates median value. |
+| `सांख्यिकी_विचरणम्(list)` | 1 | Calculates sample variance ($\sigma^2$). |
+| `सांख्यिकी_प्रमाणविचलनम्(list)` | 1 | Calculates sample standard deviation ($\sigma$). |
+| `सांख्यिकी_सहसम्बन्धः(x, y)` | 2 | Computes Pearson correlation coefficient ($r$). |
+| `सांख्यिकी_समाश्रयणम्(x, y)` | 2 | Performs linear regression ($y = mx + c$), returning `[slope, intercept]`. |
+| `पठ_पङ्क्ति()` | 0 | Reads a line of input from standard input (Console). |

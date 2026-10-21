@@ -25,6 +25,7 @@ window.PRAJNA_DOCS_EN = {
       items: [
         { id: "intro", title: "Introduction & Downloads" },
         { id: "install", title: "Cross-Platform Installation" },
+        { id: "repl", title: "Interactive REPL (आदेशफलकम्)" },
         { id: "quickstart", title: "Quickstart & First Program" }
       ]
     },
@@ -47,6 +48,7 @@ window.PRAJNA_DOCS_EN = {
         { id: "stdlib_dicts", title: "Dictionaries (शब्दकोषः)" },
         { id: "stdlib_sets", title: "Mathematical Sets (समुच्चयः)" },
         { id: "stdlib_functional", title: "Functional & Aggregations (योगः, परिसरः)" },
+        { id: "stdlib_datascience", title: "DataFrames, Matrices & Statistics (दत्ततालिका, सांख्यिकी)" },
         { id: "stdlib_math", title: "Mathematics & Statistics (गणितम्)" },
         { id: "stdlib_io", title: "Files, Paths & Network (सञ्चिका, मार्गः, जालम्)" },
         { id: "stdlib_gui", title: "Desktop GUI System (वातायनम्)" }
@@ -705,12 +707,177 @@ chmod +x build.sh
       <p>A native Sanskrit development environment featuring VS Code Dark+ styling, syntax highlighting, and live autocompletion.</p>
     `,
 
+    
+    repl: `
+      <h1>Interactive Sanskrit REPL (संवादात्मक-आदेशफलकम्)</h1>
+      <p class="lead">
+        Prajna provides a first-class interactive Read-Eval-Print Loop (REPL). Test expressions, inspect algorithms, and explore the standard library in real time.
+      </p>
+
+      <h2>Starting the REPL</h2>
+      <p>Simply execute <code>prajna</code> with no arguments or pass <code>repl</code>:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">Terminal</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code># Launch directly into interactive mode:
+prajna
+
+# Or explicitly:
+prajna repl</code></pre>
+      </div>
+
+      <h2>Interactive Session Example</h2>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">Prajna REPL</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>==================================================
+प्रज्ञा (Prajna) v1.0.0 — संवादात्मक-आदेशफलकम् (Interactive REPL)
+संस्कृतभाषाधारिता स्वायत्ता सङ्गणकप्रणाली
+बहिर्गमनाय 'विराम;' / 'exit', साहाय्याय 'साहाय्यम्' लिखन्तु।
+==================================================
+प्रज्ञा >>> चलम् आधारः = २५;
+प्रज्ञा >>> चलम् घाताङ्कः = २;
+प्रज्ञा >>> लिख गणित_घातः(आधारः, घाताङ्कः);
+६२५
+प्रज्ञा >>> चलम् छात्राः = सूची_रचय();
+प्रज्ञा >>> सूची_योजय(छात्राः, "पाणिनिः");
+प्रज्ञा >>> सूची_योजय(छात्राः, "पतञ्जलिः");
+प्रज्ञा >>> लिख छात्राः;
+[ पाणिनिः, पतञ्जलिः ]
+प्रज्ञा >>> विराम;
+प्रज्ञा-आदेशफलकं समापितम्। शुभं भवतु!</code></pre>
+      </div>
+
+      <h2>REPL Commands</h2>
+      <table class="table-api">
+        <thead><tr><th>Command</th><th>Effect</th></tr></thead>
+        <tbody>
+          <tr><td><code>विराम;</code> / <code>exit</code></td><td>Exits the interactive session cleanly</td></tr>
+          <tr><td><code>साहाय्यम्</code> / <code>help</code></td><td>Displays usage guidance and command shortcuts</td></tr>
+          <tr><td><code>स्वच्छम्</code> / <code>clear</code></td><td>Clears the terminal console display</td></tr>
+        </tbody>
+      </table>
+    `,
+
+
+    stdlib_datascience: `
+      <h1>Data Science, Matrices & Statistics (दत्ततालिका, सांख्यिकी)</h1>
+      <p class="lead">
+        Prajna offers built-in primitives for tabular data manipulation (DataFrames), matrix linear algebra, CSV file I/O, and statistical modeling.
+      </p>
+
+      <h2>1. DataFrames (दत्ततालिका)</h2>
+      <p>Construct tabular datasets with named columns, append records, and inspect structural summaries:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">Prajna</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>// Initialize columns
+चलम् स्तम्भाः = सूची_रचय();
+सूची_योजय(स्तम्भाः, "नाम");
+सूची_योजय(स्तम्भाः, "वयः");
+सूची_योजय(स्तम्भाः, "अङ्काः");
+
+चलम् तालिका = तालिका_रचय(स्तम्भाः);
+
+// Append rows
+चलम् छात्र१ = सूची_रचय();
+सूची_योजय(छात्र१, "आर्यभटः");
+सूची_योजय(छात्र१, २३);
+सूची_योजय(छात्र१, ९८.५);
+तालिका_पङ्क्ति_योजय(तालिका, छात्र१);
+
+// Print summary
+लिख तालिका_संक्षेपः(तालिका);
+
+// Extract column as list
+चलम् नामानि = तालिका_स्तम्भ_प्राप्नु(तालिका, "नाम");
+लिख "विद्वांसः: " + सूत्र_परिवर्तय(नामानि);</code></pre>
+      </div>
+
+      <h2>2. CSV File Import & Export</h2>
+      <p>Save tabular datasets to disk and load them back in one line:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">Prajna</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>// Save DataFrame to CSV
+दत्त_लिख_csv(तालिका, "students.csv");
+
+// Load CSV into DataFrame
+चलम् आगता_तालिका = दत्त_पठ_csv("students.csv");
+लिख तालिका_संक्षेपः(आगता_तालिका);</code></pre>
+      </div>
+
+      <h2>3. Matrix Operations (संख्याव्यूहः)</h2>
+      <p>Perform matrix multiplications, transpositions, and vector dot products:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">Prajna</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>// Construct 2x2 matrices
+चलम् मू१ = सूची_रचय();
+सूची_योजय(मू१, १.०); सूची_योजय(मू१, २.०);
+सूची_योजय(मू१, ३.०); सूची_योजय(मू१, ४.०);
+चलम् व्यूह_क = व्यूह_रचय(२, २, मू१);
+
+चलम् मू२ = सूची_रचय();
+सूची_योजय(मू२, २.०); सूची_योजय(मू२, ०.०);
+सूची_योजय(मू२, १.०); सूची_योजय(मू२, २.०);
+चलम् व्यूह_ख = व्यूह_रचय(२, २, मू२);
+
+// Matrix multiplication (A x B)
+चलम् व्यूह_गुणितम् = व्यूह_गुणनम्(व्यूह_क, व्यूह_ख);
+लिख "गुणनफलम् [०, ०] = " + सूत्र_परिवर्तय(व्यूह_प्राप्नु(व्यूह_गुणितम्, ०, ०));
+
+// Transposition (A^T)
+चलम् परिवर्तः = व्यूह_परिवर्तः(व्यूह_क);</code></pre>
+      </div>
+
+      <h2>4. Statistical Computing & Linear Regression (सांख्यिकी)</h2>
+      <p>Calculate metrics, standard deviations, Pearson correlation coefficients, and linear regression models:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">Prajna</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>चलम् अङ्काः = सूची_रचय();
+सूची_योजय(अङ्काः, १०.०);
+सूची_योजय(अङ्काः, १५.०);
+सूची_योजय(अङ्काः, २०.०);
+सूची_योजय(अङ्काः, २५.०);
+
+लिख "माध्यम् (Mean) = " + सूत्र_परिवर्तय(सांख्यिकी_माध्यम्(अङ्काः));
+लिख "मध्यिका (Median) = " + सूत्र_परिवर्तय(सांख्यिकी_मध्यिका(अङ्काः));
+लिख "विचरणम् (Variance) = " + सूत्र_परिवर्तय(सांख्यिकी_विचरणम्(अङ्काः));
+लिख "प्रमाणविचलनम् (StdDev) = " + सूत्र_परिवर्तय(सांख्यिकी_प्रमाणविचलनम्(अङ्काः));
+
+// Linear regression (y = mx + c)
+चलम् x = सूची_रचय();
+सूची_योजय(x, १.०); सूची_योजय(x, २.०); सूची_योजय(x, ३.०);
+चलम् y = सूची_रचय();
+सूची_योजय(y, २.०); सूची_योजय(y, ४.०); सूची_योजय(y, ५.०);
+
+चलम् समाश्रय = सांख्यिकी_समाश्रयणम्(x, y);
+लिख "प्रवणता (Slope m) = " + सूत्र_परिवर्तय(सूची_प्राप्नु(समाश्रय, ०));
+लिख "अन्तःखण्डः (Intercept c) = " + सूत्र_परिवर्तय(सूची_प्राप्नु(समाश्रय, १));</code></pre>
+      </div>
+    `,
+
     playground_sec: `
       <h1>Live Browser Playground</h1>
       <p>Experiment with Prajna directly in your web browser:</p>
       <div style="margin: 1.5rem 0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
           <select id="playground-sample-select" class="btn-control" onchange="PrajnaApp.loadPlaygroundSample()">
+            <option value="datascience">दत्ततालिका तथा सांख्यिकी (Data Science & Stats)</option>
             <option value="conditionals">यदि-अन्यथा (Conditionals & Grades)</option>
             <option value="fibonacci">फिबोनाची-माला (Fibonacci)</option>
             <option value="sets">समुच्चयः (Mathematical Sets)</option>

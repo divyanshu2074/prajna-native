@@ -90,7 +90,15 @@
          पदम् == "जाल_प्राप्नु" वा पदम् == "जाल_प्रेषय" वा पदम् == "जाल_अवतारणम्" वा
          पदम् == "गणित_लॉग" वा पदम् == "गणित_लॉग१०" वा पदम् == "गणित_माध्यम्" वा
          पदम् == "गणित_मध्यिका" वा पदम् == "वस्तु_रचय" वा पदम् == "वस्तु_स्थापय" वा
-         पदम् == "वस्तु_प्राप्नु" वा पदम् == "वस्तु_गुणाः") {
+         पदम् == "वस्तु_प्राप्नु" वा पदम् == "वस्तु_गुणाः" वा
+         पदम् == "तालिका_रचय" वा पदम् == "तालिका_पङ्क्ति_योजय" वा पदम् == "तालिका_स्तम्भ_प्राप्नु" वा
+         पदम् == "तालिका_संक्षेपः" वा पदम् == "दत्त_पठ_csv" वा पदम् == "दत्त_लिख_csv" वा
+         पदम् == "व्यूह_रचय" वा पदम् == "व्यूह_प्राप्नु" वा पदम् == "व्यूह_स्थापय" वा
+         पदम् == "व्यूह_पङ्क्तयः" वा पदम् == "व्यूह_स्तम्भाः" वा पदम् == "व्यूह_गुणनम्" वा
+         पदम् == "व्यूह_परिवर्तः" वा पदम् == "सदिश_अदिशगुणनम्" वा
+         पदम् == "सांख्यिकी_माध्यम्" वा पदम् == "सांख्यिकी_मध्यिका" वा पदम् == "सांख्यिकी_विचरणम्" वा
+         पदम् == "सांख्यिकी_प्रमाणविचलनम्" वा पदम् == "सांख्यिकी_सहसम्बन्धः" वा पदम् == "सांख्यिकी_समाश्रयणम्" वा
+         पदम् == "पठ_पङ्क्ति" वा पदम् == "संवादात्मक_आदेशफलकम्") {
         प्रत्यागच्छ सत्यम्;
     }
     प्रत्यागच्छ असत्यम्;
@@ -159,11 +167,16 @@
 फलनम् अङ्कम्_पठ(स्रोतः, सूचकः, दीर्घता) {
     चलम् पाठः = "";
     चलम् वर्तमान_सूचकः = सूचकः;
+    चलम् दशांशयुक्तम् = असत्यम्;
 
     यावत् (वर्तमान_सूचकः < दीर्घता) {
         चलम् च = वर्ण_प्राप्नु(स्रोतः, वर्तमान_सूचकः);
         यदि (देवनागरी_अङ्कम्(च) वा आङ्ग्ल_अङ्कम्(च)) {
             पाठः = पाठः + अङ्क_परिवर्तनम्(च);
+            वर्तमान_सूचकः = वर्तमान_सूचकः + १;
+        } अन्यथा यदि (च == "." तथा दशांशयुक्तम् == असत्यम् तथा वर्तमान_सूचकः + १ < दीर्घता तथा (देवनागरी_अङ्कम्(वर्ण_प्राप्नु(स्रोतः, वर्तमान_सूचकः + १)) वा आङ्ग्ल_अङ्कम्(वर्ण_प्राप्नु(स्रोतः, वर्तमान_सूचकः + १)))) {
+            पाठः = पाठः + ".";
+            दशांशयुक्तम् = सत्यम्;
             वर्तमान_सूचकः = वर्तमान_सूचकः + १;
         } अन्यथा {
             यावत्_विराम();
@@ -173,6 +186,9 @@
     }
 
     चलम् परिणाम_सूचकः = सूचकः + सूत्र_दीर्घता(पाठः);
+    यदि (दशांशयुक्तम्) {
+        प्रत्यागच्छ सूची_द्वयम्(पाठः + "D", परिणाम_सूचकः);
+    }
     प्रत्यागच्छ सूची_द्वयम्(पाठः + "L", परिणाम_सूचकः);
 }
 
@@ -732,7 +748,116 @@
     धावकः = धावकः + "    public static double DashamshaParivartaya(object v) { if (v == null) return 0.0; double d = 0.0; double.TryParse(v.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d); return d; }\n";
     धावकः = धावकः + "    public static long PurnankaParivartaya(object v) { if (v == null) return 0; double d = 0.0; if (double.TryParse(v.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d)) return (long)d; return 0; }\n";
     धावकः = धावकः + "    public static void Bahirgaccha(object code) { Environment.Exit(Convert.ToInt32(code)); }\n";
-    धावकः = धावकः + "    public static long PatralekhakamArabhasva(object t, object init) {\n";
+    धावकः = धावकः + "\n    // DataFrames (दत्ततालिका)\n    public static Dictionary<string, object> TalikaRachaya(object stambhah) {\n        var d = new Dictionary<string, object>();\n        var list = new List<object>();\n        var sList = stambhah as IList;\n        if (sList != null) { foreach (var item in sList) list.Add(item == null ? \"\" : item.ToString()); }\n        d[\"stambhah\"] = list;\n        d[\"panktiyah\"] = new List<object>();\n        return d;\n    }\n    public static dynamic TalikaPanktiYojaya(dynamic talika, dynamic pankti) {\n        if (talika != null && talika is IDictionary && talika.ContainsKey(\"panktiyah\")) {\n            var list = talika[\"panktiyah\"] as IList;\n            if (list != null) list.Add(pankti);\n        }\n        return talika;\n    }\n    public static List<object> TalikaStambhaPraptnu(dynamic talika, dynamic stambhaNama) {\n        var res = new List<object>();\n        if (talika != null && talika is IDictionary && talika.ContainsKey(\"stambhah\") && talika.ContainsKey(\"panktiyah\")) {\n            var stambhah = talika[\"stambhah\"] as IList;\n            var panktiyah = talika[\"panktiyah\"] as IList;\n            if (stambhah != null && panktiyah != null) {\n                int idx = -1;\n                string target = stambhaNama == null ? \"\" : stambhaNama.ToString();\n                for (int i = 0; i < stambhah.Count; i++) {\n                    if (stambhah[i] != null && stambhah[i].ToString() == target) { idx = i; break; }\n                }\n                if (idx != -1) {\n                    foreach (var row in panktiyah) {\n                        var r = row as IList;\n                        if (r != null && idx < r.Count) res.Add(r[idx]);\n                        else res.Add(null);\n                    }\n                }\n            }\n        }\n        return res;\n    }\n    public static string TalikaSankshepah(dynamic talika) {\n        if (talika == null || !(talika is IDictionary) || !talika.ContainsKey(\"stambhah\") || !talika.ContainsKey(\"panktiyah\")) return \"[तालिका-दोषः]\";\n        var stambhah = talika[\"stambhah\"] as IList;\n        var panktiyah = talika[\"panktiyah\"] as IList;\n        int cols = stambhah != null ? stambhah.Count : 0;\n        int rows = panktiyah != null ? panktiyah.Count : 0;\n        StringBuilder sb = new StringBuilder();\n        sb.AppendLine(string.Format(\"दत्ततालिका: {0} पङ्क्तयः x {1} स्तम्भाः\", IntToDevanagari(rows), IntToDevanagari(cols)));\n        if (stambhah != null) {\n            sb.Append(\"स्तम्भाः: [ \");\n            foreach (var col in stambhah) sb.Append(col + \" \");\n            sb.Append(\"]\");\n        }\n        return sb.ToString();\n    }\n    public static Dictionary<string, object> DattaPathaCsv(dynamic path) {\n        string p = path == null ? \"\" : path.ToString();\n        var dt = TalikaRachaya(new List<object>());\n        if (File.Exists(p)) {\n            var lines = File.ReadAllLines(p, Encoding.UTF8);\n            if (lines.Length > 0) {\n                var headers = lines[0].Split(',');\n                var stambhaList = new List<object>();\n                foreach (var h in headers) stambhaList.Add(h.Trim());\n                dt[\"stambhah\"] = stambhaList;\n                var rowsList = new List<object>();\n                for (int i = 1; i < lines.Length; i++) {\n                    if (string.IsNullOrWhiteSpace(lines[i])) continue;\n                    var cells = lines[i].Split(',');\n                    var row = new List<object>();\n                    foreach (var c in cells) {\n                        string trimmed = c.Trim();\n                        double num = 0.0;\n                        if (double.TryParse(trimmed, System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out num))\n                            row.Add(trimmed.Contains(\".\") ? (object)num : (object)((long)num));\n                        else\n                            row.Add(trimmed);\n                    }\n                    rowsList.Add(row);\n                }\n                dt[\"panktiyah\"] = rowsList;\n            }\n        }\n        return dt;\n    }\n    public static long DattaLekhaCsv(dynamic talika, dynamic path) {\n        string p = path == null ? \"\" : path.ToString();\n        if (talika != null && talika is IDictionary && talika.ContainsKey(\"stambhah\") && talika.ContainsKey(\"panktiyah\")) {\n            var stambhah = talika[\"stambhah\"] as IList;\n            var panktiyah = talika[\"panktiyah\"] as IList;\n            StringBuilder sb = new StringBuilder();\n            if (stambhah != null) {\n                List<string> h = new List<string>();\n                foreach (var col in stambhah) h.Add(col == null ? \"\" : col.ToString());\n                sb.AppendLine(string.Join(\",\", h.ToArray()));\n            }\n            if (panktiyah != null) {\n                foreach (var row in panktiyah) {\n                    var r = row as IList;\n                    if (r != null) {\n                        List<string> cells = new List<string>();\n                        foreach (var c in r) cells.Add(c == null ? \"\" : c.ToString());\n                        sb.AppendLine(string.Join(\",\", cells.ToArray()));\n                    }\n                }\n            }\n            File.WriteAllText(p, sb.ToString(), Encoding.UTF8);\n            return 1;\n        }\n        return 0;\n    }\n\n    // Matrices (संख्याव्यूहः)\n    public static List<object> VyuhaRachaya(dynamic rows, dynamic cols, dynamic values) {\n        int r = Convert.ToInt32(rows);\n        int c = Convert.ToInt32(cols);\n        var matrix = new List<object>();\n        var vals = values as IList;\n        int idx = 0;\n        for (int i = 0; i < r; i++) {\n            var row = new List<object>();\n            for (int j = 0; j < c; j++) {\n                if (vals != null && idx < vals.Count) row.Add(vals[idx++]);\n                else row.Add(0.0);\n            }\n            matrix.Add(row);\n        }\n        return matrix;\n    }\n    public static dynamic VyuhaPraptnu(dynamic m, dynamic r, dynamic c) {\n        var mat = m as IList;\n        if (mat != null) {\n            int rowIdx = Convert.ToInt32(r);\n            int colIdx = Convert.ToInt32(c);\n            if (rowIdx >= 0 && rowIdx < mat.Count) {\n                var row = mat[rowIdx] as IList;\n                if (row != null && colIdx >= 0 && colIdx < row.Count) return row[colIdx];\n            }\n        }\n        return 0.0;\n    }\n    public static dynamic VyuhaSthapaya(dynamic m, dynamic r, dynamic c, dynamic v) {\n        var mat = m as IList;\n        if (mat != null) {\n            int rowIdx = Convert.ToInt32(r);\n            int colIdx = Convert.ToInt32(c);\n            if (rowIdx >= 0 && rowIdx < mat.Count) {\n                var row = mat[rowIdx] as IList;\n                if (row != null && colIdx >= 0 && colIdx < row.Count) row[colIdx] = v;\n            }\n        }\n        return m;\n    }\n    public static long VyuhaPanktiyah(dynamic m) { var mat = m as IList; return mat != null ? mat.Count : 0; }\n    public static long VyuhaStambhah(dynamic m) { var mat = m as IList; if (mat != null && mat.Count > 0) { var r = mat[0] as IList; return r != null ? r.Count : 0; } return 0; }\n    public static List<object> VyuhaParivartah(dynamic m) {\n        var mat = m as IList;\n        if (mat == null || mat.Count == 0) return new List<object>();\n        int r = mat.Count;\n        int c = ((IList)mat[0]).Count;\n        var res = new List<object>();\n        for (int j = 0; j < c; j++) {\n            var newRow = new List<object>();\n            for (int i = 0; i < r; i++) newRow.Add(((IList)mat[i])[j]);\n            res.Add(newRow);\n        }\n        return res;\n    }\n    public static List<object> VyuhaGunanam(dynamic a, dynamic b) {\n        var matA = a as IList;\n        var matB = b as IList;\n        if (matA == null || matB == null || matA.Count == 0 || matB.Count == 0) return new List<object>();\n        int rA = matA.Count;\n        int cA = ((IList)matA[0]).Count;\n        int rB = matB.Count;\n        int cB = ((IList)matB[0]).Count;\n        if (cA != rB) return new List<object>();\n        var res = new List<object>();\n        for (int i = 0; i < rA; i++) {\n            var row = new List<object>();\n            for (int j = 0; j < cB; j++) {\n                double sum = 0.0;\n                for (int k = 0; k < cA; k++) {\n                    double vA = Convert.ToDouble(((IList)matA[i])[k]);\n                    double vB = Convert.ToDouble(((IList)matB[k])[j]);\n                    sum += vA * vB;\n                }\n                row.Add(sum);\n            }\n            res.Add(row);\n        }\n        return res;\n    }\n    public static double SadishaAdishagunanam(dynamic a, dynamic b) {\n        var listA = a as IList;\n        var listB = b as IList;\n        if (listA == null || listB == null) return 0.0;\n        int len = Math.Min(listA.Count, listB.Count);\n        double sum = 0.0;\n        for (int i = 0; i < len; i++) sum += Convert.ToDouble(listA[i]) * Convert.ToDouble(listB[i]);\n        return sum;\n    }\n\n    // Statistics (सांख्यिकी)\n    public static double SankhyikiMadhyamam(dynamic a) {\n        var l = a as IList;\n        if (l == null || l.Count == 0) return 0.0;\n        double sum = 0.0;\n        foreach (var v in l) sum += Convert.ToDouble(v);\n        return sum / l.Count;\n    }\n    public static double SankhyikiMadhyika(dynamic a) {\n        var l = a as IList;\n        if (l == null || l.Count == 0) return 0.0;\n        var nums = new List<double>();\n        foreach (var v in l) nums.Add(Convert.ToDouble(v));\n        nums.Sort();\n        int mid = nums.Count / 2;\n        return (nums.Count % 2 != 0) ? nums[mid] : (nums[mid - 1] + nums[mid]) / 2.0;\n    }\n    public static double SankhyikiVicharanam(dynamic a) {\n        var l = a as IList;\n        if (l == null || l.Count < 2) return 0.0;\n        double mean = SankhyikiMadhyamam(a);\n        double sumSq = 0.0;\n        foreach (var v in l) {\n            double diff = Convert.ToDouble(v) - mean;\n            sumSq += diff * diff;\n        }\n        return sumSq / (l.Count - 1);\n    }\n    public static double SankhyikiPramanavichalanam(dynamic a) {\n        return Math.Sqrt(SankhyikiVicharanam(a));\n    }\n    public static double SankhyikiSahasambandhah(dynamic x, dynamic y) {\n        var lx = x as IList;\n        var ly = y as IList;\n        if (lx == null || ly == null || lx.Count < 2 || lx.Count != ly.Count) return 0.0;\n        double meanX = SankhyikiMadhyamam(x);\n        double meanY = SankhyikiMadhyamam(y);\n        double num = 0.0, denomX = 0.0, denomY = 0.0;\n        for (int i = 0; i < lx.Count; i++) {\n            double dx = Convert.ToDouble(lx[i]) - meanX;\n            double dy = Convert.ToDouble(ly[i]) - meanY;\n            num += dx * dy;\n            denomX += dx * dx;\n            denomY += dy * dy;\n        }\n        double denom = Math.Sqrt(denomX * denomY);\n        return denom == 0.0 ? 0.0 : num / denom;\n    }\n    public static List<object> SankhyikiSamashrayanam(dynamic x, dynamic y) {\n        var lx = x as IList;\n        var ly = y as IList;\n        if (lx == null || ly == null || lx.Count < 2 || lx.Count != ly.Count) return new List<object> { 0.0, 0.0 };\n        double meanX = SankhyikiMadhyamam(x);\n        double meanY = SankhyikiMadhyamam(y);\n        double num = 0.0, denom = 0.0;\n        for (int i = 0; i < lx.Count; i++) {\n            double dx = Convert.ToDouble(lx[i]) - meanX;\n            num += dx * (Convert.ToDouble(ly[i]) - meanY);\n            denom += dx * dx;\n        }\n        double slope = denom == 0.0 ? 0.0 : num / denom;\n        double intercept = meanY - slope * meanX;\n        return new List<object> { slope, intercept };\n    }\n\n    // Console Input & Interactive REPL\n    public static string PathaPankti() {\n        return Console.ReadLine() ?? \"\";\n    }\n    public static void StartRepl() {
+        try {
+            Console.OutputEncoding = Encoding.UTF8;
+            Console.InputEncoding = Encoding.UTF8;
+        } catch { }
+        Console.WriteLine("==================================================");
+        Console.WriteLine("प्रज्ञा (Prajna) v1.0.0 — संवादात्मक-आदेशफलकम् (Interactive REPL)");
+        Console.WriteLine("संस्कृतभाषाधारिता स्वायत्ता सङ्गणकप्रणाली");
+        Console.WriteLine("बहिर्गमनाय 'विराम;' / 'exit', साहाय्याय 'साहाय्यम्' लिखन्तु।");
+        Console.WriteLine("==================================================");
+
+        var sessionHistory = new List<string>();
+        string buffer = "";
+        int openBraces = 0;
+
+        while (true) {
+            if (openBraces > 0) {
+                Console.Write("प्रज्ञा ... ");
+            } else {
+                Console.Write("प्रज्ञा >>> ");
+            }
+
+            string line = Console.ReadLine();
+            if (line == null) break;
+            string trimmed = line.Trim();
+
+            if (openBraces == 0 && (trimmed == "विराम;" || trimmed == "विराम" || trimmed == "exit" || trimmed == "quit")) {
+                Console.WriteLine("प्रज्ञा-आदेशफलकं समापितम्। शुभं भवतु!");
+                break;
+            }
+            if (openBraces == 0 && (trimmed == "साहाय्यम्" || trimmed == "help")) {
+                Console.WriteLine("क्रीडाङ्गणवत् प्रज्ञा-सङ्केतं लिखतु, उदा: चलम् x = २५; लिख x * २;");
+                Console.WriteLine("बहिर्गमनाय 'विराम;' अथवा 'exit' इति लिखतु।");
+                continue;
+            }
+            if (openBraces == 0 && (trimmed == "स्वच्छम्" || trimmed == "clear")) {
+                Console.Clear();
+                continue;
+            }
+
+            foreach (char ch in trimmed) {
+                if (ch == '{') openBraces++;
+                else if (ch == '}') openBraces = Math.Max(0, openBraces - 1);
+            }
+
+            buffer += (buffer.Length > 0 ? "\n" : "") + line;
+            if (openBraces > 0) continue;
+
+            string toExecute = buffer.Trim();
+            buffer = "";
+
+            if (string.IsNullOrWhiteSpace(toExecute)) continue;
+
+            try {
+                bool isDef = toExecute.StartsWith("चलम्") || toExecute.StartsWith("स्थिरम्") || toExecute.StartsWith("फलनम्") || toExecute.Contains("=");
+                string codeToRun = "";
+                if (sessionHistory.Count > 0) {
+                    codeToRun = string.Join("\n", sessionHistory.ToArray()) + "\n";
+                }
+
+                string exprRun = toExecute;
+                if (!exprRun.Contains(";") && !exprRun.Contains("{") && !isDef && !exprRun.StartsWith("लिख")) {
+                    exprRun = "लिख " + exprRun + ";";
+                }
+                codeToRun += exprRun;
+
+                string tempPr = "_repl_eval.pr";
+                string tempExe = "_repl_eval.exe";
+                File.WriteAllText(tempPr, codeToRun, Encoding.UTF8);
+
+                string prajnaExe = System.Reflection.Assembly.GetExecutingAssembly().Location;
+                var psi = new ProcessStartInfo(prajnaExe, "run " + tempPr) {
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true
+                };
+
+                using (var p = Process.Start(psi)) {
+                    string stdout = p.StandardOutput.ReadToEnd();
+                    p.WaitForExit();
+                    if (p.ExitCode == 0) {
+                        if (isDef) {
+                            sessionHistory.Add(toExecute);
+                        }
+                        if (!string.IsNullOrWhiteSpace(stdout)) {
+                            foreach (var l in stdout.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)) {
+                                if (!l.StartsWith("प्रज्ञा-स्वयम्भू-सङ्कलनं") && !l.StartsWith("सङ्कलनं सफलं")) {
+                                    Console.WriteLine(l);
+                                }
+                            }
+                        }
+                    } else {
+                        if (!string.IsNullOrWhiteSpace(stdout)) {
+                            foreach (var l in stdout.Split(new char[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries)) {
+                                if (!l.StartsWith("प्रज्ञा-स्वयम्भू-सङ्कलनं") && !l.StartsWith("सङ्कलनं सफलं")) {
+                                    Console.WriteLine(l);
+                                }
+                            }
+                        }
+                    }
+                }
+                if (File.Exists(tempPr)) File.Delete(tempPr);
+                if (File.Exists(tempExe)) File.Delete(tempExe);
+            } catch (Exception ex) {
+                Console.WriteLine("[सञ्चालन-दोषः]: " + ex.Message);
+            }
+        }
+    }
+        धावकः = धावकः + "    public static long PatralekhakamArabhasva(object t, object init) {\n";
     धावकः = धावकः + "        Form f = new Form() { Text = t == null ? \"प्रज्ञा पत्रलेखकः\" : t.ToString(), Size = new Size(900, 650), StartPosition = FormStartPosition.CenterScreen };\n";
     धावकः = धावकः + "        TextBox tb = new TextBox() { Multiline = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Both, Font = new Font(\"Nirmala UI\", 12F), Text = init == null ? \"\" : init.ToString() };\n";
     धावकः = धावकः + "        f.Controls.Add(tb);\n";
@@ -850,6 +975,30 @@
     कक्षा = कक्षा + "    public static dynamic आदेशतर्काः() { return PrajnaRuntime.AdeshaTarkah(); }\n";
     कक्षा = कक्षा + "    public static dynamic बहिर्गच्छ(dynamic c) { PrajnaRuntime.Bahirgaccha(c); return 0; }\n\n";
 
+    कक्षा = कक्षा + "    public static dynamic तालिका_रचय(params dynamic[] a) { return PrajnaRuntime.TalikaRachaya(a.Length > 0 ? a[0] : null); }\n";
+    कक्षा = कक्षा + "    public static dynamic तालिका_पङ्क्ति_योजय(dynamic a, dynamic b) { return PrajnaRuntime.TalikaPanktiYojaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic तालिका_स्तम्भ_प्राप्नु(dynamic a, dynamic b) { return PrajnaRuntime.TalikaStambhaPraptnu(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic तालिका_संक्षेपः(dynamic a) { return PrajnaRuntime.TalikaSankshepah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic दत्त_पठ_csv(dynamic a) { return PrajnaRuntime.DattaPathaCsv(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic दत्त_लिख_csv(dynamic a, dynamic b) { return PrajnaRuntime.DattaLekhaCsv(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic व्यूह_रचय(dynamic a, dynamic b, dynamic c) { return PrajnaRuntime.VyuhaRachaya(a, b, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic व्यूह_प्राप्नु(dynamic a, dynamic b, dynamic c) { return PrajnaRuntime.VyuhaPraptnu(a, b, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic व्यूह_स्थापय(dynamic a, dynamic b, dynamic c, dynamic d) { return PrajnaRuntime.VyuhaSthapaya(a, b, c, d); }\n";
+    कक्षा = कक्षा + "    public static dynamic व्यूह_पङ्क्तयः(dynamic a) { return PrajnaRuntime.VyuhaPanktiyah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic व्यूह_स्तम्भाः(dynamic a) { return PrajnaRuntime.VyuhaStambhah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic व्यूह_गुणनम्(dynamic a, dynamic b) { return PrajnaRuntime.VyuhaGunanam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic व्यूह_परिवर्तः(dynamic a) { return PrajnaRuntime.VyuhaParivartah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सदिश_अदिशगुणनम्(dynamic a, dynamic b) { return PrajnaRuntime.SadishaAdishagunanam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सांख्यिकी_माध्यम्(dynamic a) { return PrajnaRuntime.SankhyikiMadhyamam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सांख्यिकी_मध्यिका(dynamic a) { return PrajnaRuntime.SankhyikiMadhyika(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सांख्यिकी_विचरणम्(dynamic a) { return PrajnaRuntime.SankhyikiVicharanam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सांख्यिकी_प्रमाणविचलनम्(dynamic a) { return PrajnaRuntime.SankhyikiPramanavichalanam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सांख्यिकी_सहसम्बन्धः(dynamic a, dynamic b) { return PrajnaRuntime.SankhyikiSahasambandhah(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सांख्यिकी_समाश्रयणम्(dynamic a, dynamic b) { return PrajnaRuntime.SankhyikiSamashrayanam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic पठ_पङ्क्ति() { return PrajnaRuntime.PathaPankti(); }\n";
+    कक्षा = कक्षा + "    public static dynamic संवादात्मक_आदेशफलकम्() { PrajnaRuntime.StartRepl(); return 0; }\n";
+
+
     कक्षा = कक्षा + फलनानि + "\n";
     कक्षा = कक्षा + "    [STAThread]\n    public static void Main(string[] args) {\n";
     कक्षा = कक्षा + "        try { Console.OutputEncoding = Encoding.UTF8; Console.InputEncoding = Encoding.UTF8; } catch { }\n";
@@ -919,15 +1068,23 @@
     चलम् तर्काः = आदेशतर्काः();
     चलम् तर्क_सङ्ख्या = सूची_दीर्घता(तर्काः);
 
-    यदि (तर्क_सङ्ख्या == ० वा सूची_प्राप्नु(तर्काः, ०) == "--help" वा सूची_प्राप्नु(तर्काः, ०) == "-h") {
+    यदि (तर्क_सङ्ख्या == ० वा सूची_प्राप्नु(तर्काः, ०) == "repl") {
+        संवादात्मक_आदेशफलकम्();
+        प्रत्यागच्छ ०;
+    }
+
+    यदि (सूची_प्राप्नु(तर्काः, ०) == "--help" वा सूची_प्राप्नु(तर्काः, ०) == "-h" वा सूची_प्राप्नु(तर्काः, ०) == "help") {
         लिख "==================================================";
         लिख "प्रज्ञा (Prajna) — स्वयम्भू-सङ्कलकः (Self-Hosted Compiler)";
         लिख "संस्कृतभाषायाः स्वायत्तसङ्गणकप्रणाली";
         लिख "==================================================";
         लिख "उपयोगः:";
+        लिख "  prajna                          (संवादात्मक-आदेशफलकम् / REPL)";
+        लिख "  prajna repl                     (संवादात्मक-आदेशफलकम् / REPL)";
+        लिख "  prajna run <सञ्चिका.pr>          (प्रोग्राम-निष्पादनम्)";
         लिख "  prajna compile <सञ्चिका.pr> [-o <निर्गम.exe>] [--gui]";
-        लिख "  prajna run <सञ्चिका.pr>";
-        लिख "  prajna version";
+        लिख "  prajna version                  (संस्करण-प्रदर्शनम्)";
+        लिख "  prajna help                     (साहाय्य-प्रदर्शनम्)";
         प्रत्यागच्छ ०;
     }
 

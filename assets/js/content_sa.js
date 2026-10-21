@@ -637,12 +637,176 @@ chmod +x build.sh
       <p>VS Code Dark+ विन्यासयुक्तः, संस्कृतभाषायाः सर्वसुविधासम्पन्नः विकासपरिवेशः।</p>
     `,
 
+    
+    repl: `
+      <h1>संवादात्मक-आदेशफलकम् (Interactive REPL)</h1>
+      <p class="lead">
+        प्रज्ञा-भाषा साक्षात् सम्भाषणवत् सङ्केत-परीक्षणाय संवादात्मक-आदेशफलकं (REPL) प्रयच्छति। अत्र कोऽपि सञ्चिकां विना साक्षात् कोडं चालयितुं शक्नोति।
+      </p>
+
+      <h2>आदेशफलकस्य आरम्भः</h2>
+      <p>केवलं <code>prajna</code> अथवा <code>prajna repl</code> इति लिखतु:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">टर्मिनल (Terminal)</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code># साक्षात् आरम्भः:
+prajna
+
+# अथवा स्पष्टादेशेन:
+prajna repl</code></pre>
+      </div>
+
+      <h2>संवादोदाहरणम् (Live REPL Session)</h2>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">प्रज्ञा आदेशफलकम्</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>==================================================
+प्रज्ञा (Prajna) v1.0.0 — संवादात्मक-आदेशफलकम् (Interactive REPL)
+संस्कृतभाषाधारिता स्वायत्ता सङ्गणकप्रणाली
+बहिर्गमनाय 'विराम;' / 'exit', साहाय्याय 'साहाय्यम्' लिखन्तु।
+==================================================
+प्रज्ञा >>> चलम् क = २५;
+प्रज्ञा >>> चलम् ख = ७५;
+प्रज्ञा >>> लिख क + ख;
+१००
+प्रज्ञा >>> चलम् छात्राः = सूची_रचय();
+प्रज्ञा >>> सूची_योजय(छात्राः, "पाणिनिः");
+प्रज्ञा >>> सूची_योजय(छात्राः, "कात्यायनः");
+प्रज्ञा >>> लिख छात्राः;
+[ पाणिनिः, कात्यायनः ]
+प्रज्ञा >>> विराम;
+प्रज्ञा-आदेशफलकं समापितम्। शुभं भवतु!</code></pre>
+      </div>
+
+      <h2>आदेशाः (Control Commands)</h2>
+      <table class="table-api">
+        <thead><tr><th>आदेशः</th><th>कार्यम्</th></tr></thead>
+        <tbody>
+          <tr><td><code>विराम;</code> / <code>exit</code></td><td>सत्रात् बहिर्गच्छति</td></tr>
+          <tr><td><code>साहाय्यम्</code> / <code>help</code></td><td>उपयोग-मार्गदर्शिकां दर्शयति</td></tr>
+          <tr><td><code>स्वच्छम्</code> / <code>clear</code></td><td>फलकं निर्मलं करोति</td></tr>
+        </tbody>
+      </table>
+    `,
+
+
+    stdlib_datascience: `
+      <h1>दत्ततालिका, व्यूहः तथा सांख्यिकी (DataFrames, Matrices & Statistics)</h1>
+      <p class="lead">
+        दत्त-विज्ञानस्य (Data Science) कृते प्रज्ञा-भाषायां दत्ततालिका (DataFrames), संख्याव्यूहः (Matrix Algebra), CSV आदान-प्रदानं तथा सांख्यिकी-समाश्रयणम् (Statistical Regression) अन्तर्निर्मितानि सन्ति।
+      </p>
+
+      <h2>१. दत्ततालिका (DataFrames)</h2>
+      <p>स्तम्भानां नामभिः सह तालिकां रचयतु, पङ्क्तीः योजयतु, संक्षेपं च पश्यतु:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">प्रज्ञा</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>// स्तम्भाः
+चलम् स्तम्भाः = सूची_रचय();
+सूची_योजय(स्तम्भाः, "नाम");
+सूची_योजय(स्तम्भाः, "वयः");
+सूची_योजय(स्तम्भाः, "अङ्काः");
+
+चलम् तालिका = तालिका_रचय(स्तम्भाः);
+
+// पङ्क्तीनां संयोजनम्
+चलम् पङ्क्ति१ = सूची_रचय();
+सूची_योजय(पङ्क्ति१, "आर्यभटः");
+सूची_योजय(पङ्क्ति१, २३);
+सूची_योजय(पङ्क्ति१, ९८.५);
+तालिका_पङ्क्ति_योजय(तालिका, पङ्क्ति१);
+
+// संक्षेपः
+लिख तालिका_संक्षेपः(तालिका);
+
+// स्तम्भ-प्राप्तिः
+चलम् नामानि = तालिका_स्तम्भ_प्राप्नु(तालिका, "नाम");
+लिख "विद्वांसः: " + सूत्र_परिवर्तय(नामानि);</code></pre>
+      </div>
+
+      <h2>२. CSV सञ्चिका-सञ्चालनम्</h2>
+      <p>दत्ततालिकां CSV सञ्चिकायां संरक्षतु, ततः साक्षात् पठतु च:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">प्रज्ञा</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>// CSV सञ्चिकायां लेखनम्
+दत्त_लिख_csv(तालिका, "छात्रदत्तम्.csv");
+
+// CSV सञ्चिकातः पठनम्
+चलम् आगता = दत्त_पठ_csv("छात्रदत्तम्.csv");
+लिख तालिका_संक्षेपः(आगता);</code></pre>
+      </div>
+
+      <h2>३. संख्याव्यूहः (Matrix Algebra)</h2>
+      <p>व्यूह-गुणनम्, परिवर्तः (Transpose), सदिश-अदिशगुणनम् (Dot Product) च:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">प्रज्ञा</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>चलम् मू१ = सूची_रचय();
+सूची_योजय(मू१, १.०); सूची_योजय(मू१, २.०);
+सूची_योजय(मू१, ३.०); सूची_योजय(मू१, ४.०);
+चलम् व्यूह_क = व्यूह_रचय(२, २, मू१);
+
+चलम् मू२ = सूची_रचय();
+सूची_योजय(मू२, २.०); सूची_योजय(मू२, ०.०);
+सूची_योजय(मू२, १.०); सूची_योजय(मू२, २.०);
+चलम् व्यूह_ख = व्यूह_रचय(२, २, मू२);
+
+// व्यूह-गुणनम् (A x B)
+चलम् गुणितम् = व्यूह_गुणनम्(व्यूह_क, व्यूह_ख);
+लिख "गुणनफलम् [०, ०] = " + सूत्र_परिवर्तय(व्यूह_प्राप्नु(गुणितम्, ०, ०));
+
+// परिवर्तः (A^T)
+चलम् परि = व्यूह_परिवर्तः(व्यूह_क);</code></pre>
+      </div>
+
+      <h2>४. सांख्यिकी तथा समाश्रयणम् (Statistics & Regression)</h2>
+      <p>माध्यम्, मध्यिका, प्रमाणविचलनम्, सहसम्बन्धः, समाश्रयण-प्रवणता च:</p>
+      <div class="code-container">
+        <div class="code-header">
+          <span class="code-lang">प्रज्ञा</span>
+          <button class="btn-copy" onclick="PrajnaApp.copyCode(this)">प्रतिलिपिं कुरु (Copy)</button>
+        </div>
+        <pre><code>चलम् अङ्काः = सूची_रचय();
+सूची_योजय(अङ्काः, १०.०);
+सूची_योजय(अङ्काः, १५.०);
+सूची_योजय(अङ्काः, २०.०);
+सूची_योजय(अङ्काः, २५.०);
+
+लिख "माध्यम् = " + सूत्र_परिवर्तय(सांख्यिकी_माध्यम्(अङ्काः));
+लिख "मध्यिका = " + सूत्र_परिवर्तय(सांख्यिकी_मध्यिका(अङ्काः));
+लिख "विचरणम् = " + सूत्र_परिवर्तय(सांख्यिकी_विचरणम्(अङ्काः));
+लिख "प्रमाणविचलनम् = " + सूत्र_परिवर्तय(सांख्यिकी_प्रमाणविचलनम्(अङ्काः));
+
+// समाश्रयणम् (Linear Regression y = mx + c)
+चलम् x = सूची_रचय();
+सूची_योजय(x, १.०); सूची_योजय(x, २.०); सूची_योजय(x, ३.०);
+चलम् y = सूची_रचय();
+सूची_योजय(y, २.०); सूची_योजय(y, ४.०); सूची_योजय(y, ५.०);
+
+चलम् समाश्रय = सांख्यिकी_समाश्रयणम्(x, y);
+लिख "प्रवणता (m) = " + सूत्र_परिवर्तय(सूची_प्राप्नु(समाश्रय, ०));
+लिख "अन्तःखण्डः (c) = " + सूत्र_परिवर्तय(सूची_प्राप्नु(समाश्रय, १));</code></pre>
+      </div>
+    `,
+
     playground_sec: `
       <h1>प्रत्यक्ष-प्रयोगशाला (Live Browser Playground)</h1>
       <p>अत्र साक्षात् स्वस्य जालगवेषके (Browser) प्रज्ञा-प्रोग्रामं चालयित्वा पश्यन्तु:</p>
       <div style="margin: 1.5rem 0;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.75rem;">
           <select id="playground-sample-select" class="btn-control" onchange="PrajnaApp.loadPlaygroundSample()">
+            <option value="datascience">दत्ततालिका तथा सांख्यिकी (Data Science & Stats)</option>
             <option value="conditionals">यदि-अन्यथा (Conditionals & Grades)</option>
             <option value="fibonacci">फिबोनाची-माला (Fibonacci)</option>
             <option value="sets">समुच्चयः (Mathematical Sets)</option>
