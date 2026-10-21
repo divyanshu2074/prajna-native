@@ -1,0 +1,11 @@
+# Prajna Native — Git Ignore
+
+# Temporary compiler artifacts
+*.cs
+_prajna_temp.exe
+*.obj
+*.pdb
+*.tmp
+
+# User logs
+*.log

@@ -1,0 +1,793 @@
+// ============================================================================
+// प्रज्ञा (Prajna) — स्वयम्भू-सङ्कलकः (Self-Hosted Prajna Compiler)
+// अयम् सङ्कलकः सम्पूर्णतया प्रज्ञा-भाषायां लिखितः अस्ति।
+// अनेन प्रज्ञा-सङ्गणकप्रणाली Python-तन्त्रात् सम्पूर्णा मुक्ता भूत्वा
+// स्वयमेव प्रज्ञा-स्रोतःसङ्केतान् सङ्कलयति निष्पादयति च।
+// ============================================================================
+
+फलनम् देवनागरी_अङ्कम्(वर्णः) {
+    यदि (वर्णः == "०" वा वर्णः == "१" वा वर्णः == "२" वा वर्णः == "३" वा वर्णः == "४" वा
+         वर्णः == "५" वा वर्णः == "६" वा वर्णः == "७" वा वर्णः == "८" वा वर्णः == "९") {
+        प्रत्यागच्छ सत्यम्;
+    }
+    प्रत्यागच्छ असत्यम्;
+}
+
+फलनम् आङ्ग्ल_अङ्कम्(वर्णः) {
+    यदि (वर्णः == "0" वा वर्णः == "1" वा वर्णः == "2" वा वर्णः == "3" वा वर्णः == "4" वा
+         वर्णः == "5" वा वर्णः == "6" वा वर्णः == "7" वा वर्णः == "8" वा वर्णः == "9") {
+        प्रत्यागच्छ सत्यम्;
+    }
+    प्रत्यागच्छ असत्यम्;
+}
+
+फलनम् अङ्क_परिवर्तनम्(वर्णः) {
+    यदि (वर्णः == "०") { प्रत्यागच्छ "0"; }
+    यदि (वर्णः == "१") { प्रत्यागच्छ "1"; }
+    यदि (वर्णः == "२") { प्रत्यागच्छ "2"; }
+    यदि (वर्णः == "३") { प्रत्यागच्छ "3"; }
+    यदि (वर्णः == "४") { प्रत्यागच्छ "4"; }
+    यदि (वर्णः == "५") { प्रत्यागच्छ "5"; }
+    यदि (वर्णः == "६") { प्रत्यागच्छ "6"; }
+    यदि (वर्णः == "७") { प्रत्यागच्छ "7"; }
+    यदि (वर्णः == "८") { प्रत्यागच्छ "8"; }
+    यदि (वर्णः == "९") { प्रत्यागच्छ "9"; }
+    प्रत्यागच्छ वर्णः;
+}
+
+फलनम् रिक्तस्थानम्_अस्ति(वर्णः) {
+    यदि (वर्णः == " " वा वर्णः == "\t" वा वर्णः == "\r" वा वर्णः == "\n") {
+        प्रत्यागच्छ सत्यम्;
+    }
+    प्रत्यागच्छ असत्यम्;
+}
+
+फलनम् विरामचिह्नम्_अस्ति(वर्णः) {
+    यदि (वर्णः == "(" वा वर्णः == ")" वा वर्णः == "{" वा वर्णः == "}" वा
+         वर्णः == "[" वा वर्णः == "]" वा वर्णः == ";" वा वर्णः == "," वा
+         वर्णः == "+" वा वर्णः == "-" वा वर्णः == "*" वा वर्णः == "/" वा
+         वर्णः == "%" वा वर्णः == "=" वा वर्णः == "<" वा वर्णः == ">" वा
+         वर्णः == "!" वा वर्णः == "&" वा वर्णः == "|" वा
+         वर्णः == "==" वा वर्णः == "!=" वा वर्णः == "<=" वा वर्णः == ">=") {
+        प्रत्यागच्छ सत्यम्;
+    }
+    प्रत्यागच्छ असत्यम्;
+}
+
+फलनम् अन्तर्निर्मितम्_अस्ति(पदम्) {
+    यदि (पदम् == "सूत्र_दीर्घता" वा पदम् == "सूत्र_खण्डम्" वा पदम् == "वर्ण_प्राप्नु" वा
+         पदम् == "सूत्र_सम्बन्ध" वा पदम् == "संख्या_परिवर्तय" वा पदम् == "सूत्र_परिवर्तय" वा
+         पदम् == "सूत्र_विभाजय" वा पदम् == "सूत्र_संयोजय" वा पदम् == "सूत्र_प्रतिस्थापनम्" वा
+         पदम् == "सूत्र_अन्वेषणम्" वा पदम् == "सूत्र_छेदय" वा पदम् == "सूत्र_आरम्भः" वा
+         पदम् == "सूत्र_अन्तः" वा पदम् == "लघु_वर्णमाला" वा पदम् == "गुरु_वर्णमाला" वा
+         पदम् == "सूची_रचय" वा पदम् == "सूची_योजय" वा पदम् == "सूची_प्राप्नु" वा
+         पदम् == "सूची_स्थापय" वा पदम् == "सूची_दीर्घता" वा पदम् == "सूची_द्वयम्" वा
+         पदम् == "सूची_खण्डम्" वा पदम् == "सूची_निष्कासय" वा पदम् == "सूची_शोधय" वा
+         पदम् == "सूची_विपरीत" वा पदम् == "सूची_अन्तर्भावः" वा पदम् == "सूची_संयोजय" वा
+         पदम् == "सूची_अन्वेषणम्" वा पदम् == "कोष_रचय" वा पदम् == "कोष_स्थापय" वा
+         पदम् == "कोष_प्राप्नु" वा पदम् == "कोष_अस्ति" वा पदम् == "कोष_निष्कासय" वा
+         पदम् == "कोष_कुञ्चिकाः" वा पदम् == "कोष_मूल्यानि" वा पदम् == "कोष_दीर्घता" वा
+         पदम् == "कोष_स्वच्छीकुरु" वा पदम् == "गणित_वर्गमूलम्" वा पदम् == "गणित_घातः" वा
+         पदम् == "गणित_परममूल्यम्" वा पदम् == "गणित_ज्या" वा पदम् == "गणित_कोज्या" वा
+         पदम् == "गणित_स्पर्शज्या" वा पदम् == "गणित_अधः" वा पदम् == "गणित_उपरि" वा
+         पदम् == "गणित_समीपम्" वा पदम् == "गणित_पाई" वा पदम् == "गणित_ई" वा
+         पदम् == "यादृच्छिक" वा पदम् == "यादृच्छिक_अन्तराले" वा पदम् == "काल_वर्तमान_मिली" वा
+         पदम् == "काल_वर्तमान_क्षणम्" वा पदम् == "काल_विराम" वा पदम् == "सञ्चिका_पठ" वा
+         पदम् == "सञ्चिका_लिख" वा पदम् == "सञ्चिका_विद्यते" वा पदम् == "सञ्चिका_लोपय" वा
+         पदम् == "सञ्चिका_निर्देशिका_सूची" वा पदम् == "निर्देशिका_रचय" वा पदम् == "प्रणाली_वातावरणम्" वा
+         पदम् == "प्रणाली_सञ्चालकः" वा पदम् == "जेसन_रूपान्तरम्" वा पदम् == "जेसन_पठ" वा
+         पदम् == "प्रकारः" वा पदम् == "दशांश_परिवर्तय" वा पदम् == "पूर्णाङ्क_परिवर्तय" वा
+         पदम् == "वातायनम्_दर्शय" वा पदम् == "पत्रलेखकम्_आरभस्व" वा पदम् == "आदेशः_निष्पादय" वा
+         पदम् == "आदेशतर्काः" वा पदम् == "बहिर्गच्छ") {
+        प्रत्यागच्छ सत्यम्;
+    }
+    प्रत्यागच्छ असत्यम्;
+}
+
+// पद-रूपान्तरणम् (Expression Token to C# Code)
+फलनम् पद_रूपान्तरम्(पदम्) {
+    यदि (पदम् == "सत्यम्") { प्रत्यागच्छ "true"; }
+    यदि (पदम् == "असत्यम्") { प्रत्यागच्छ "false"; }
+    यदि (पदम् == "तथा") { प्रत्यागच्छ "&&"; }
+    यदि (पदम् == "वा") { प्रत्यागच्छ "||"; }
+    यदि (पदम् == "न") { प्रत्यागच्छ "!"; }
+    यदि (अन्तर्निर्मितम्_अस्ति(पदम्)) { प्रत्यागच्छ पदम्; }
+    यदि (सूत्र_दीर्घता(पदम्) > ० तथा वर्ण_प्राप्नु(पदम्, ०) == "\"") { प्रत्यागच्छ पदम्; }
+    यदि (सूत्र_दीर्घता(पदम्) > ० तथा आङ्ग्ल_अङ्कम्(वर्ण_प्राप्नु(पदम्, ०))) { प्रत्यागच्छ पदम्; }
+    यदि (विरामचिह्नम्_अस्ति(पदम्)) { प्रत्यागच्छ पदम्; }
+    प्रत्यागच्छ "var_" + पदम्;
+}
+
+// किं पदम् वाक्यसमाप्तौ योग्यम्?
+फलनम् समाप्ति_योग्यम्(पदम्) {
+    यदि (पदम् == "" वा पदम् == ";" वा पदम् == "{" वा पदम् == "}" वा पदम् == "(" वा पदम् == "[" वा
+         पदम् == "," वा पदम् == "+" वा पदम् == "-" वा पदम् == "*" वा पदम् == "/" वा पदम् == "%" वा
+         पदम् == "=" वा पदम् == "==" वा पदम् == "!=" वा पदम् == "<=" वा पदम् == ">=" वा
+         पदम् == "<" वा पदम् == ">" वा पदम् == "वा" वा पदम् == "तथा" वा पदम् == "यदि" वा
+         पदम् == "यावत्" वा पदम् == "चलम्" वा पदम् == "स्थिरम्" वा पदम् == "फलनम्" वा
+         पदम् == "अन्यथा" वा पदम् == "लिख" वा पदम् == "प्रत्यागच्छ") {
+        प्रत्यागच्छ असत्यम्;
+    }
+    प्रत्यागच्छ सत्यम्;
+}
+
+// सहायक-पठन-फलनानि
+फलनम् सूत्रम्_पठ(स्रोतः, सूचकः, दीर्घता) {
+    चलम् पाठः = "\"";
+    चलम् वर्तमान_सूचकः = सूचकः + १;
+    चलम् समाप्तम् = असत्यम्;
+
+    यावत् (वर्तमान_सूचकः < दीर्घता तथा समाप्तम् == असत्यम्) {
+        चलम् च = वर्ण_प्राप्नु(स्रोतः, वर्तमान_सूचकः);
+        यदि (च == "\\") {
+            पाठः = पाठः + च;
+            वर्तमान_सूचकः = वर्तमान_सूचकः + १;
+            यदि (वर्तमान_सूचकः < दीर्घता) {
+                पाठः = पाठः + वर्ण_प्राप्नु(स्रोतः, वर्तमान_सूचकः);
+                वर्तमान_सूचकः = वर्तमान_सूचकः + १;
+            }
+        } अन्यथा यदि (च == "\"") {
+            पाठः = पाठः + "\"";
+            वर्तमान_सूचकः = वर्तमान_सूचकः + १;
+            समाप्तम् = सत्यम्;
+        } अन्यथा {
+            पाठः = पाठः + च;
+            वर्तमान_सूचकः = वर्तमान_सूचकः + १;
+        }
+    }
+
+    प्रत्यागच्छ सूची_द्वयम्(पाठः, वर्तमान_सूचकः);
+}
+
+फलनम् यावत्_विराम() {
+    प्रत्यागच्छ ०;
+}
+
+फलनम् अङ्कम्_पठ(स्रोतः, सूचकः, दीर्घता) {
+    चलम् पाठः = "";
+    चलम् वर्तमान_सूचकः = सूचकः;
+
+    यावत् (वर्तमान_सूचकः < दीर्घता) {
+        चलम् च = वर्ण_प्राप्नु(स्रोतः, वर्तमान_सूचकः);
+        यदि (देवनागरी_अङ्कम्(च) वा आङ्ग्ल_अङ्कम्(च)) {
+            पाठः = पाठः + अङ्क_परिवर्तनम्(च);
+            वर्तमान_सूचकः = वर्तमान_सूचकः + १;
+        } अन्यथा {
+            यावत्_विराम();
+            चलम् शेषः = दीर्घता - वर्तमान_सूचकः;
+            वर्तमान_सूचकः = वर्तमान_सूचकः + शेषः;
+        }
+    }
+
+    चलम् परिणाम_सूचकः = सूचकः + सूत्र_दीर्घता(पाठः);
+    प्रत्यागच्छ सूची_द्वयम्(पाठः + "L", परिणाम_सूचकः);
+}
+
+फलनम् नाम_पठ(स्रोतः, सूचकः, दीर्घता) {
+    चलम् पाठः = "";
+    चलम् वर्तमान_सूचकः = सूचकः;
+
+    यावत् (वर्तमान_सूचकः < दीर्घता) {
+        चलम् च = वर्ण_प्राप्नु(स्रोतः, वर्तमान_सूचकः);
+        यदि (रिक्तस्थानम्_अस्ति(च) वा विरामचिह्नम्_अस्ति(च) वा च == "\"") {
+            चलम् शेषः = दीर्घता - वर्तमान_सूचकः;
+            वर्तमान_सूचकः = वर्तमान_सूचकः + शेषः;
+        } अन्यथा {
+            पाठः = पाठः + च;
+            वर्तमान_सूचकः = वर्तमान_सूचकः + १;
+        }
+    }
+
+    चलम् परिणाम_सूचकः = सूचकः + सूत्र_दीर्घता(पाठः);
+    प्रत्यागच्छ सूची_द्वयम्(पाठः, परिणाम_सूचकः);
+}
+
+// पदच्छेदकः (Tokenizer)
+फलनम् पदच्छेदः(स्रोतः) {
+    चलम् चिह्नानि = सूची_रचय();
+    चलम् दीर्घता = सूत्र_दीर्घता(स्रोतः);
+    चलम् सूचकः = ०;
+
+    यावत् (सूचकः < दीर्घता) {
+        चलम् वर्तमानः = वर्ण_प्राप्नु(स्रोतः, सूचकः);
+
+        यदि (वर्तमानः == "\n") {
+            चलम् सङ्ख्या = सूची_दीर्घता(चिह्नानि);
+            यदि (सङ्ख्या > ०) {
+                चलम् अन्तिमम् = सूची_प्राप्नु(चिह्नानि, सङ्ख्या - १);
+                यदि (समाप्ति_योग्यम्(अन्तिमम्)) {
+                    सूची_योजय(चिह्नानि, ";");
+                }
+            }
+            सूचकः = सूचकः + १;
+        } अन्यथा यदि (रिक्तस्थानम्_अस्ति(वर्तमानः)) {
+            सूचकः = सूचकः + १;
+        } अन्यथा {
+            चलम् अग्रिमः = "";
+            यदि (सूचकः + १ < दीर्घता) {
+                अग्रिमः = वर्ण_प्राप्नु(स्रोतः, सूचकः + १);
+            }
+
+            // एकपङ्क्ति-टिप्पणी
+            यदि (वर्तमानः == "/" तथा अग्रिमः == "/") {
+                सूचकः = सूचकः + २;
+                यावत् (सूचकः < दीर्घता तथा वर्ण_प्राप्नु(स्रोतः, सूचकः) != "\n") {
+                    सूचकः = सूचकः + १;
+                }
+            } अन्यथा यदि (वर्तमानः == "/" तथा अग्रिमः == "*") {
+                // बहुपङ्क्ति-टिप्पणी
+                सूचकः = सूचकः + २;
+                यावत् (सूचकः + १ < दीर्घता) {
+                    यदि (वर्ण_प्राप्नु(स्रोतः, सूचकः) == "*" तथा वर्ण_प्राप्नु(स्रोतः, सूचकः + १) == "/") {
+                        सूचकः = सूचकः + २;
+                        सूचकः = सूचकः + दीर्घता;
+                    } अन्यथा {
+                        सूचकः = सूचकः + १;
+                    }
+                }
+            } अन्यथा यदि (वर्तमानः == "\"") {
+                चलम् सूत्र_परिणामः = सूत्रम्_पठ(स्रोतः, सूचकः, दीर्घता);
+                सूची_योजय(चिह्नानि, सूची_प्राप्नु(सूत्र_परिणामः, ०));
+                सूचकः = सूची_प्राप्नु(सूत्र_परिणामः, १);
+            } अन्यथा यदि (देवनागरी_अङ्कम्(वर्तमानः) वा आङ्ग्ल_अङ्कम्(वर्तमानः)) {
+                चलम् अङ्क_परिणामः = अङ्कम्_पठ(स्रोतः, सूचकः, दीर्घता);
+                सूची_योजय(चिह्नानि, सूची_प्राप्नु(अङ्क_परिणामः, ०));
+                सूचकः = सूची_प्राप्नु(अङ्क_परिणामः, १);
+            } अन्यथा {
+                चलम् द्वि_चिह्नम् = "";
+                यदि (सूचकः + १ < दीर्घता) {
+                    द्वि_चिह्नम् = वर्तमानः + अग्रिमः;
+                }
+
+                यदि (द्वि_चिह्नम् == "==" वा द्वि_चिह्नम् == "!=" वा द्वि_चिह्नम् == "<=" वा द्वि_चिह्नम् == ">=") {
+                    सूची_योजय(चिह्नानि, द्वि_चिह्नम्);
+                    सूचकः = सूचकः + २;
+                } अन्यथा यदि (विरामचिह्नम्_अस्ति(वर्तमानः)) {
+                    सूची_योजय(चिह्नानि, वर्तमानः);
+                    सूचकः = सूचकः + १;
+                } अन्यथा {
+                    चलम् नाम_परिणामः = नाम_पठ(स्रोतः, सूचकः, दीर्घता);
+                    सूची_योजय(चिह्नानि, सूची_प्राप्नु(नाम_परिणामः, ०));
+                    सूचकः = सूची_प्राप्नु(नाम_परिणामः, १);
+                }
+            }
+        }
+    }
+
+    चलम् अन्तिम_सङ्ख्या = सूची_दीर्घता(चिह्नानि);
+    यदि (अन्तिम_सङ्ख्या > ०) {
+        चलम् शेष_अन्तिमम् = सूची_प्राप्नु(चिह्नानि, अन्तिम_सङ्ख्या - १);
+        यदि (समाप्ति_योग्यम्(शेष_अन्तिमम्)) {
+            सूची_योजय(चिह्नानि, ";");
+        }
+    }
+
+    प्रत्यागच्छ चिह्नानि;
+}
+
+// अनुवादकः (C# Code Generator)
+फलनम् अनुवादय(चिह्नानि) {
+    चलम् फलनानि = "";
+    चलम् मुख्य_भागः = "";
+    चलम् दीर्घता = सूची_दीर्घता(चिह्नानि);
+    चलम् सूचकः = ०;
+    चलम् फलन_अन्तर्गतम् = असत्यम्;
+    चलम् खण्ड_स्तरः = ०;
+
+    यावत् (सूचकः < दीर्घता) {
+        चलम् चिह्नम् = सूची_प्राप्नु(चिह्नानि, सूचकः);
+
+        // १. चलम् / स्थिरम्
+        यदि (चिह्नम् == "चलम्" वा चिह्नम् == "स्थिरम्") {
+            चलम् पङ्क्तिः = "dynamic ";
+            सूचकः = सूचकः + १;
+            यदि (सूचकः < दीर्घता) {
+                चलम् नाम = सूची_प्राप्नु(चिह्नानि, सूचकः);
+                पङ्क्तिः = पङ्क्तिः + "var_" + नाम;
+                सूचकः = सूचकः + १;
+                यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != ";") {
+                    पङ्क्तिः = पङ्क्तिः + पद_रूपान्तरम्(सूची_प्राप्नु(चिह्नानि, सूचकः));
+                    सूचकः = सूचकः + १;
+                }
+                पङ्क्तिः = पङ्क्तिः + ";\n";
+                यदि (फलन_अन्तर्गतम्) {
+                    फलनानि = फलनानि + "        " + पङ्क्तिः;
+                } अन्यथा {
+                    मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+                }
+            }
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == ";") {
+                सूचकः = सूचकः + १;
+            }
+        } अन्यथा यदि (चिह्नम् == "लिख") {
+            // २. लिख
+            चलम् पङ्क्तिः = "PrajnaRuntime.Likha(";
+            सूचकः = सूचकः + १;
+            यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != ";") {
+                पङ्क्तिः = पङ्क्तिः + पद_रूपान्तरम्(सूची_प्राप्नु(चिह्नानि, सूचकः));
+                सूचकः = सूचकः + १;
+            }
+            पङ्क्तिः = पङ्क्तिः + ");\n";
+            यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        " + पङ्क्तिः;
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+            }
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == ";") {
+                सूचकः = सूचकः + १;
+            }
+        } अन्यथा यदि (चिह्नम् == "यदि" वा चिह्नम् == "यावत्") {
+            // ३. यदि / यावत्
+            चलम् आदिः = "if (PrajnaRuntime.ToBool(";
+            यदि (चिह्नम् == "यावत्") {
+                आदिः = "while (PrajnaRuntime.ToBool(";
+            }
+            चलम् पङ्क्तिः = आदिः;
+            सूचकः = सूचकः + १; // (
+            यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != "{") {
+                चलम् पदम् = सूची_प्राप्नु(चिह्नानि, सूचकः);
+                यदि (पदम् == "(" वा पदम् == ")") {
+                    पङ्क्तिः = पङ्क्तिः + पदम्;
+                } अन्यथा {
+                    पङ्क्तिः = पङ्क्तिः + पद_रूपान्तरम्(पदम्);
+                }
+                सूचकः = सूचकः + १;
+            }
+            पङ्क्तिः = पङ्क्तिः + ")) {\n";
+            खण्ड_स्तरः = खण्ड_स्तरः + १;
+            यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        " + पङ्क्तिः;
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+            }
+            सूचकः = सूचकः + १;
+        } अन्यथा यदि (चिह्नम् == "अन्यथा") {
+            // ४. अन्यथा / अन्यथा यदि
+            सूचकः = सूचकः + १;
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == "यदि") {
+                सूचकः = सूचकः + १; // यदि
+                चलम् पङ्क्तिः = "else if (PrajnaRuntime.ToBool(";
+                यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != "{") {
+                    चलम् पदम् = सूची_प्राप्नु(चिह्नानि, सूचकः);
+                    यदि (पदम् == "(" वा पदम् == ")") {
+                        पङ्क्तिः = पङ्क्तिः + पदम्;
+                    } अन्यथा {
+                        पङ्क्तिः = पङ्क्तिः + पद_रूपान्तरम्(पदम्);
+                    }
+                    सूचकः = सूचकः + १;
+                }
+                पङ्क्तिः = पङ्क्तिः + ")) {\n";
+                खण्ड_स्तरः = खण्ड_स्तरः + १;
+                सूचकः = सूचकः + १; // {
+                यदि (फलन_अन्तर्गतम्) {
+                    फलनानि = फलनानि + "        " + पङ्क्तिः;
+                } अन्यथा {
+                    मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+                }
+            } अन्यथा {
+                चलम् पङ्क्तिः = "else {\n";
+                यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == "{") {
+                    सूचकः = सूचकः + १;
+                }
+                खण्ड_स्तरः = खण्ड_स्तरः + १;
+                यदि (फलन_अन्तर्गतम्) {
+                    फलनानि = फलनानि + "        " + पङ्क्तिः;
+                } अन्यथा {
+                    मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+                }
+            }
+        } अन्यथा यदि (चिह्नम् == "फलनम्") {
+            // ५. फलनम्
+            फलन_अन्तर्गतम् = सत्यम्;
+            खण्ड_स्तरः = १;
+            सूचकः = सूचकः + १;
+            चलम् फलन_नाम = सूची_प्राप्नु(चिह्नानि, सूचकः);
+            सूचकः = सूचकः + १; // (
+            चलम् पङ्क्तिः = "    public static dynamic var_" + फलन_नाम + "(";
+            सूचकः = सूचकः + १;
+            यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != ")") {
+                चलम् पदम् = सूची_प्राप्नु(चिह्नानि, सूचकः);
+                यदि (पदम् == ",") {
+                    पङ्क्तिः = पङ्क्तिः + ", ";
+                } अन्यथा {
+                    पङ्क्तिः = पङ्क्तिः + "dynamic var_" + पदम्;
+                }
+                सूचकः = सूचकः + १;
+            }
+            पङ्क्तिः = पङ्क्तिः + ") {\n";
+            फलनानि = फलनानि + पङ्क्तिः;
+            सूचकः = सूचकः + १; // )
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == "{") {
+                सूचकः = सूचकः + १;
+            }
+        } अन्यथा यदि (चिह्नम् == "प्रत्यागच्छ") {
+            // ६. प्रत्यागच्छ
+            चलम् पङ्क्तिः = "return ";
+            सूचकः = सूचकः + १;
+            यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != ";") {
+                पङ्क्तिः = पङ्क्तिः + पद_रूपान्तरम्(सूची_प्राप्नु(चिह्नानि, सूचकः));
+                सूचकः = सूचकः + १;
+            }
+            पङ्क्तिः = पङ्क्तिः + ";\n";
+            फलनानि = फलनानि + "        " + पङ्क्तिः;
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == ";") {
+                सूचकः = सूचकः + १;
+            }
+        } अन्यथा यदि (चिह्नम् == "}") {
+            // ७. खण्डसमाप्तिः
+            खण्ड_स्तरः = खण्ड_स्तरः - १;
+            यदि (फलन_अन्तर्गतम् तथा खण्ड_स्तरः <= ०) {
+                फलनानि = फलनानि + "        return null;\n    }\n\n";
+                फलन_अन्तर्गतम् = असत्यम्;
+                खण्ड_स्तरः = ०;
+            } अन्यथा यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        }\n";
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        }\n";
+            }
+            सूचकः = सूचकः + १;
+        } अन्यथा {
+            // ८. अन्यानि वाक्यानि (Assignments, method calls)
+            चलम् पङ्क्तिः = "";
+            यावत् (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) != ";") {
+                पङ्क्तिः = पङ्क्तिः + पद_रूपान्तरम्(सूची_प्राप्नु(चिह्नानि, सूचकः));
+                सूचकः = सूचकः + १;
+            }
+            पङ्क्तिः = पङ्क्तिः + ";\n";
+            यदि (फलन_अन्तर्गतम्) {
+                फलनानि = फलनानि + "        " + पङ्क्तिः;
+            } अन्यथा {
+                मुख्य_भागः = मुख्य_भागः + "        " + पङ्क्तिः;
+            }
+            यदि (सूचकः < दीर्घता तथा सूची_प्राप्नु(चिह्नानि, सूचकः) == ";") {
+                सूचकः = सूचकः + १;
+            }
+        }
+    }
+
+    प्रत्यागच्छ सूची_द्वयम्(फलनानि, मुख्य_भागः);
+}
+
+// C# सम्पूर्ण-सङ्केतस्य निर्माणम्
+फलनम् सज्जीकुरु_सङ्केतम्(फलनानि, मुख्य_भागः) {
+    चलम् आधारः = "// प्रज्ञा (Prajna) स्वयम्भू-सङ्कलकेन निर्मितम्\n";
+    आधारः = आधारः + "using System;\nusing System.IO;\nusing System.Text;\nusing System.Drawing;\nusing System.Collections;\nusing System.Collections.Generic;\nusing System.Diagnostics;\nusing System.Windows.Forms;\n\n";
+
+    // PrajnaRuntime
+    चलम् धावकः = "public static class PrajnaRuntime {\n";
+    धावकः = धावकः + "    public static bool DevanagariOutput = true;\n";
+    धावकः = धावकः + "    public static string[] CommandLineArgs = new string[0];\n";
+    धावकः = धावकः + "    public static string IntToDevanagari(long n) {\n";
+    धावकः = धावकः + "        bool neg = n < 0; if (neg) n = -n;\n";
+    धावकः = धावकः + "        string s = n.ToString(); StringBuilder sb = new StringBuilder();\n";
+    धावकः = धावकः + "        if (neg) sb.Append('-');\n";
+    धावकः = धावकः + "        foreach (char ch in s) { if (ch >= '0' && ch <= '9') sb.Append((char)('०' + (ch - '0'))); else sb.Append(ch); }\n";
+    धावकः = धावकः + "        return sb.ToString();\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static long DevanagariToInt(string s) {\n";
+    धावकः = धावकः + "        if (string.IsNullOrEmpty(s)) return 0;\n";
+    धावकः = धावकः + "        StringBuilder sb = new StringBuilder();\n";
+    धावकः = धावकः + "        foreach (char ch in s.Trim()) {\n";
+    धावकः = धावकः + "            if (ch >= '०' && ch <= '९') sb.Append((char)('0' + (ch - '०')));\n";
+    धावकः = धावकः + "            else if (ch >= '0' && ch <= '9' || ch == '-' || ch == '+') sb.Append(ch);\n";
+    धावकः = धावकः + "        }\n";
+    धावकः = धावकः + "        long res = 0; long.TryParse(sb.ToString(), out res); return res;\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static string Format(object val) {\n";
+    धावकः = धावकः + "        if (val == null) return \"\";\n";
+    धावकः = धावकः + "        if (val is bool) return ((bool)val) ? \"सत्यम्\" : \"असत्यम्\";\n";
+    धावकः = धावकः + "        if (val is long || val is int) { long v = Convert.ToInt64(val); return DevanagariOutput ? IntToDevanagari(v) : v.ToString(); }\n";
+    धावकः = धावकः + "        if (val is double || val is float) return val.ToString();\n";
+    धावकः = धावकः + "        if (val is IList) {\n";
+    धावकः = धावकः + "            IList list = (IList)val; StringBuilder sb = new StringBuilder(); sb.Append(\"[\");\n";
+    धावकः = धावकः + "            for (int i = 0; i < list.Count; i++) { sb.Append(Format(list[i])); if (i < list.Count - 1) sb.Append(\", \" ); }\n";
+    धावकः = धावकः + "            sb.Append(\"]\"); return sb.ToString();\n";
+    धावकः = धावकः + "        }\n";
+    धावकः = धावकः + "        return val.ToString();\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static void Likha(object val) { Console.WriteLine(Format(val)); }\n";
+    धावकः = धावकः + "    public static bool ToBool(object a) {\n";
+    धावकः = धावकः + "        if (a is bool) return (bool)a;\n";
+    धावकः = धावकः + "        if (a is long) return Convert.ToInt64(a) != 0;\n";
+    धावकः = धावकः + "        if (a is int) return Convert.ToInt32(a) != 0;\n";
+    धावकः = धावकः + "        if (a is string) return !string.IsNullOrEmpty((string)a);\n";
+    धावकः = धावकः + "        return a != null;\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static List<object> MakeList(params object[] items) { return new List<object>(items); }\n";
+    धावकः = धावकः + "    public static long SutraDirghata(object s) { return s == null ? 0 : s.ToString().Length; }\n";
+    धावकः = धावकः + "    public static string SutraKhandam(object s, object st, object l) {\n";
+    धावकः = धावकः + "        string str = s == null ? \"\" : s.ToString(); int start = Convert.ToInt32(st); int len = Convert.ToInt32(l);\n";
+    धावकः = धावकः + "        if (start < 0) start = 0; if (start >= str.Length) return \"\";\n";
+    धावकः = धावकः + "        if (start + len > str.Length) len = str.Length - start; return str.Substring(start, len);\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static string VarnaPraptnu(object s, object idx) {\n";
+    धावकः = धावकः + "        string str = s == null ? \"\" : s.ToString(); int i = Convert.ToInt32(idx);\n";
+    धावकः = धावकः + "        if (i >= 0 && i < str.Length) return str[i].ToString(); return \"\";\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static string SutraSambandha(object a, object b) { return (a == null ? \"\" : a.ToString()) + (b == null ? \"\" : b.ToString()); }\n";
+    धावकः = धावकः + "    public static long SankhyaParivartaya(object v) { return v == null ? 0 : DevanagariToInt(v.ToString()); }\n";
+    धावकः = धावकः + "    public static string SutraParivartaya(object v) { return Format(v); }\n";
+    धावकः = धावकः + "    public static List<object> SuchiRachaya() { return new List<object>(); }\n";
+    धावकः = धावकः + "    public static List<object> SuchiYojaya(object l, object item) {\n";
+    धावकः = धावकः + "        if (l is List<object>) { ((List<object>)l).Add(item); return (List<object>)l; }\n";
+    धावकः = धावकः + "        var nl = new List<object>(); nl.Add(item); return nl;\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static object SuchiPraptnu(object l, object idx) {\n";
+    धावकः = धावकः + "        int i = Convert.ToInt32(idx); if (l is IList) { var list = (IList)l; if (i >= 0 && i < list.Count) return list[i]; } return \"\";\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static object SuchiSthapaya(object l, object idx, object val) {\n";
+    धावकः = धावकः + "        int i = Convert.ToInt32(idx); if (l is IList) { ((IList)l)[i] = val; return val; } return null;\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static long SuchiDirghata(object l) { return (l is ICollection) ? ((ICollection)l).Count : 0; }\n";
+    धावकः = धावकः + "    public static List<object> SuchiDvayam(object a, object b) { var nl = new List<object>(); nl.Add(a); nl.Add(b); return nl; }\n";
+    धावकः = धावकः + "    public static string SanchikaPatha(object p) { return File.ReadAllText(p.ToString(), Encoding.UTF8); }\n";
+    धावकः = धावकः + "    public static long SanchikaLekha(object p, object c) { File.WriteAllText(p.ToString(), c == null ? \"\" : c.ToString(), Encoding.UTF8); return 1; }\n";
+    धावकः = धावकः + "    public static bool SanchikaVidyate(object p) { return File.Exists(p.ToString()); }\n";
+    धावकः = धावकः + "    public static long VatayanamaDarshaya(object t, object m) { MessageBox.Show(m == null ? \"\" : m.ToString(), t == null ? \"प्रज्ञा\" : t.ToString()); return 1; }\n";
+    धावकः = धावकः + "    public static string AdeshahNishpadaya(object cmd) {\n";
+    धावकः = धावकः + "        try {\n";
+    धावकः = धावकः + "            ProcessStartInfo psi = new ProcessStartInfo(\"cmd.exe\", \"/c \" + cmd.ToString()) {\n";
+    धावकः = धावकः + "                RedirectStandardOutput = true, RedirectStandardError = true, UseShellExecute = false, CreateNoWindow = true,\n";
+    धावकः = धावकः + "                StandardOutputEncoding = Encoding.UTF8, StandardErrorEncoding = Encoding.UTF8\n";
+    धावकः = धावकः + "            };\n";
+    धावकः = धावकः + "            using (Process p = Process.Start(psi)) { string outStr = p.StandardOutput.ReadToEnd(); p.WaitForExit(); return outStr; }\n";
+    धावकः = धावकः + "        } catch (Exception ex) { return \"दोषः: \" + ex.Message; }\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "    public static List<object> AdeshaTarkah() { var l = new List<object>(); foreach (var a in CommandLineArgs) l.Add(a); return l; }\n";
+    धावकः = धावकः + "    public static string SutraVibhajaya(object s, object delim) { string str = s == null ? \"\" : s.ToString(); string d = delim == null ? \" \" : delim.ToString(); return string.Join(\",\", str.Split(new string[] { d }, StringSplitOptions.None)); }\n";
+    धावकः = धावकः + "    public static string SutraSamyojaya(object delim, object list) { string d = delim == null ? \"\" : delim.ToString(); if (list is IList) { var parts = new List<string>(); foreach (var item in (IList)list) parts.Add(Format(item)); return string.Join(d, parts.ToArray()); } return \"\"; }\n";
+    धावकः = धावकः + "    public static string SutraPratisthapanam(object orig, object o, object n) { string s = orig == null ? \"\" : orig.ToString(); string ov = o == null ? \"\" : o.ToString(); string nv = n == null ? \"\" : n.ToString(); return s.Replace(ov, nv); }\n";
+    धावकः = धावकः + "    public static long SutraAnveshanam(object s, object sub) { string str = s == null ? \"\" : s.ToString(); string sb = sub == null ? \"\" : sub.ToString(); return str.IndexOf(sb); }\n";
+    धावकः = धावकः + "    public static string SutraChedaya(object s) { return s == null ? \"\" : s.ToString().Trim(); }\n";
+    धावकः = धावकः + "    public static bool SutraAarambhah(object s, object pref) { string str = s == null ? \"\" : s.ToString(); string p = pref == null ? \"\" : pref.ToString(); return str.StartsWith(p); }\n";
+    धावकः = धावकः + "    public static bool SutraAntah(object s, object suff) { string str = s == null ? \"\" : s.ToString(); string sf = suff == null ? \"\" : suff.ToString(); return str.EndsWith(sf); }\n";
+    धावकः = धावकः + "    public static string LaghuVarnamala(object s) { return s == null ? \"\" : s.ToString().ToLower(); }\n";
+    धावकः = धावकः + "    public static string GuruVarnamala(object s) { return s == null ? \"\" : s.ToString().ToUpper(); }\n";
+    धावकः = धावकः + "    public static List<object> SuchiKhandam(object list, object st, object l) { var res = new List<object>(); if (list is IList) { IList il = (IList)list; int s = Convert.ToInt32(st); int len = Convert.ToInt32(l); for (int i = s; i < s + len && i < il.Count; i++) if (i >= 0) res.Add(il[i]); } return res; }\n";
+    धावकः = धावकः + "    public static object SuchiNishkasaya(object list, object idx) { if (list is IList) { IList il = (IList)list; int i = Convert.ToInt32(idx); if (i >= 0 && i < il.Count) { object v = il[i]; il.RemoveAt(i); return v; } } return null; }\n";
+    धावकः = धावकः + "    public static object SuchiShodhaya(object list) { if (list is List<object>) { var l = (List<object>)list; l.Sort((a,b) => string.Compare(Format(a), Format(b), StringComparison.Ordinal)); return l; } return list; }\n";
+    धावकः = धावकः + "    public static object SuchiViparita(object list) { if (list is List<object>) { var l = (List<object>)list; l.Reverse(); return l; } return list; }\n";
+    धावकः = धावकः + "    public static bool SuchiAntarbhavah(object list, object item) { if (list is IList) { foreach (var x in (IList)list) if (Format(x) == Format(item)) return true; } return false; }\n";
+    धावकः = धावकः + "    public static List<object> SuchiSamyojaya(object l1, object l2) { var res = new List<object>(); if (l1 is IList) foreach (var x in (IList)l1) res.Add(x); if (l2 is IList) foreach (var x in (IList)l2) res.Add(x); return res; }\n";
+    धावकः = धावकः + "    public static long SuchiAnveshanam(object list, object item) { if (list is IList) { IList il = (IList)list; for (int i = 0; i < il.Count; i++) if (Format(il[i]) == Format(item)) return i; } return -1; }\n";
+    धावकः = धावकः + "    public static Dictionary<string, object> KoshaRachaya() { return new Dictionary<string, object>(); }\n";
+    धावकः = धावकः + "    public static object KoshaSthapaya(object dict, object k, object v) { if (dict is Dictionary<string, object>) { ((Dictionary<string, object>)dict)[k == null ? \"\" : k.ToString()] = v; return dict; } return dict; }\n";
+    धावकः = धावकः + "    public static object KoshaPraptnu(object dict, object k) { if (dict is Dictionary<string, object>) { var d = (Dictionary<string, object>)dict; string key = k == null ? \"\" : k.ToString(); if (d.ContainsKey(key)) return d[key]; } return \"\"; }\n";
+    धावकः = धावकः + "    public static bool KoshaAsti(object dict, object k) { if (dict is Dictionary<string, object>) { return ((Dictionary<string, object>)dict).ContainsKey(k == null ? \"\" : k.ToString()); } return false; }\n";
+    धावकः = धावकः + "    public static object KoshaNishkasaya(object dict, object k) { if (dict is Dictionary<string, object>) { var d = (Dictionary<string, object>)dict; string key = k == null ? \"\" : k.ToString(); if (d.ContainsKey(key)) { object v = d[key]; d.Remove(key); return v; } } return null; }\n";
+    धावकः = धावकः + "    public static List<object> KoshaKunchikah(object dict) { var res = new List<object>(); if (dict is Dictionary<string, object>) { foreach (var k in ((Dictionary<string, object>)dict).Keys) res.Add(k); } return res; }\n";
+    धावकः = धावकः + "    public static List<object> KoshaMulyani(object dict) { var res = new List<object>(); if (dict is Dictionary<string, object>) { foreach (var v in ((Dictionary<string, object>)dict).Values) res.Add(v); } return res; }\n";
+    धावकः = धावकः + "    public static long KoshaDirghata(object dict) { if (dict is Dictionary<string, object>) return ((Dictionary<string, object>)dict).Count; return 0; }\n";
+    धावकः = धावकः + "    public static object KoshaSwacchikuru(object dict) { if (dict is Dictionary<string, object>) ((Dictionary<string, object>)dict).Clear(); return dict; }\n";
+    धावकः = धावकः + "    public static double GanitaVargamulam(object x) { return Math.Sqrt(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static double GanitaGhaatah(object x, object y) { return Math.Pow(Convert.ToDouble(x), Convert.ToDouble(y)); }\n";
+    धावकः = धावकः + "    public static object GanitaParamamulyam(object x) { if (x is double || x is float) return Math.Abs(Convert.ToDouble(x)); return Math.Abs(Convert.ToInt64(x)); }\n";
+    धावकः = धावकः + "    public static double GanitaJyaa(object x) { return Math.Sin(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static double GanitaKojyaa(object x) { return Math.Cos(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static double GanitaSparshajyaa(object x) { return Math.Tan(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static long GanitaAdhah(object x) { return (long)Math.Floor(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static long GanitaUpari(object x) { return (long)Math.Ceiling(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static long GanitaSamipam(object x) { return (long)Math.Round(Convert.ToDouble(x)); }\n";
+    धावकः = धावकः + "    public static double GanitaPi() { return Math.PI; }\n";
+    धावकः = धावकः + "    public static double GanitaE() { return Math.E; }\n";
+    धावकः = धावकः + "    private static Random _rnd = new Random();\n";
+    धावकः = धावकः + "    public static double Yaadrichhika() { return _rnd.NextDouble(); }\n";
+    धावकः = धावकः + "    public static long YaadrichhikaAntarale(object min, object max) { return _rnd.Next(Convert.ToInt32(min), Convert.ToInt32(max) + 1); }\n";
+    धावकः = धावकः + "    public static long KalaVartamanaMili() { return (long)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds; }\n";
+    धावकः = धावकः + "    public static string KalaVartamanaKshanam() { return DateTime.Now.ToString(\"yyyy-MM-dd HH:mm:ss\"); }\n";
+    धावकः = धावकः + "    public static long KalaVirama(object ms) { System.Threading.Thread.Sleep(Convert.ToInt32(ms)); return 1; }\n";
+    धावकः = धावकः + "    public static long SanchikaLopaya(object path) { string p = path == null ? \"\" : path.ToString(); if (File.Exists(p)) File.Delete(p); return 1; }\n";
+    धावकः = धावकः + "    public static List<object> SanchikaNirdeshikaSuchi(object dir) { var res = new List<object>(); string d = dir == null ? \"\" : dir.ToString(); if (Directory.Exists(d)) { foreach (var f in Directory.GetFileSystemEntries(d)) res.Add(Path.GetFileName(f)); } return res; }\n";
+    धावकः = धावकः + "    public static long NirdeshikaRachaya(object dir) { string d = dir == null ? \"\" : dir.ToString(); if (!Directory.Exists(d)) Directory.CreateDirectory(d); return 1; }\n";
+    धावकः = धावकः + "    public static string PranaliVatavaranam(object key) { return Environment.GetEnvironmentVariable(key == null ? \"\" : key.ToString()) ?? \"\"; }\n";
+    धावकः = धावकः + "    public static string PranaliSanchalakah() { return \"windows\"; }\n";
+    धावकः = धावकः + "    public static string JesonRupantaram(object obj) { return Format(obj); }\n";
+    धावकः = धावकः + "    public static object JesonPatha(object str) { return str == null ? \"\" : str.ToString(); }\n";
+    धावकः = धावकः + "    public static string Prakaarah(object v) { if (v == null) return \"शून्यम्\"; if (v is bool) return \"बूलियनम्\"; if (v is long || v is int) return \"संख्या\"; if (v is double || v is float) return \"दशांशः\"; if (v is string) return \"सूत्रम्\"; if (v is IList) return \"सूची\"; if (v is IDictionary) return \"शब्दकोषः\"; return \"अज्ञातम्\"; }\n";
+    धावकः = धावकः + "    public static double DashamshaParivartaya(object v) { if (v == null) return 0.0; double d = 0.0; double.TryParse(v.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d); return d; }\n";
+    धावकः = धावकः + "    public static long PurnankaParivartaya(object v) { if (v == null) return 0; double d = 0.0; if (double.TryParse(v.ToString(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out d)) return (long)d; return 0; }\n";
+    धावकः = धावकः + "    public static void Bahirgaccha(object code) { Environment.Exit(Convert.ToInt32(code)); }\n";
+    धावकः = धावकः + "    public static long PatralekhakamArabhasva(object t, object init) {\n";
+    धावकः = धावकः + "        Form f = new Form() { Text = t == null ? \"प्रज्ञा पत्रलेखकः\" : t.ToString(), Size = new Size(900, 650), StartPosition = FormStartPosition.CenterScreen };\n";
+    धावकः = धावकः + "        TextBox tb = new TextBox() { Multiline = true, Dock = DockStyle.Fill, ScrollBars = ScrollBars.Both, Font = new Font(\"Nirmala UI\", 12F), Text = init == null ? \"\" : init.ToString() };\n";
+    धावकः = धावकः + "        f.Controls.Add(tb);\n";
+    धावकः = धावकः + "        Application.Run(f); return 1;\n";
+    धावकः = धावकः + "    }\n";
+    धावकः = धावकः + "}\n\n";
+
+    // PrajnaProgram class
+    चलम् कक्षा = "public class PrajnaProgram {\n";
+    // Built-in aliases
+    कक्षा = कक्षा + "    public static dynamic सूत्र_दीर्घता(dynamic s) { return PrajnaRuntime.SutraDirghata(s); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_खण्डम्(dynamic s, dynamic st, dynamic l) { return PrajnaRuntime.SutraKhandam(s, st, l); }\n";
+    कक्षा = कक्षा + "    public static dynamic वर्ण_प्राप्नु(dynamic s, dynamic idx) { return PrajnaRuntime.VarnaPraptnu(s, idx); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_सम्बन्ध(dynamic a, dynamic b) { return PrajnaRuntime.SutraSambandha(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic संख्या_परिवर्तय(dynamic v) { return PrajnaRuntime.SankhyaParivartaya(v); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_परिवर्तय(dynamic v) { return PrajnaRuntime.SutraParivartaya(v); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_विभाजय(dynamic a, dynamic b) { return PrajnaRuntime.SutraVibhajaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_संयोजय(dynamic a, dynamic b) { return PrajnaRuntime.SutraSamyojaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_प्रतिस्थापनम्(dynamic a, dynamic b, dynamic c) { return PrajnaRuntime.SutraPratisthapanam(a, b, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_अन्वेषणम्(dynamic a, dynamic b) { return PrajnaRuntime.SutraAnveshanam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_छेदय(dynamic a) { return PrajnaRuntime.SutraChedaya(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_आरम्भः(dynamic a, dynamic b) { return PrajnaRuntime.SutraAarambhah(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूत्र_अन्तः(dynamic a, dynamic b) { return PrajnaRuntime.SutraAntah(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic लघु_वर्णमाला(dynamic a) { return PrajnaRuntime.LaghuVarnamala(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गुरु_वर्णमाला(dynamic a) { return PrajnaRuntime.GuruVarnamala(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_रचय() { return PrajnaRuntime.SuchiRachaya(); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_योजय(dynamic l, dynamic item) { return PrajnaRuntime.SuchiYojaya(l, item); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_प्राप्नु(dynamic l, dynamic idx) { return PrajnaRuntime.SuchiPraptnu(l, idx); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_स्थापय(dynamic l, dynamic idx, dynamic v) { return PrajnaRuntime.SuchiSthapaya(l, idx, v); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_दीर्घता(dynamic l) { return PrajnaRuntime.SuchiDirghata(l); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_द्वयम्(dynamic a, dynamic b) { return PrajnaRuntime.SuchiDvayam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_खण्डम्(dynamic a, dynamic b, dynamic c) { return PrajnaRuntime.SuchiKhandam(a, b, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_निष्कासय(dynamic a, dynamic b) { return PrajnaRuntime.SuchiNishkasaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_शोधय(dynamic a) { return PrajnaRuntime.SuchiShodhaya(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_विपरीत(dynamic a) { return PrajnaRuntime.SuchiViparita(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_अन्तर्भावः(dynamic a, dynamic b) { return PrajnaRuntime.SuchiAntarbhavah(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_संयोजय(dynamic a, dynamic b) { return PrajnaRuntime.SuchiSamyojaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic सूची_अन्वेषणम्(dynamic a, dynamic b) { return PrajnaRuntime.SuchiAnveshanam(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_रचय() { return PrajnaRuntime.KoshaRachaya(); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_स्थापय(dynamic a, dynamic b, dynamic c) { return PrajnaRuntime.KoshaSthapaya(a, b, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_प्राप्नु(dynamic a, dynamic b) { return PrajnaRuntime.KoshaPraptnu(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_अस्ति(dynamic a, dynamic b) { return PrajnaRuntime.KoshaAsti(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_निष्कासय(dynamic a, dynamic b) { return PrajnaRuntime.KoshaNishkasaya(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_कुञ्चिकाः(dynamic a) { return PrajnaRuntime.KoshaKunchikah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_मूल्यानि(dynamic a) { return PrajnaRuntime.KoshaMulyani(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_दीर्घता(dynamic a) { return PrajnaRuntime.KoshaDirghata(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic कोष_स्वच्छीकुरु(dynamic a) { return PrajnaRuntime.KoshaSwacchikuru(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_वर्गमूलम्(dynamic a) { return PrajnaRuntime.GanitaVargamulam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_घातः(dynamic a, dynamic b) { return PrajnaRuntime.GanitaGhaatah(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_परममूल्यम्(dynamic a) { return PrajnaRuntime.GanitaParamamulyam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_ज्या(dynamic a) { return PrajnaRuntime.GanitaJyaa(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_कोज्या(dynamic a) { return PrajnaRuntime.GanitaKojyaa(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_स्पर्शज्या(dynamic a) { return PrajnaRuntime.GanitaSparshajyaa(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_अधः(dynamic a) { return PrajnaRuntime.GanitaAdhah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_उपरि(dynamic a) { return PrajnaRuntime.GanitaUpari(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_समीपम्(dynamic a) { return PrajnaRuntime.GanitaSamipam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_पाई() { return PrajnaRuntime.GanitaPi(); }\n";
+    कक्षा = कक्षा + "    public static dynamic गणित_ई() { return PrajnaRuntime.GanitaE(); }\n";
+    कक्षा = कक्षा + "    public static dynamic यादृच्छिक() { return PrajnaRuntime.Yaadrichhika(); }\n";
+    कक्षा = कक्षा + "    public static dynamic यादृच्छिक_अन्तराले(dynamic a, dynamic b) { return PrajnaRuntime.YaadrichhikaAntarale(a, b); }\n";
+    कक्षा = कक्षा + "    public static dynamic काल_वर्तमान_मिली() { return PrajnaRuntime.KalaVartamanaMili(); }\n";
+    कक्षा = कक्षा + "    public static dynamic काल_वर्तमान_क्षणम्() { return PrajnaRuntime.KalaVartamanaKshanam(); }\n";
+    कक्षा = कक्षा + "    public static dynamic काल_विराम(dynamic a) { return PrajnaRuntime.KalaVirama(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सञ्चिका_पठ(dynamic p) { return PrajnaRuntime.SanchikaPatha(p); }\n";
+    कक्षा = कक्षा + "    public static dynamic सञ्चिका_लिख(dynamic p, dynamic c) { return PrajnaRuntime.SanchikaLekha(p, c); }\n";
+    कक्षा = कक्षा + "    public static dynamic सञ्चिका_विद्यते(dynamic p) { return PrajnaRuntime.SanchikaVidyate(p); }\n";
+    कक्षा = कक्षा + "    public static dynamic सञ्चिका_लोपय(dynamic a) { return PrajnaRuntime.SanchikaLopaya(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic सञ्चिका_निर्देशिका_सूची(dynamic a) { return PrajnaRuntime.SanchikaNirdeshikaSuchi(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic निर्देशिका_रचय(dynamic a) { return PrajnaRuntime.NirdeshikaRachaya(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic प्रणाली_वातावरणम्(dynamic a) { return PrajnaRuntime.PranaliVatavaranam(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic प्रणाली_सञ्चालकः() { return PrajnaRuntime.PranaliSanchalakah(); }\n";
+    कक्षा = कक्षा + "    public static dynamic जेसन_रूपान्तरम्(dynamic a) { return PrajnaRuntime.JesonRupantaram(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic जेसन_पठ(dynamic a) { return PrajnaRuntime.JesonPatha(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic प्रकारः(dynamic a) { return PrajnaRuntime.Prakaarah(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic दशांश_परिवर्तय(dynamic a) { return PrajnaRuntime.DashamshaParivartaya(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic पूर्णाङ्क_परिवर्तय(dynamic a) { return PrajnaRuntime.PurnankaParivartaya(a); }\n";
+    कक्षा = कक्षा + "    public static dynamic वातायनम्_दर्शय(dynamic t, dynamic m) { return PrajnaRuntime.VatayanamaDarshaya(t, m); }\n";
+    कक्षा = कक्षा + "    public static dynamic पत्रलेखकम्_आरभस्व(dynamic t, dynamic init) { return PrajnaRuntime.PatralekhakamArabhasva(t, init); }\n";
+    कक्षा = कक्षा + "    public static dynamic आदेशः_निष्पादय(dynamic c) { return PrajnaRuntime.AdeshahNishpadaya(c); }\n";
+    कक्षा = कक्षा + "    public static dynamic आदेशतर्काः() { return PrajnaRuntime.AdeshaTarkah(); }\n";
+    कक्षा = कक्षा + "    public static dynamic बहिर्गच्छ(dynamic c) { PrajnaRuntime.Bahirgaccha(c); return 0; }\n\n";
+
+    कक्षा = कक्षा + फलनानि + "\n";
+    कक्षा = कक्षा + "    [STAThread]\n    public static void Main(string[] args) {\n";
+    कक्षा = कक्षा + "        try { Console.OutputEncoding = Encoding.UTF8; Console.InputEncoding = Encoding.UTF8; } catch { }\n";
+    कक्षा = कक्षा + "        PrajnaRuntime.CommandLineArgs = args;\n";
+    कक्षा = कक्षा + मुख्य_भागः + "\n";
+    कक्षा = कक्षा + "    }\n}\n";
+
+    प्रत्यागच्छ आधारः + धावकः + कक्षा;
+}
+
+// मुख्य-सङ्कलन-फलनम्
+फलनम् सङ्कलय_सञ्चिकाम्(स्रोतः_मार्गः, निर्गम_मार्गः, चित्रमयम्) {
+    लिख "प्रज्ञा-स्वयम्भू-सङ्कलनं प्रारभते: " + स्रोतः_मार्गः + " -> " + निर्गम_मार्गः;
+
+    यदि (सञ्चिका_विद्यते(स्रोतः_मार्गः) == असत्यम्) {
+        लिख "दोषः: स्रोतःसञ्चिका न लब्धा: " + स्रोतः_मार्गः;
+        प्रत्यागच्छ ०;
+    }
+
+    चलम् स्रोतः = सञ्चिका_पठ(स्रोतः_मार्गः);
+    चलम् चिह्नानि = पदच्छेदः(स्रोतः);
+    चलम् अनुवाद_भागौ = अनुवादय(चिह्नानि);
+    चलम् फलनानि = सूची_प्राप्नु(अनुवाद_भागौ, ०);
+    चलम् मुख्य_भागः = सूची_प्राप्नु(अनुवाद_भागौ, १);
+
+    चलम् सम्पूर्ण_सङ्केतः = सज्जीकुरु_सङ्केतम्(फलनानि, मुख्य_भागः);
+    चलम् cs_मार्गः = निर्गम_मार्गः + ".cs";
+
+    सञ्चिका_लिख(cs_मार्गः, सम्पूर्ण_सङ्केतः);
+
+    चलम् लक्ष्यम् = "/target:exe";
+    यदि (चित्रमयम्) {
+        लक्ष्यम् = "/target:winexe";
+    }
+
+    चलम् csc = "C:\\Windows\\Microsoft.NET\\Framework64\\v4.0.30319\\csc.exe";
+    चलम् आदेशः = csc + " /nologo /codepage:65001 /optimize+ " + लक्ष्यम् + " /r:System.dll /r:System.Core.dll /r:Microsoft.CSharp.dll /r:System.Windows.Forms.dll /r:System.Drawing.dll /out:" + निर्गम_मार्गः + " " + cs_मार्गः;
+
+    चलम् परिणामः = आदेशः_निष्पादय(आदेशः);
+
+    यदि (सञ्चिका_विद्यते(निर्गम_मार्गः)) {
+        आदेशः_निष्पादय("cmd /c del " + cs_मार्गः);
+        लिख "सङ्कलनं सफलं जातम्! निष्पाद्य-सञ्चिका: " + निर्गम_मार्गः;
+        प्रत्यागच्छ १;
+    } अन्यथा {
+        लिख "सङ्कलने दोषः सञ्जातः:\n" + परिणामः;
+        प्रत्यागच्छ ०;
+    }
+}
+
+// मुख्य-कार्यम् (Main CLI Entrypoint)
+फलनम् मुख्यम्() {
+    चलम् तर्काः = आदेशतर्काः();
+    चलम् तर्क_सङ्ख्या = सूची_दीर्घता(तर्काः);
+
+    यदि (तर्क_सङ्ख्या == ० वा सूची_प्राप्नु(तर्काः, ०) == "--help" वा सूची_प्राप्नु(तर्काः, ०) == "-h") {
+        लिख "==================================================";
+        लिख "प्रज्ञा (Prajna) — स्वयम्भू-सङ्कलकः (Self-Hosted Compiler)";
+        लिख "संस्कृतभाषायाः स्वायत्तसङ्गणकप्रणाली";
+        लिख "==================================================";
+        लिख "उपयोगः:";
+        लिख "  prajna compile <सञ्चिका.pr> [-o <निर्गम.exe>] [--gui]";
+        लिख "  prajna run <सञ्चिका.pr>";
+        लिख "  prajna version";
+        प्रत्यागच्छ ०;
+    }
+
+    यदि (सूची_प्राप्नु(तर्काः, ०) == "version" वा सूची_प्राप्नु(तर्काः, ०) == "-v" वा सूची_प्राप्नु(तर्काः, ०) == "--version") {
+        लिख "प्रज्ञा (Prajna) v1.0.0 — संस्कृतभाषाधारिता स्वायत्तसङ्गणकप्रणाली";
+        लिख "Python-निरपेक्षम् स्वयम्भू-निष्पादनतन्त्रम्";
+        लिख "सर्वाधिकारः सुरक्षिताः © २०२६";
+        प्रत्यागच्छ ०;
+    }
+
+    यदि (सूची_प्राप्नु(तर्काः, ०) == "compile") {
+        यदि (तर्क_सङ्ख्या < २) {
+            लिख "दोषः: स्रोतःसञ्चिकायाः मार्गः अपेक्षितः।";
+            प्रत्यागच्छ १;
+        }
+        चलम् स्रोतः_मार्गः = सूची_प्राप्नु(तर्काः, १);
+        चलम् निर्गम_मार्गः = "prajna_output.exe";
+        चलम् चित्रमयम् = असत्यम्;
+
+        चलम् अनुक्रमः = २;
+        यावत् (अनुक्रमः < तर्क_सङ्ख्या) {
+            यदि (सूची_प्राप्नु(तर्काः, अनुक्रमः) == "-o" तथा अनुक्रमः + १ < तर्क_सङ्ख्या) {
+                निर्गम_मार्गः = सूची_प्राप्नु(तर्काः, अनुक्रमः + १);
+                अनुक्रमः = अनुक्रमः + २;
+            } अन्यथा यदि (सूची_प्राप्नु(तर्काः, अनुक्रमः) == "--gui") {
+                चित्रमयम् = सत्यम्;
+                अनुक्रमः = अनुक्रमः + १;
+            } अन्यथा {
+                अनुक्रमः = अनुक्रमः + १;
+            }
+        }
+
+        चलम् यशः = सङ्कलय_सञ्चिकाम्(स्रोतः_मार्गः, निर्गम_मार्गः, चित्रमयम्);
+        प्रत्यागच्छ यशः;
+    }
+
+    यदि (सूची_प्राप्नु(तर्काः, ०) == "run") {
+        यदि (तर्क_सङ्ख्या < २) {
+            लिख "दोषः: स्रोतःसञ्चिकायाः मार्गः अपेक्षितः।";
+            प्रत्यागच्छ १;
+        }
+        चलम् स्रोतः_मार्गः = सूची_प्राप्नु(तर्काः, १);
+        चलम् तात्कालिक_exe = "_prajna_temp.exe";
+        चलम् यशः = सङ्कलय_सञ्चिकाम्(स्रोतः_मार्गः, तात्कालिक_exe, असत्यम्);
+        यदि (यशः == १) {
+            चलम् निर्गमः = आदेशः_निष्पादय(तात्कालिक_exe);
+            लिख निर्गमः;
+            आदेशः_निष्पादय("cmd /c del " + तात्कालिक_exe);
+        }
+        प्रत्यागच्छ यशः;
+    }
+
+    लिख "अज्ञातः आदेशः: " + सूची_प्राप्नु(तर्काः, ०);
+    प्रत्यागच्छ १;
+}
+
+मुख्यम्();
